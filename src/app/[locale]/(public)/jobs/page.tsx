@@ -1,0 +1,120 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { createClient } from '@/lib/supabase/server';
+import { JobCard } from '@/components/jobs/JobCard';
+import { JobFilters } from '@/components/jobs/JobFilters';
+import type { Database } from '@/types/database.types';
+import { Briefcase } from 'lucide-react';
+
+type EmploymentType = Database['public']['Enums']['employment_type'];
+
+export default async function JobsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{
+    query?: string;
+    location?: string;
+    type?: string;
+  }>;
+}) {
+  const { locale } = await params;
+  const { query, location, type } = await searchParams;
+  setRequestLocale(locale);
+
+  const t = await getTranslations('jobs');
+  const tCommon = await getTranslations('common');
+
+  const supabase = await createClient();
+
+  // Base query: published jobs with company info
+  let jobsQuery = supabase
+    .from('jobs')
+    .select('*, companies(name, slug, logo_url)')
+    .eq('status', 'published')
+    .order('published_at', { ascending: false });
+
+  if (query) {
+    jobsQuery = jobsQuery.ilike('title', `%${query}%`);
+  }
+  if (location) {
+    jobsQuery = jobsQuery.ilike('location', `%${location}%`);
+  }
+  if (type && ['full_time', 'part_time', 'contract'].includes(type)) {
+    jobsQuery = jobsQuery.eq('employment_type', type as EmploymentType);
+  }
+
+  const { data: jobs } = await jobsQuery;
+  const jobList = jobs ?? [];
+
+  const typeLabels: Record<EmploymentType, string> = {
+    full_time: t('fullTime'),
+    part_time: t('partTime'),
+    contract: t('contract'),
+  };
+
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: '#F7F8FC' }}>
+      {/* Page header */}
+      <div className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+            {t('title')}
+          </h1>
+          <p className="mt-2 text-slate-500">
+            {jobList.length > 0
+              ? `${jobList.length} empleo${jobList.length !== 1 ? 's' : ''} disponible${jobList.length !== 1 ? 's' : ''}`
+              : t('noJobs')}
+          </p>
+
+          {/* Filters */}
+          <div className="mt-6">
+            <JobFilters
+              initialQuery={query}
+              initialLocation={location}
+              initialType={type}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Job list */}
+      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+        {jobList.length === 0 ? (
+          <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-white py-20 text-center">
+            <div
+              className="mx-auto flex h-14 w-14 items-center justify-center rounded-full"
+              style={{ backgroundColor: '#eff4ff' }}
+            >
+              <Briefcase className="h-7 w-7" style={{ color: '#0057FF' }} />
+            </div>
+            <h2 className="mt-4 text-sm font-semibold text-slate-700">
+              {tCommon('noResults')}
+            </h2>
+            <p className="mt-1 text-sm text-slate-400">{t('noJobs')}</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-3">
+            {jobList.map((job) => {
+              // Supabase returns joined relation as object (or null)
+              const company = job.companies as {
+                name: string;
+                slug: string;
+                logo_url: string | null;
+              } | null;
+
+              return (
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  company={company}
+                  typeLabel={typeLabels[job.employment_type]}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

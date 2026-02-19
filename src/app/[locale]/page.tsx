@@ -1,0 +1,179 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { createClient } from '@/lib/supabase/server';
+import { Link } from '@/i18n/navigation';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { ArrowRight, MapPin, Briefcase, Building2 } from 'lucide-react';
+
+/**
+ * Landing page — /[locale]/
+ *
+ * This page lives outside the (public) route group because Next.js does not
+ * allow two pages.tsx at the same URL level (route groups share the parent URL).
+ * Header and Footer are imported directly here so the (public)/layout.tsx is
+ * only needed for nested public routes like /jobs and /companies.
+ *
+ * TODO: Once the old placeholder can be removed, move this into (public)/page.tsx.
+ */
+export default async function LandingPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const t = await getTranslations('landing');
+  const tCommon = await getTranslations('common');
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header user={user} />
+      <main className="flex-1">
+        {/* Hero */}
+        <section
+          className="relative overflow-hidden"
+          style={{
+            background:
+              'linear-gradient(135deg, #f0f5ff 0%, #ffffff 50%, #f8faff 100%)',
+          }}
+        >
+          {/* Decorative grid */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                'linear-gradient(#0057FF 1px, transparent 1px), linear-gradient(to right, #0057FF 1px, transparent 1px)',
+              backgroundSize: '48px 48px',
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Decorative blob */}
+          <div
+            className="pointer-events-none absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full opacity-10 blur-3xl"
+            style={{ backgroundColor: '#0057FF' }}
+            aria-hidden="true"
+          />
+
+          <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+            <div className="max-w-3xl">
+              {/* Eyebrow badge */}
+              <div className="mb-6 flex items-center gap-2">
+                <Badge
+                  className="rounded-full border px-3 py-1 text-xs font-medium"
+                  style={{
+                    borderColor: '#0057FF',
+                    color: '#0057FF',
+                    backgroundColor: '#eff4ff',
+                  }}
+                >
+                  Honduras
+                </Badge>
+              </div>
+
+              {/* Headline */}
+              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                {t('heroTitle')}
+              </h1>
+
+              {/* Sub-headline */}
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:text-xl">
+                {t('heroSubtitle')}
+              </p>
+
+              {/* CTA */}
+              <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-12 gap-2 rounded-lg px-8 text-base font-semibold text-white transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: '#0057FF' }}
+                >
+                  <Link href="/jobs">
+                    {t('ctaButton')}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="ghost"
+                  className="h-12 gap-2 rounded-lg px-6 text-base font-medium text-slate-700 hover:bg-slate-100"
+                >
+                  <Link href="/login">{tCommon('login')}</Link>
+                </Button>
+              </div>
+
+              {/* Trust indicators */}
+              <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+                <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <Briefcase
+                    className="h-4 w-4 shrink-0"
+                    style={{ color: '#0057FF' }}
+                  />
+                  <span>Empleos publicados diariamente</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <Building2
+                    className="h-4 w-4 shrink-0"
+                    style={{ color: '#0057FF' }}
+                  />
+                  <span>Empresas verificadas</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <MapPin
+                    className="h-4 w-4 shrink-0"
+                    style={{ color: '#0057FF' }}
+                  />
+                  <span>Honduras</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured jobs section — empty state placeholder */}
+        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+              {t('featuredJobs')}
+            </h2>
+            <Link
+              href="/jobs"
+              className="flex items-center gap-1 text-sm font-medium transition-colors hover:opacity-80"
+              style={{ color: '#0057FF' }}
+            >
+              {tCommon('viewAll')}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+
+          {/* Empty state */}
+          <div className="mt-8 flex min-h-[200px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 py-16 text-center">
+            <Briefcase className="mx-auto h-10 w-10 text-slate-300" />
+            <p className="mt-4 text-sm font-medium text-slate-500">
+              {tCommon('noResults')}
+            </p>
+            <Button
+              asChild
+              size="sm"
+              className="mt-6 text-white"
+              style={{ backgroundColor: '#0057FF' }}
+            >
+              <Link href="/jobs">{t('ctaButton')}</Link>
+            </Button>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}

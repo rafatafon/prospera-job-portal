@@ -1,0 +1,104 @@
+{
+  "common": {
+    "login": "Iniciar sesion",
+    "logout": "Cerrar sesion",
+    "search": "Buscar",
+    "apply": "Aplicar",
+    "jobs": "Empleos",
+    "companies": "Empresas",
+    "dashboard": "Panel",
+    "loading": "Cargando...",
+    "noResults": "No se encontraron resultados",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "publish": "Publicar",
+    "archive": "Archivar",
+    "edit": "Editar",
+    "viewAll": "Ver todos",
+    "apply_now": "Aplicar ahora",
+    "back": "Volver",
+    "filters": "Filtros",
+    "clearFilters": "Limpiar filtros"
+  },
+  "landing": {
+    "heroTitle": "Encuentra tu proximo empleo en Honduras",
+    "heroSubtitle": "Conectamos talento hondureno con las mejores oportunidades laborales del pais",
+    "ctaButton": "Explorar empleos",
+    "featuredJobs": "Empleos destacados"
+  },
+  "jobs": {
+    "title": "Empleos disponibles",
+    "searchPlaceholder": "Buscar por titulo, empresa o palabra clave...",
+    "filterLocation": "Ubicacion",
+    "filterType": "Tipo de empleo",
+    "allLocations": "Todas las ubicaciones",
+    "allTypes": "Todos los tipos",
+    "fullTime": "Tiempo completo",
+    "partTime": "Medio tiempo",
+    "contract": "Contrato",
+    "postedOn": "Publicado el",
+    "applyNow": "Aplicar ahora",
+    "noJobs": "No hay empleos disponibles en este momento"
+  },
+  "jobDetail": {
+    "description": "Descripcion del puesto",
+    "applyExternal": "Aplicar en sitio externo",
+    "location": "Ubicacion",
+    "type": "Tipo de empleo",
+    "postedDate": "Fecha de publicacion",
+    "company": "Empresa"
+  },
+  "companies": {
+    "title": "Empresas",
+    "viewJobs": "Ver empleos",
+    "noCompanies": "No hay empresas registradas",
+    "website": "Sitio web",
+    "jobCount": "{count, plural, =0 {Sin empleos} one {# empleo} other {# empleos}}"
+  },
+  "login": {
+    "title": "Iniciar sesion",
+    "email": "Correo electronico",
+    "password": "Contrasena",
+    "loginButton": "Iniciar sesion",
+    "signupButton": "Crear cuenta",
+    "noAccount": "No tienes cuenta?",
+    "hasAccount": "Ya tienes cuenta?",
+    "loginError": "Credenciales incorrectas. Intenta de nuevo."
+  },
+  "dashboard": {
+    "title": "Panel de control",
+    "totalJobs": "Total de empleos",
+    "publishedJobs": "Empleos publicados",
+    "draftJobs": "Borradores",
+    "createJob": "Crear empleo",
+    "recentActivity": "Actividad reciente"
+  },
+  "dashboardJobs": {
+    "title": "Gestionar empleos",
+    "newJob": "Nuevo empleo",
+    "status": "Estado",
+    "actions": "Acciones",
+    "draft": "Borrador",
+    "published": "Publicado",
+    "archived": "Archivado",
+    "confirmPublish": "Estas seguro de que deseas publicar este empleo?",
+    "confirmArchive": "Estas seguro de que deseas archivar este empleo?",
+    "confirmDelete": "Estas seguro de que deseas eliminar este empleo? Esta accion no se puede deshacer.",
+    "noJobs": "Aun no has creado ningun empleo"
+  },
+  "jobForm": {
+    "title": "Crear nuevo empleo",
+    "titleField": "Titulo del puesto",
+    "titlePlaceholder": "Ej: Desarrollador Full Stack",
+    "descriptionField": "Descripcion",
+    "descriptionPlaceholder": "Describe las responsabilidades, requisitos y beneficios del puesto...",
+    "locationField": "Ubicacion",
+    "locationPlaceholder": "Ej: Tegucigalpa, Honduras",
+    "employmentType": "Tipo de empleo",
+    "applyUrl": "URL para aplicar",
+    "applyUrlPlaceholder": "https://ejemplo.com/aplicar",
+    "saveDraft": "Guardar como borrador",
+    "creating": "Creando..."
+  }
+}
