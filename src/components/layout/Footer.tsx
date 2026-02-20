@@ -21,7 +21,7 @@ export async function Footer() {
         <div className="flex items-center gap-4">
           {/* Facebook */}
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/ProsperaHn"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
@@ -33,7 +33,7 @@ export async function Footer() {
           </a>
           {/* Instagram */}
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/prosperahn"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
@@ -45,7 +45,7 @@ export async function Footer() {
           </a>
           {/* X (Twitter) */}
           <a
-            href="https://x.com"
+            href="https://https://x.com/prosperaglobal.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
@@ -57,7 +57,7 @@ export async function Footer() {
           </a>
           {/* YouTube */}
           <a
-            href="https://youtube.com"
+            href="https://https://www.youtube.com/@prosperahn255.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
@@ -69,7 +69,7 @@ export async function Footer() {
           </a>
           {/* Discord */}
           <a
-            href="https://discord.com"
+            href="https://discord.gg/FKSGnQWxXps"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
