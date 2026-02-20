@@ -7,19 +7,19 @@ type EmploymentType = Database['public']['Enums']['employment_type'];
 
 /** Color accent per employment type for the card's left border on hover */
 const TYPE_ACCENT: Record<EmploymentType, string> = {
-  full_time: '#0057FF',
+  full_time: '#E8501C',
   part_time: '#0d9488',
   contract: '#7c3aed',
 };
 
 const TYPE_BG: Record<EmploymentType, string> = {
-  full_time: '#eff4ff',
+  full_time: '#FFF5F0',
   part_time: '#f0fdfa',
   contract: '#f5f3ff',
 };
 
 const TYPE_TEXT: Record<EmploymentType, string> = {
-  full_time: '#1e40af',
+  full_time: '#C2410C',
   part_time: '#0f766e',
   contract: '#6d28d9',
 };
@@ -100,7 +100,7 @@ export function JobCard({ job, company, typeLabel }: JobCardProps) {
             </p>
 
             {/* Job title */}
-            <h3 className="mt-0.5 text-sm font-semibold leading-snug text-slate-900 group-hover:text-[#0057FF] transition-colors">
+            <h3 className="mt-0.5 text-sm font-semibold leading-snug text-slate-900 group-hover:text-[#E8501C] transition-colors">
               {job.title}
             </h3>
 

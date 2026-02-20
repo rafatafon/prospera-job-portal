@@ -42,7 +42,7 @@ export default async function LandingPage({
           className="relative overflow-hidden"
           style={{
             background:
-              'linear-gradient(135deg, #f0f5ff 0%, #ffffff 50%, #f8faff 100%)',
+              'linear-gradient(135deg, #FFF8F5 0%, #ffffff 50%, #FFFBF8 100%)',
           }}
         >
           {/* Decorative grid */}
@@ -50,7 +50,7 @@ export default async function LandingPage({
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage:
-                'linear-gradient(#0057FF 1px, transparent 1px), linear-gradient(to right, #0057FF 1px, transparent 1px)',
+                'linear-gradient(#E8501C 1px, transparent 1px), linear-gradient(to right, #E8501C 1px, transparent 1px)',
               backgroundSize: '48px 48px',
             }}
             aria-hidden="true"
@@ -59,7 +59,7 @@ export default async function LandingPage({
           {/* Decorative blob */}
           <div
             className="pointer-events-none absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full opacity-10 blur-3xl"
-            style={{ backgroundColor: '#0057FF' }}
+            style={{ backgroundColor: '#E8501C' }}
             aria-hidden="true"
           />
 
@@ -70,9 +70,9 @@ export default async function LandingPage({
                 <Badge
                   className="rounded-full border px-3 py-1 text-xs font-medium"
                   style={{
-                    borderColor: '#0057FF',
-                    color: '#0057FF',
-                    backgroundColor: '#eff4ff',
+                    borderColor: '#E8501C',
+                    color: '#E8501C',
+                    backgroundColor: '#FFF5F0',
                   }}
                 >
                   Honduras
@@ -95,7 +95,7 @@ export default async function LandingPage({
                   asChild
                   size="lg"
                   className="h-12 gap-2 rounded-lg px-8 text-base font-semibold text-white transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: '#0057FF' }}
+                  style={{ backgroundColor: '#E8501C' }}
                 >
                   <Link href="/jobs">
                     {t('ctaButton')}
@@ -117,21 +117,21 @@ export default async function LandingPage({
                 <div className="flex items-center gap-2 text-sm text-slate-500">
                   <Briefcase
                     className="h-4 w-4 shrink-0"
-                    style={{ color: '#0057FF' }}
+                    style={{ color: '#E8501C' }}
                   />
                   <span>Empleos publicados diariamente</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-slate-500">
                   <Building2
                     className="h-4 w-4 shrink-0"
-                    style={{ color: '#0057FF' }}
+                    style={{ color: '#E8501C' }}
                   />
                   <span>Empresas verificadas</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-slate-500">
                   <MapPin
                     className="h-4 w-4 shrink-0"
-                    style={{ color: '#0057FF' }}
+                    style={{ color: '#E8501C' }}
                   />
                   <span>Honduras</span>
                 </div>
@@ -149,7 +149,7 @@ export default async function LandingPage({
             <Link
               href="/jobs"
               className="flex items-center gap-1 text-sm font-medium transition-colors hover:opacity-80"
-              style={{ color: '#0057FF' }}
+              style={{ color: '#E8501C' }}
             >
               {tCommon('viewAll')}
               <ArrowRight className="h-3.5 w-3.5" />
@@ -166,7 +166,7 @@ export default async function LandingPage({
               asChild
               size="sm"
               className="mt-6 text-white"
-              style={{ backgroundColor: '#0057FF' }}
+              style={{ backgroundColor: '#E8501C' }}
             >
               <Link href="/jobs">{t('ctaButton')}</Link>
             </Button>

@@ -25,13 +25,13 @@ function formatDate(dateStr: string) {
 }
 
 const TYPE_BG: Record<EmploymentType, string> = {
-  full_time: '#eff4ff',
+  full_time: '#FFF5F0',
   part_time: '#f0fdfa',
   contract: '#f5f3ff',
 };
 
 const TYPE_TEXT: Record<EmploymentType, string> = {
-  full_time: '#1e40af',
+  full_time: '#C2410C',
   part_time: '#0f766e',
   contract: '#6d28d9',
 };
@@ -73,7 +73,7 @@ export default async function JobDetailPage({
   const typeText = TYPE_TEXT[job.employment_type];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F7F8FC' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
         {/* Back link */}
         <Link
@@ -92,7 +92,7 @@ export default async function JobDetailPage({
               {/* Brand top bar */}
               <div
                 className="h-1.5 w-full"
-                style={{ backgroundColor: '#0057FF' }}
+                style={{ backgroundColor: '#E8501C' }}
                 aria-hidden="true"
               />
               <div className="p-6">
@@ -115,7 +115,7 @@ export default async function JobDetailPage({
                     {company && (
                       <Link
                         href={`/companies/${company.slug}`}
-                        className="text-sm font-medium text-slate-600 transition-colors hover:text-[#0057FF]"
+                        className="text-sm font-medium text-slate-600 transition-colors hover:text-[#E8501C]"
                       >
                         {company.name}
                       </Link>
@@ -185,7 +185,7 @@ export default async function JobDetailPage({
                 <Button
                   asChild
                   className="mt-4 w-full gap-2 text-white"
-                  style={{ backgroundColor: '#0057FF' }}
+                  style={{ backgroundColor: '#E8501C' }}
                 >
                   <a
                     href={job.apply_url}
@@ -259,8 +259,8 @@ export default async function JobDetailPage({
                       <dd className="mt-0.5">
                         <Link
                           href={`/companies/${company.slug}`}
-                          className="text-sm font-medium transition-colors hover:text-[#0057FF]"
-                          style={{ color: '#0057FF' }}
+                          className="text-sm font-medium transition-colors hover:text-[#E8501C]"
+                          style={{ color: '#E8501C' }}
                         >
                           {company.name}
                         </Link>

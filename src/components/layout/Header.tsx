@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import { MobileMenu } from '@/components/layout/MobileMenu';
@@ -17,13 +18,15 @@ export async function Header({ user }: HeaderProps) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/prospera-icon.png"
+            alt="Prospera"
+            width={24}
+            height={24}
+            className="h-6 w-6"
+          />
           <span className="text-xl font-bold tracking-tight text-slate-900">
             Prospera
-            <span
-              className="ml-0.5 inline-block h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: '#0057FF' }}
-              aria-hidden="true"
-            />
           </span>
         </Link>
 
@@ -47,8 +50,8 @@ export async function Header({ user }: HeaderProps) {
             <Button
               asChild
               size="sm"
-              style={{ backgroundColor: '#0057FF' }}
-              className="text-white hover:opacity-90"
+              style={{ backgroundColor: '#E8501C' }}
+              className="rounded-full text-white hover:opacity-90"
             >
               <Link href="/dashboard">{t('dashboard')}</Link>
             </Button>
@@ -56,8 +59,8 @@ export async function Header({ user }: HeaderProps) {
             <Button
               asChild
               size="sm"
-              style={{ backgroundColor: '#0057FF' }}
-              className="text-white hover:opacity-90"
+              style={{ backgroundColor: '#E8501C' }}
+              className="rounded-full text-white hover:opacity-90"
             >
               <Link href="/login">{t('login')}</Link>
             </Button>

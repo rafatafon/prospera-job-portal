@@ -3,6 +3,7 @@
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
+import { Globe } from 'lucide-react';
 
 export function LocaleSwitcher() {
   const locale = useLocale();
@@ -16,13 +17,14 @@ export function LocaleSwitcher() {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="sm"
       onClick={handleSwitch}
-      className="h-8 px-2.5 text-xs font-semibold tracking-widest text-slate-500 hover:text-slate-900"
+      className="h-8 gap-1.5 rounded-full border-slate-200 px-3 text-xs font-medium text-slate-600 hover:text-slate-900"
       aria-label={`Switch to ${locale === 'es' ? 'English' : 'Español'}`}
     >
-      {locale === 'es' ? 'EN' : 'ES'}
+      <Globe className="h-3.5 w-3.5" />
+      {locale === 'es' ? 'English' : 'Español'}
     </Button>
   );
 }

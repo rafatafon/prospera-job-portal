@@ -78,7 +78,7 @@ export function JobForm() {
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white focus-visible:ring-1"
                 style={
-                  { '--tw-ring-color': '#0057FF' } as React.CSSProperties
+                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
                 }
               />
             </div>
@@ -104,7 +104,7 @@ export function JobForm() {
                 rows={8}
                 className="resize-y border-slate-200 bg-white focus-visible:ring-1 leading-relaxed"
                 style={
-                  { '--tw-ring-color': '#0057FF' } as React.CSSProperties
+                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
                 }
               />
             </div>
@@ -126,7 +126,7 @@ export function JobForm() {
                   disabled={isPending}
                   className="h-10 border-slate-200 bg-white focus-visible:ring-1"
                   style={
-                    { '--tw-ring-color': '#0057FF' } as React.CSSProperties
+                    { '--tw-ring-color': '#E8501C' } as React.CSSProperties
                   }
                 />
               </div>
@@ -183,7 +183,7 @@ export function JobForm() {
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white focus-visible:ring-1"
                 style={
-                  { '--tw-ring-color': '#0057FF' } as React.CSSProperties
+                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
                 }
               />
               <p className="text-xs text-slate-400">
@@ -208,7 +208,7 @@ export function JobForm() {
               type="submit"
               disabled={isPending}
               className="gap-2 text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-              style={{ backgroundColor: '#0057FF' }}
+              style={{ backgroundColor: '#E8501C' }}
             >
               {isPending ? (
                 <>

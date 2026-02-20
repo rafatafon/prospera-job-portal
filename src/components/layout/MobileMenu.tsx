@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -36,13 +37,19 @@ export function MobileMenu({ user }: MobileMenuProps) {
       </SheetTrigger>
       <SheetContent side="right" className="w-72">
         <SheetHeader>
-          <SheetTitle className="text-left text-lg font-bold text-slate-900">
-            Prospera
-            <span
-              className="ml-0.5 inline-block h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: '#0057FF' }}
-              aria-hidden="true"
-            />
+          <SheetTitle className="text-left">
+            <span className="flex items-center gap-2">
+              <Image
+                src="/prospera-icon.png"
+                alt="Prospera"
+                width={20}
+                height={20}
+                className="h-5 w-5"
+              />
+              <span className="text-lg font-bold text-slate-900">
+                Prospera
+              </span>
+            </span>
           </SheetTitle>
         </SheetHeader>
         <nav className="mt-6 flex flex-col gap-1" aria-label="Mobile navigation">
@@ -61,8 +68,8 @@ export function MobileMenu({ user }: MobileMenuProps) {
           {user ? (
             <Button
               asChild
-              className="w-full text-white"
-              style={{ backgroundColor: '#0057FF' }}
+              className="w-full rounded-full text-white"
+              style={{ backgroundColor: '#E8501C' }}
               onClick={() => setOpen(false)}
             >
               <Link href="/dashboard">{t('dashboard')}</Link>
@@ -70,8 +77,8 @@ export function MobileMenu({ user }: MobileMenuProps) {
           ) : (
             <Button
               asChild
-              className="w-full text-white"
-              style={{ backgroundColor: '#0057FF' }}
+              className="w-full rounded-full text-white"
+              style={{ backgroundColor: '#E8501C' }}
               onClick={() => setOpen(false)}
             >
               <Link href="/login">{t('login')}</Link>

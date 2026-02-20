@@ -53,7 +53,7 @@ export default async function CompanyProfilePage({
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F7F8FC' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
         {/* Back link */}
         <Link
@@ -69,7 +69,7 @@ export default async function CompanyProfilePage({
           {/* Top accent bar */}
           <div
             className="h-2 w-full"
-            style={{ backgroundColor: '#0057FF' }}
+            style={{ backgroundColor: '#E8501C' }}
             aria-hidden="true"
           />
 
@@ -112,7 +112,7 @@ export default async function CompanyProfilePage({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-1.5 text-sm font-medium transition-colors hover:opacity-80"
-                      style={{ color: '#0057FF' }}
+                      style={{ color: '#E8501C' }}
                     >
                       <Globe className="h-4 w-4" />
                       {t('website')}
@@ -147,9 +147,9 @@ export default async function CompanyProfilePage({
             <div className="flex min-h-[200px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-white py-16 text-center">
               <div
                 className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
-                style={{ backgroundColor: '#eff4ff' }}
+                style={{ backgroundColor: '#FFF5F0' }}
               >
-                <Briefcase className="h-6 w-6" style={{ color: '#0057FF' }} />
+                <Briefcase className="h-6 w-6" style={{ color: '#E8501C' }} />
               </div>
               <p className="mt-3 text-sm text-slate-500">
                 Esta empresa no tiene empleos activos en este momento.

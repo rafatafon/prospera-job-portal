@@ -74,7 +74,7 @@ export function JobFilters({
           defaultValue={initialQuery}
           onChange={handleQueryChange}
           className="h-10 border-slate-200 bg-white pl-9 focus-visible:ring-1"
-          style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
+          style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
         />
       </div>
 

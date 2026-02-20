@@ -81,7 +81,7 @@ export function LoginForm() {
             autoComplete="email"
             placeholder="you@company.com"
             className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-            style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -101,7 +101,7 @@ export function LoginForm() {
             autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
             placeholder="••••••••"
             className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-            style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -118,7 +118,7 @@ export function LoginForm() {
           type="submit"
           disabled={isPending}
           className="h-10 w-full font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-          style={{ backgroundColor: '#0057FF' }}
+          style={{ backgroundColor: '#E8501C' }}
         >
           {isPending
             ? tCommon('loading')

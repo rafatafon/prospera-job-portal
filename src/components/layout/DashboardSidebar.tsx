@@ -2,6 +2,7 @@
 
 import { usePathname } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { LayoutDashboard, Briefcase, PlusCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -56,14 +57,16 @@ export function DashboardSidebar() {
     >
       {/* Logo area */}
       <div className="flex h-16 shrink-0 items-center border-b border-white/10 px-6">
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/prospera-icon.png"
+            alt="Prospera"
+            width={20}
+            height={20}
+            className="h-5 w-5"
+          />
           <span className="text-lg font-bold tracking-tight text-white">
             Prospera
-            <span
-              className="ml-0.5 inline-block h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: '#4D8AFF' }}
-              aria-hidden="true"
-            />
           </span>
         </Link>
       </div>

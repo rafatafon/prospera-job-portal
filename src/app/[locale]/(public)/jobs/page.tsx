@@ -54,7 +54,7 @@ export default async function JobsPage({
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F7F8FC' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
       {/* Page header */}
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -84,9 +84,9 @@ export default async function JobsPage({
           <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-white py-20 text-center">
             <div
               className="mx-auto flex h-14 w-14 items-center justify-center rounded-full"
-              style={{ backgroundColor: '#eff4ff' }}
+              style={{ backgroundColor: '#FFF5F0' }}
             >
-              <Briefcase className="h-7 w-7" style={{ color: '#0057FF' }} />
+              <Briefcase className="h-7 w-7" style={{ color: '#E8501C' }} />
             </div>
             <h2 className="mt-4 text-sm font-semibold text-slate-700">
               {tCommon('noResults')}
