@@ -82,17 +82,14 @@ export async function Footer() {
         </div>
       </div>
 
-      {/* Giant watermark text */}
-      <div className="pointer-events-none select-none overflow-hidden pb-4" aria-hidden="true">
-        <p
-          className="text-center font-bold uppercase leading-none tracking-tighter"
-          style={{
-            fontSize: 'clamp(6rem, 15vw, 14rem)',
-            color: '#f3f4f6',
-          }}
-        >
-          PROSPERA
-        </p>
+      {/* Giant wordmark SVG */}
+      <div className="pointer-events-none select-none overflow-hidden" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/prospera-wordmark.c66c5ce2.svg"
+          alt=""
+          className="w-full"
+        />
       </div>
     </footer>
   );

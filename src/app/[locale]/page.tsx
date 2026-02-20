@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { ArrowRight, MapPin, Briefcase, Building2 } from 'lucide-react';
+import { ArrowRight, Briefcase } from 'lucide-react';
 
 /**
  * Landing page — /[locale]/
@@ -112,30 +112,6 @@ export default async function LandingPage({
                 </Button>
               </div>
 
-              {/* Trust indicators */}
-              <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-                <div className="flex items-center gap-2 text-sm text-slate-500">
-                  <Briefcase
-                    className="h-4 w-4 shrink-0"
-                    style={{ color: '#E8501C' }}
-                  />
-                  <span>Empleos publicados diariamente</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-500">
-                  <Building2
-                    className="h-4 w-4 shrink-0"
-                    style={{ color: '#E8501C' }}
-                  />
-                  <span>Empresas verificadas</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-500">
-                  <MapPin
-                    className="h-4 w-4 shrink-0"
-                    style={{ color: '#E8501C' }}
-                  />
-                  <span>Honduras</span>
-                </div>
-              </div>
             </div>
           </div>
         </section>
