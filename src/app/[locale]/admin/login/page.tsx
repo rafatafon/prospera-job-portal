@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
+import { Link } from '@/i18n/navigation';
 import { LoginForm } from '@/components/auth/LoginForm';
 
 export default async function AdminLoginPage({
@@ -11,45 +12,97 @@ export default async function AdminLoginPage({
   setRequestLocale(locale);
 
   const t = await getTranslations('admin');
+  const tLanding = await getTranslations('landing');
 
   return (
-    <div
-      className="flex min-h-screen flex-col items-center justify-center px-4"
-      style={{
-        background:
-          'linear-gradient(135deg, #0A1628 0%, #0f2040 50%, #0A1628 100%)',
-      }}
-    >
-      {/* Decorative orange blob — subtle on dark */}
-      <div
-        className="pointer-events-none fixed -right-48 -top-48 h-[600px] w-[600px] rounded-full opacity-5 blur-3xl"
-        style={{ backgroundColor: '#E8501C' }}
-        aria-hidden="true"
-      />
+    <div className="flex min-h-screen flex-col lg:flex-row">
+      {/* Left — hero image panel */}
+      <div className="relative hidden h-48 shrink-0 overflow-hidden sm:block sm:h-56 lg:h-auto lg:w-1/2">
+        <Image
+          src="/duna-tower.avif"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+        />
 
-      {/* Card */}
-      <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-white/5 px-8 py-10 shadow-2xl backdrop-blur-sm">
-        {/* Logo header */}
-        <div className="mb-8 flex flex-col items-center text-center">
-          <div
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20"
-            style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
-          >
-            <Image
-              src="/prospera-icon.svg"
-              alt="Prospera"
-              width={28}
-              height={28}
-              className="h-7 w-7 brightness-0 invert"
-            />
+        {/* Gradient overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.05) 100%)',
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Logo + tagline overlay */}
+        <div className="absolute inset-0 flex flex-col justify-between p-6 lg:p-10">
+          {/* Top — logo */}
+          <Link href="/" className="flex items-center gap-2.5">
+            <div
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+            >
+              <Image
+                src="/prospera-icon.svg"
+                alt="Prospera"
+                width={20}
+                height={20}
+                className="h-5 w-5 brightness-0 invert"
+              />
+            </div>
+            <span className="text-sm font-semibold text-white">Prospera</span>
+          </Link>
+
+          {/* Bottom — tagline (lg only) */}
+          <div className="hidden lg:block">
+            <h2 className="max-w-md text-3xl font-bold leading-tight text-white">
+              {tLanding('heroTitle')}
+            </h2>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
+              {tLanding('heroSubtitle')}
+            </p>
           </div>
-          <span className="mt-3 text-2xl font-bold tracking-tight text-white">
-            {t('loginTitle')}
-          </span>
-          <p className="mt-1.5 text-sm text-white/60">{t('loginSubtitle')}</p>
         </div>
+      </div>
 
-        <LoginForm variant="admin" />
+      {/* Right — dark form panel */}
+      <div
+        className="flex flex-1 flex-col items-center justify-center px-6 py-12 sm:px-10 lg:px-16"
+        style={{
+          background:
+            'linear-gradient(135deg, #0A1628 0%, #0f2040 50%, #0A1628 100%)',
+        }}
+      >
+        <div className="w-full max-w-sm">
+          {/* Mobile logo (visible when image is hidden on xs) */}
+          <div className="mb-8 flex items-center gap-2.5 sm:hidden">
+            <Link href="/" className="flex items-center gap-2.5">
+              <Image
+                src="/prospera-icon.svg"
+                alt="Prospera"
+                width={28}
+                height={28}
+                className="h-7 w-7 brightness-0 invert"
+              />
+              <span className="text-sm font-semibold text-white">
+                Prospera
+              </span>
+            </Link>
+          </div>
+
+          {/* Heading */}
+          <h1 className="text-2xl font-bold tracking-tight text-white">
+            {t('loginTitle')}
+          </h1>
+          <p className="mt-2 text-sm text-white/60">{t('loginSubtitle')}</p>
+
+          {/* Form */}
+          <div className="mt-8">
+            <LoginForm variant="admin" dark />
+          </div>
+        </div>
       </div>
     </div>
   );

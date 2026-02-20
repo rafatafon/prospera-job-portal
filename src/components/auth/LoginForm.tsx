@@ -12,9 +12,10 @@ import { AlertCircle } from 'lucide-react';
 
 interface LoginFormProps {
   variant?: 'company' | 'admin';
+  dark?: boolean;
 }
 
-export function LoginForm({ variant = 'company' }: LoginFormProps) {
+export function LoginForm({ variant = 'company', dark = false }: LoginFormProps) {
   const t = useTranslations('login');
   const tCommon = useTranslations('common');
   const tAdmin = useTranslations('admin');
@@ -43,11 +44,19 @@ export function LoginForm({ variant = 'company' }: LoginFormProps) {
     });
   }
 
+  const labelColor = dark ? 'text-white/80' : 'text-slate-700';
+  const inputClasses = dark
+    ? 'h-11 rounded-lg border-white/10 bg-white/10 text-white placeholder:text-white/40 focus-visible:ring-1'
+    : 'h-11 rounded-lg border-slate-200 bg-white focus-visible:ring-1';
+  const backLinkColor = dark
+    ? 'font-medium text-white/50 transition-colors hover:text-white'
+    : 'font-medium text-slate-500 transition-colors hover:text-slate-900';
+
   return (
     <div className="w-full">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+          <Label htmlFor="email" className={`text-sm font-medium ${labelColor}`}>
             {t('email')}
           </Label>
           <Input
@@ -57,17 +66,14 @@ export function LoginForm({ variant = 'company' }: LoginFormProps) {
             required
             autoComplete="email"
             placeholder="you@company.com"
-            className="h-10 border-slate-200 bg-white focus-visible:ring-1"
+            className={inputClasses}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
 
         <div className="space-y-1.5">
-          <Label
-            htmlFor="password"
-            className="text-sm font-medium text-slate-700"
-          >
+          <Label htmlFor="password" className={`text-sm font-medium ${labelColor}`}>
             {t('password')}
           </Label>
           <Input
@@ -77,7 +83,7 @@ export function LoginForm({ variant = 'company' }: LoginFormProps) {
             required
             autoComplete="current-password"
             placeholder="••••••••"
-            className="h-10 border-slate-200 bg-white focus-visible:ring-1"
+            className={inputClasses}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
           />
@@ -85,7 +91,7 @@ export function LoginForm({ variant = 'company' }: LoginFormProps) {
 
         {/* Error message */}
         {error && (
-          <div className="flex items-center gap-2 rounded-lg border border-red-100 bg-red-50 px-3 py-2.5 text-sm text-red-600">
+          <div className={`flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm ${dark ? 'border border-red-400/30 bg-red-500/20 text-red-300' : 'border border-red-100 bg-red-50 text-red-600'}`}>
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -94,18 +100,15 @@ export function LoginForm({ variant = 'company' }: LoginFormProps) {
         <Button
           type="submit"
           disabled={isPending}
-          className="h-10 w-full font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="h-11 w-full rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           style={{ backgroundColor: '#E8501C' }}
         >
           {isPending ? tCommon('loading') : t('loginButton')}
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-xs text-slate-500">
-        <Link
-          href="/"
-          className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900"
-        >
+      <p className="mt-8 text-center text-xs">
+        <Link href="/" className={backLinkColor}>
           &larr; {tCommon('back')}
         </Link>
       </p>
