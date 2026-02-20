@@ -23,7 +23,9 @@
     "filters": "Filters",
     "clearFilters": "Clear filters",
     "close": "Close",
-    "showMore": "Show more"
+    "showMore": "Show more",
+    "companyLogin": "Company Login",
+    "adminLogin": "Admin"
   },
   "landing": {
     "heroTitle": "Find your next job in the companies that form part of Prospera",
@@ -61,14 +63,13 @@
     "jobCount": "{count, plural, =0 {No jobs} one {# job} other {# jobs}}"
   },
   "login": {
-    "title": "Log in",
+    "title": "Company Portal",
+    "subtitle": "Sign in to manage your job postings",
     "email": "Email",
     "password": "Password",
     "loginButton": "Log in",
-    "signupButton": "Sign up",
-    "noAccount": "Don't have an account?",
-    "hasAccount": "Already have an account?",
-    "loginError": "Invalid credentials. Please try again."
+    "loginError": "Invalid credentials. Please try again.",
+    "companyOnly": "This login is for company accounts only."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -104,5 +105,11 @@
     "applyUrlPlaceholder": "https://example.com/apply",
     "saveDraft": "Save as draft",
     "creating": "Creating..."
+  },
+  "admin": {
+    "loginTitle": "Admin Login",
+    "loginSubtitle": "Sign in to the administration panel",
+    "title": "Administration",
+    "accessDenied": "Access denied. Admin credentials required."
   }
 }

@@ -103,7 +103,7 @@ export function MobileMenu({ user }: MobileMenuProps) {
               onClick={() => setOpen(false)}
               className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
             >
-              {user ? t('dashboard') : t('login')}
+              {user ? t('dashboard') : t('companyLogin')}
             </Link>
           </div>
         </div>

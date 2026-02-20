@@ -71,10 +71,10 @@ export function JobCard({ job, company, typeLabel }: JobCardProps) {
           aria-hidden="true"
         />
 
-        <div className="flex items-start gap-4 p-5">
+        <div className="flex items-start gap-3 p-4 sm:gap-4 sm:p-5">
           {/* Company logo */}
           <div
-            className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50"
+            className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50 sm:h-12 sm:w-12"
             aria-hidden="true"
           >
             {company?.logo_url ? (
@@ -86,7 +86,7 @@ export function JobCard({ job, company, typeLabel }: JobCardProps) {
                 className="h-full w-full object-contain"
               />
             ) : (
-              <span className="text-base font-bold text-slate-400">
+              <span className="text-sm font-bold text-slate-400 sm:text-base">
                 {(company?.name ?? 'E').charAt(0).toUpperCase()}
               </span>
             )}
@@ -95,7 +95,7 @@ export function JobCard({ job, company, typeLabel }: JobCardProps) {
           {/* Content */}
           <div className="min-w-0 flex-1">
             {/* Company name */}
-            <p className="text-xs font-medium text-slate-500">
+            <p className="truncate text-xs font-medium text-slate-500">
               {company?.name ?? ''}
             </p>
 
@@ -105,28 +105,25 @@ export function JobCard({ job, company, typeLabel }: JobCardProps) {
             </h3>
 
             {/* Meta row */}
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
               {job.location && (
                 <span className="flex items-center gap-1 text-xs text-slate-400">
-                  <MapPin className="h-3 w-3" />
-                  {job.location}
+                  <MapPin className="h-3 w-3 shrink-0" />
+                  <span className="truncate">{job.location}</span>
                 </span>
               )}
               <span className="flex items-center gap-1 text-xs text-slate-400">
-                <Clock className="h-3 w-3" />
+                <Clock className="h-3 w-3 shrink-0" />
                 {formatRelativeDate(job.published_at ?? job.created_at)}
               </span>
+              {/* Employment type badge */}
+              <span
+                className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+                style={{ backgroundColor: typeBg, color: typeText }}
+              >
+                {typeLabel}
+              </span>
             </div>
-          </div>
-
-          {/* Employment type badge — right aligned */}
-          <div className="shrink-0 self-start">
-            <span
-              className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
-              style={{ backgroundColor: typeBg, color: typeText }}
-            >
-              {typeLabel}
-            </span>
           </div>
         </div>
       </article>

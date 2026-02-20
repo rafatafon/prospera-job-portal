@@ -34,7 +34,7 @@ export default async function LandingPage({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header user={user} />
+      <Header user={user} showLogin={false} />
       <main className="flex-1">
         {/* Hero */}
         <section
@@ -87,14 +87,6 @@ export default async function LandingPage({
                     {t('ctaButton')}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="ghost"
-                  className="h-12 gap-2 rounded-lg px-6 text-base font-medium text-slate-700 hover:bg-slate-100"
-                >
-                  <Link href="/login">{tCommon('login')}</Link>
                 </Button>
               </div>
 

@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 
-export async function login(
+export async function adminLogin(
   locale: string,
   formData: FormData,
 ): Promise<{ error: string } | void> {
@@ -21,8 +21,7 @@ export async function login(
     return { error: error.message };
   }
 
-  // Fetch the user's profile to check their role.
-  // Only company and admin users are allowed to log in here.
+  // Fetch the user's profile to verify admin role.
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -37,14 +36,12 @@ export async function login(
     .eq('id', user.id)
     .single();
 
-  const role = profile?.role;
-
-  if (role !== 'company' && role !== 'admin') {
-    // Sign out users who don't have the required role
+  if (profile?.role !== 'admin') {
+    // Sign out non-admin users who attempted to use the admin login
     await supabase.auth.signOut();
-    return { error: 'company_only' };
+    return { error: 'access_denied' };
   }
 
   revalidatePath('/', 'layout');
-  redirect(`/${locale}/dashboard`);
+  redirect(`/${locale}/admin`);
 }

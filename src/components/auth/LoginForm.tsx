@@ -6,17 +6,20 @@ import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { login, signup } from '@/app/[locale]/login/actions';
+import { login } from '@/app/[locale]/login/actions';
+import { adminLogin } from '@/app/[locale]/admin/login/actions';
 import { AlertCircle } from 'lucide-react';
 
-type AuthMode = 'login' | 'signup';
+interface LoginFormProps {
+  variant?: 'company' | 'admin';
+}
 
-export function LoginForm() {
+export function LoginForm({ variant = 'company' }: LoginFormProps) {
   const t = useTranslations('login');
   const tCommon = useTranslations('common');
+  const tAdmin = useTranslations('admin');
   const locale = useLocale();
 
-  const [mode, setMode] = useState<AuthMode>('login');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -26,48 +29,22 @@ export function LoginForm() {
     const formData = new FormData(event.currentTarget);
 
     startTransition(async () => {
-      const action = mode === 'login' ? login : signup;
+      const action = variant === 'admin' ? adminLogin : login;
       const result = await action(locale, formData);
       if (result?.error) {
-        setError(t('loginError'));
+        if (result.error === 'company_only') {
+          setError(t('companyOnly'));
+        } else if (result.error === 'access_denied') {
+          setError(tAdmin('accessDenied'));
+        } else {
+          setError(t('loginError'));
+        }
       }
     });
   }
 
   return (
     <div className="w-full">
-      {/* Mode toggle */}
-      <div className="mb-6 flex rounded-lg bg-slate-100 p-1">
-        <button
-          type="button"
-          onClick={() => {
-            setMode('login');
-            setError(null);
-          }}
-          className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all ${
-            mode === 'login'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-500 hover:text-slate-700'
-          }`}
-        >
-          {t('loginButton')}
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setMode('signup');
-            setError(null);
-          }}
-          className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all ${
-            mode === 'signup'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-500 hover:text-slate-700'
-          }`}
-        >
-          {t('signupButton')}
-        </button>
-      </div>
-
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
           <Label htmlFor="email" className="text-sm font-medium text-slate-700">
@@ -98,7 +75,7 @@ export function LoginForm() {
             name="password"
             type="password"
             required
-            autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+            autoComplete="current-password"
             placeholder="••••••••"
             className="h-10 border-slate-200 bg-white focus-visible:ring-1"
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
@@ -120,11 +97,7 @@ export function LoginForm() {
           className="h-10 w-full font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           style={{ backgroundColor: '#E8501C' }}
         >
-          {isPending
-            ? tCommon('loading')
-            : mode === 'login'
-              ? t('loginButton')
-              : t('signupButton')}
+          {isPending ? tCommon('loading') : t('loginButton')}
         </Button>
       </form>
 

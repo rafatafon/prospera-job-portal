@@ -1,7 +1,10 @@
 import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
+import { Link } from '@/i18n/navigation';
+import { getTranslations } from 'next-intl/server';
 
 export async function Footer() {
   const currentYear = new Date().getFullYear();
+  const t = await getTranslations('common');
 
   return (
     <footer className="relative overflow-hidden border-t border-slate-200 bg-white">
@@ -12,10 +15,18 @@ export async function Footer() {
           <LocaleSwitcher />
         </div>
 
-        {/* Center: copyright */}
-        <p className="text-xs text-slate-400">
-          &copy; {currentYear} Prospera. Honduras.
-        </p>
+        {/* Center: copyright + admin link */}
+        <div className="flex items-center gap-3">
+          <p className="text-xs text-slate-400">
+            &copy; {currentYear} Prospera. Honduras.
+          </p>
+          <Link
+            href="/admin/login"
+            className="text-xs text-slate-300 transition-colors hover:text-slate-500"
+          >
+            {t('adminLogin')}
+          </Link>
+        </div>
 
         {/* Right: social icons */}
         <div className="flex items-center gap-4">

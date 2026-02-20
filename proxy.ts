@@ -5,41 +5,73 @@ import { updateSession } from '@/lib/supabase/middleware';
 
 const intlMiddleware = createMiddleware(routing);
 
-/** Routes that require an authenticated user (checked after stripping locale prefix). */
-const PROTECTED_PATHS = ['/dashboard', '/admin'];
+/** Company dashboard routes — require authenticated company/admin user. */
+const COMPANY_PATHS = ['/dashboard'];
 
-function isProtectedRoute(pathname: string): boolean {
-  // Strip the locale prefix (e.g. /es/dashboard -> /dashboard)
-  const pathWithoutLocale = pathname.replace(
-    /^\/(es|en)(\/|$)/,
-    '/',
+/** Admin routes — require authenticated admin user. */
+const ADMIN_PATHS = ['/admin'];
+
+/** Admin sub-paths that are publicly accessible (no auth required). */
+const ADMIN_PUBLIC_PATHS = ['/admin/login'];
+
+/**
+ * Extract the path without the locale prefix.
+ * e.g. /es/dashboard -> /dashboard, /en/admin/login -> /admin/login
+ */
+function stripLocale(pathname: string): string {
+  return pathname.replace(/^\/(es|en)(\/|$)/, '/');
+}
+
+/** Extract the locale from the URL path, falling back to the default locale. */
+function extractLocale(pathname: string): string {
+  const match = pathname.match(/^\/(es|en)(\/|$)/);
+  return match ? match[1] : routing.defaultLocale;
+}
+
+function matchesAny(path: string, prefixes: string[]): boolean {
+  return prefixes.some(
+    (prefix) => path === prefix || path.startsWith(`${prefix}/`),
   );
-  return PROTECTED_PATHS.some(
-    (prefix) =>
-      pathWithoutLocale === prefix ||
-      pathWithoutLocale.startsWith(`${prefix}/`),
-  );
+}
+
+function isCompanyRoute(pathname: string): boolean {
+  const path = stripLocale(pathname);
+  return matchesAny(path, COMPANY_PATHS);
+}
+
+function isAdminRoute(pathname: string): boolean {
+  const path = stripLocale(pathname);
+  // Exclude admin public paths (e.g. /admin/login) from protection
+  if (matchesAny(path, ADMIN_PUBLIC_PATHS)) {
+    return false;
+  }
+  return matchesAny(path, ADMIN_PATHS);
 }
 
 export async function proxy(request: NextRequest) {
   // 1. Refresh Supabase auth tokens (must run on every request).
   const { supabaseResponse, user } = await updateSession(request);
 
-  // 2. Protect authenticated routes.
-  if (isProtectedRoute(request.nextUrl.pathname) && !user) {
-    // Determine the locale from the URL (default to 'es').
-    const localeMatch = request.nextUrl.pathname.match(/^\/(es|en)(\/|$)/);
-    const locale = localeMatch ? localeMatch[1] : routing.defaultLocale;
-
+  // 2. Protect company dashboard routes — redirect to company login.
+  if (isCompanyRoute(request.nextUrl.pathname) && !user) {
+    const locale = extractLocale(request.nextUrl.pathname);
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = `/${locale}/login`;
     return Response.redirect(loginUrl);
   }
 
-  // 3. Delegate to next-intl for locale negotiation / prefix handling.
+  // 3. Protect admin routes — redirect to admin login.
+  if (isAdminRoute(request.nextUrl.pathname) && !user) {
+    const locale = extractLocale(request.nextUrl.pathname);
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = `/${locale}/admin/login`;
+    return Response.redirect(loginUrl);
+  }
+
+  // 4. Delegate to next-intl for locale negotiation / prefix handling.
   const intlResponse = intlMiddleware(request);
 
-  // 4. Merge Supabase cookies into the next-intl response so auth tokens
+  // 5. Merge Supabase cookies into the next-intl response so auth tokens
   //    reach the browser.
   supabaseResponse.cookies.getAll().forEach((cookie) => {
     intlResponse.cookies.set(cookie.name, cookie.value, cookie);

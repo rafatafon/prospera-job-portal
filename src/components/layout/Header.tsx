@@ -8,14 +8,15 @@ import type { User } from '@supabase/supabase-js';
 
 interface HeaderProps {
   user: User | null;
+  showLogin?: boolean;
 }
 
-export async function Header({ user }: HeaderProps) {
+export async function Header({ user, showLogin = true }: HeaderProps) {
   const t = await getTranslations('common');
 
   return (
     <header className="sticky top-0 z-50 w-full bg-transparent py-3 px-4 sm:px-6 lg:px-8">
-      <div className="relative mx-auto flex max-w-7xl items-center justify-center">
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between md:justify-center">
         {/* Center group: Logo icon + Glass pill */}
         <div className="flex items-center gap-4">
           {/* Logo icon — circular button */}
@@ -82,49 +83,23 @@ export async function Header({ user }: HeaderProps) {
         </div>
 
         {/* Desktop CTA — orange pill, pinned right */}
-        <div className="absolute right-0 hidden md:flex">
-          {user ? (
+        {(user || showLogin) && (
+          <div className="absolute right-0 hidden md:flex">
             <Button
               asChild
               size="sm"
               style={{ backgroundColor: '#E8501C' }}
               className="rounded-full px-6 text-white hover:opacity-90"
             >
-              <Link href="/dashboard">{t('dashboard')}</Link>
+              <Link href={user ? '/dashboard' : '/login'}>
+                {user ? t('dashboard') : t('companyLogin')}
+              </Link>
             </Button>
-          ) : (
-            <Button
-              asChild
-              size="sm"
-              style={{ backgroundColor: '#E8501C' }}
-              className="rounded-full px-6 text-white hover:opacity-90"
-            >
-              <Link href="/login">{t('login')}</Link>
-            </Button>
-          )}
-        </div>
+          </div>
+        )}
 
-        {/* Mobile right section — Sign In pill + burger menu */}
-        <div className="absolute right-0 flex items-center gap-2 md:hidden">
-          {user ? (
-            <Button
-              asChild
-              size="sm"
-              style={{ backgroundColor: '#E8501C' }}
-              className="rounded-full px-5 text-white hover:opacity-90"
-            >
-              <Link href="/dashboard">{t('dashboard')}</Link>
-            </Button>
-          ) : (
-            <Button
-              asChild
-              size="sm"
-              style={{ backgroundColor: '#E8501C' }}
-              className="rounded-full px-5 text-white hover:opacity-90"
-            >
-              <Link href="/login">{t('login')}</Link>
-            </Button>
-          )}
+        {/* Mobile right section — burger menu only (Company Login lives inside the menu) */}
+        <div className="flex items-center md:hidden">
           <MobileMenu user={user} />
         </div>
       </div>

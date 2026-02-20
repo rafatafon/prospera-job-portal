@@ -39,9 +39,9 @@ export default async function LoginPage({
             className="h-10 w-10"
           />
           <span className="mt-3 text-2xl font-bold tracking-tight text-slate-900">
-            Prospera
+            {t('title')}
           </span>
-          <p className="mt-2 text-sm text-slate-500">{t('title')}</p>
+          <p className="mt-1.5 text-sm text-slate-500">{t('subtitle')}</p>
         </div>
 
         <LoginForm />

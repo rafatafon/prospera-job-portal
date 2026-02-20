@@ -23,7 +23,9 @@
     "filters": "Filtros",
     "clearFilters": "Limpiar filtros",
     "close": "Cerrar",
-    "showMore": "Ver mas"
+    "showMore": "Ver mas",
+    "companyLogin": "Acceso empresa",
+    "adminLogin": "Admin"
   },
   "landing": {
     "heroTitle": "Encuentra tu proximo empleo en las empresas que forman parte de Prospera",
@@ -61,14 +63,13 @@
     "jobCount": "{count, plural, =0 {Sin empleos} one {# empleo} other {# empleos}}"
   },
   "login": {
-    "title": "Iniciar sesion",
+    "title": "Portal empresarial",
+    "subtitle": "Inicia sesion para gestionar tus ofertas de empleo",
     "email": "Correo electronico",
     "password": "Contrasena",
     "loginButton": "Iniciar sesion",
-    "signupButton": "Crear cuenta",
-    "noAccount": "No tienes cuenta?",
-    "hasAccount": "Ya tienes cuenta?",
-    "loginError": "Credenciales incorrectas. Intenta de nuevo."
+    "loginError": "Credenciales incorrectas. Intenta de nuevo.",
+    "companyOnly": "Este acceso es solo para cuentas de empresa."
   },
   "dashboard": {
     "title": "Panel de control",
@@ -104,5 +105,11 @@
     "applyUrlPlaceholder": "https://ejemplo.com/aplicar",
     "saveDraft": "Guardar como borrador",
     "creating": "Creando..."
+  },
+  "admin": {
+    "loginTitle": "Acceso administrador",
+    "loginSubtitle": "Inicia sesion en el panel de administracion",
+    "title": "Administracion",
+    "accessDenied": "Acceso denegado. Se requieren credenciales de administrador."
   }
 }
