@@ -39,7 +39,7 @@ export default async function LandingPage({
       <main className="flex-1">
         {/* Hero */}
         <section
-          className="relative overflow-hidden"
+          className="relative -mt-20 overflow-hidden pt-20"
           style={{
             background:
               'linear-gradient(135deg, #FFF8F5 0%, #ffffff 50%, #FFFBF8 100%)',
@@ -65,20 +65,7 @@ export default async function LandingPage({
 
           <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
             <div className="max-w-3xl">
-              {/* Eyebrow badge */}
-              <div className="mb-6 flex items-center gap-2">
-                <Badge
-                  className="rounded-full border px-3 py-1 text-xs font-medium"
-                  style={{
-                    borderColor: '#E8501C',
-                    color: '#E8501C',
-                    backgroundColor: '#FFF5F0',
-                  }}
-                >
-                  Honduras
-                </Badge>
-              </div>
-
+              
               {/* Headline */}
               <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
                 {t('heroTitle')}

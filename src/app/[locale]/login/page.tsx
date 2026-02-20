@@ -32,7 +32,7 @@ export default async function LoginPage({
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center text-center">
           <Image
-            src="/prospera-icon.png"
+            src="/prospera-icon.svg"
             alt="Prospera"
             width={40}
             height={40}

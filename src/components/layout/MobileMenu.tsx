@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, ChevronDown } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ user }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
+  const [businessOpen, setBusinessOpen] = useState(false);
   const t = useTranslations('common');
 
   return (
@@ -40,7 +41,7 @@ export function MobileMenu({ user }: MobileMenuProps) {
           <SheetTitle className="text-left">
             <span className="flex items-center gap-2">
               <Image
-                src="/prospera-icon.png"
+                src="/prospera-icon.svg"
                 alt="Prospera"
                 width={20}
                 height={20}
@@ -60,9 +61,41 @@ export function MobileMenu({ user }: MobileMenuProps) {
           >
             {t('jobs')}
           </Link>
-          <span className="cursor-not-allowed rounded-md px-3 py-2.5 text-sm font-medium text-slate-400 select-none">
-            {t('companies')}
-          </span>
+
+          {/* Business accordion */}
+          <button
+            type="button"
+            onClick={() => setBusinessOpen(!businessOpen)}
+            className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
+          >
+            {t('business')}
+            <ChevronDown
+              className={`h-4 w-4 text-slate-400 transition-transform ${businessOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
+          {businessOpen && (
+            <div className="ml-3 flex flex-col gap-0.5 border-l-2 border-slate-100 pl-3">
+              <a
+                href="https://www.prospera.co/en/business"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-100"
+                style={{ color: '#E8501C' }}
+              >
+                {t('business')}
+              </a>
+              <a
+                href="https://www.prospera.co/en/marketplace"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
+              >
+                {t('companyDirectory')}
+              </a>
+            </div>
+          )}
         </nav>
         <div className="mt-6 border-t border-slate-100 pt-6">
           {user ? (

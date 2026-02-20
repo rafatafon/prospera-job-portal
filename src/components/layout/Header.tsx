@@ -2,8 +2,8 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import { MobileMenu } from '@/components/layout/MobileMenu';
+import { ChevronDown } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 
 interface HeaderProps {
@@ -14,44 +14,81 @@ export async function Header({ user }: HeaderProps) {
   const t = await getTranslations('common');
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/prospera-icon.png"
-            alt="Prospera"
-            width={24}
-            height={24}
-            className="h-6 w-6"
-          />
-          <span className="text-xl font-bold tracking-tight text-slate-900">
-            Prospera
-          </span>
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+    <header className="sticky top-0 z-50 w-full bg-transparent py-3 px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto flex max-w-7xl items-center justify-center">
+        {/* Center group: Logo icon + Glass pill */}
+        <div className="flex items-center gap-4">
+          {/* Logo icon — circular button */}
           <Link
-            href="/jobs"
-            className="rounded-md px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            href="/"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/60 shadow-sm backdrop-blur-md transition-colors hover:opacity-90"
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}
           >
-            {t('jobs')}
+            <Image
+              src="/prospera-icon.svg"
+              alt="Prospera"
+              width={22}
+              height={22}
+              className="h-[22px] w-[22px]"
+            />
           </Link>
-          <span className="cursor-not-allowed rounded-md px-3 py-2 text-sm font-medium text-slate-400 select-none">
-            {t('companies')}
-          </span>
-        </nav>
 
-        {/* Desktop right side */}
-        <div className="hidden items-center gap-3 md:flex">
-          <LocaleSwitcher />
+          {/* Glass pill nav bar */}
+          <nav
+            className="hidden items-center gap-1 rounded-full border border-white/60 px-2 py-1.5 shadow-sm backdrop-blur-md md:flex"
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}
+            aria-label="Main navigation"
+          >
+            <Link
+              href="/jobs"
+              className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-white/60 hover:text-slate-900"
+            >
+              {t('jobs')}
+            </Link>
+
+            {/* Business dropdown — CSS hover */}
+            <div className="group relative">
+              <button
+                type="button"
+                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-white/60 hover:text-slate-900"
+              >
+                {t('business')}
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:rotate-180" />
+              </button>
+
+              {/* Dropdown panel */}
+              <div className="pointer-events-none absolute left-0 top-full z-50 w-64 pt-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+                  <a
+                    href="https://www.prospera.co/en/business"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block border-b border-slate-100 px-5 py-3.5 text-sm font-medium transition-colors hover:bg-slate-50"
+                  >
+                    {t('growYourBusiness')}
+                  </a>
+                  <a
+                    href="https://www.prospera.co/en/marketplace"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-5 py-3.5 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-50"
+                  >
+                    {t('companyDirectory')}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        {/* Desktop CTA — orange pill, pinned right */}
+        <div className="absolute right-0 hidden md:flex">
           {user ? (
             <Button
               asChild
               size="sm"
               style={{ backgroundColor: '#E8501C' }}
-              className="rounded-full text-white hover:opacity-90"
+              className="rounded-full px-6 text-white hover:opacity-90"
             >
               <Link href="/dashboard">{t('dashboard')}</Link>
             </Button>
@@ -60,16 +97,15 @@ export async function Header({ user }: HeaderProps) {
               asChild
               size="sm"
               style={{ backgroundColor: '#E8501C' }}
-              className="rounded-full text-white hover:opacity-90"
+              className="rounded-full px-6 text-white hover:opacity-90"
             >
               <Link href="/login">{t('login')}</Link>
             </Button>
           )}
         </div>
 
-        {/* Mobile menu */}
-        <div className="flex items-center gap-2 md:hidden">
-          <LocaleSwitcher />
+        {/* Mobile menu — pinned right */}
+        <div className="absolute right-0 md:hidden">
           <MobileMenu user={user} />
         </div>
       </div>

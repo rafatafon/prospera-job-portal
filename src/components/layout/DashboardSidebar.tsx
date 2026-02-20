@@ -59,7 +59,7 @@ export function DashboardSidebar() {
       <div className="flex h-16 shrink-0 items-center border-b border-white/10 px-6">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/prospera-icon.png"
+            src="/prospera-icon.svg"
             alt="Prospera"
             width={20}
             height={20}
