@@ -104,8 +104,27 @@ export async function Header({ user }: HeaderProps) {
           )}
         </div>
 
-        {/* Mobile menu — pinned right */}
-        <div className="absolute right-0 md:hidden">
+        {/* Mobile right section — Sign In pill + burger menu */}
+        <div className="absolute right-0 flex items-center gap-2 md:hidden">
+          {user ? (
+            <Button
+              asChild
+              size="sm"
+              style={{ backgroundColor: '#E8501C' }}
+              className="rounded-full px-5 text-white hover:opacity-90"
+            >
+              <Link href="/dashboard">{t('dashboard')}</Link>
+            </Button>
+          ) : (
+            <Button
+              asChild
+              size="sm"
+              style={{ backgroundColor: '#E8501C' }}
+              className="rounded-full px-5 text-white hover:opacity-90"
+            >
+              <Link href="/login">{t('login')}</Link>
+            </Button>
+          )}
           <MobileMenu user={user} />
         </div>
       </div>

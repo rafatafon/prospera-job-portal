@@ -21,7 +21,9 @@
     "apply_now": "Apply now",
     "back": "Back",
     "filters": "Filters",
-    "clearFilters": "Clear filters"
+    "clearFilters": "Clear filters",
+    "close": "Close",
+    "showMore": "Show more"
   },
   "landing": {
     "heroTitle": "Find your next job in the companies that form part of Prospera",

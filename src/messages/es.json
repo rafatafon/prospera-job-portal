@@ -21,7 +21,9 @@
     "apply_now": "Aplicar ahora",
     "back": "Volver",
     "filters": "Filtros",
-    "clearFilters": "Limpiar filtros"
+    "clearFilters": "Limpiar filtros",
+    "close": "Cerrar",
+    "showMore": "Ver mas"
   },
   "landing": {
     "heroTitle": "Encuentra tu proximo empleo en las empresas que forman parte de Prospera",
