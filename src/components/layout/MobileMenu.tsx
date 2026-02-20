@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation';
 import {
   Sheet,
   SheetContent,
+  SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { useTranslations } from 'next-intl';
@@ -35,7 +36,9 @@ export function MobileMenu({ user }: MobileMenuProps) {
         side="right"
         className="flex w-[85vw] flex-col sm:w-96"
         showCloseButton={false}
+        aria-describedby={undefined}
       >
+        <SheetTitle className="sr-only">Menu</SheetTitle>
         {/* Top bar — Close pill button */}
         <div className="flex justify-end p-4">
           <button
