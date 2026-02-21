@@ -14,6 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      applications: {
+        Row: {
+          country: string
+          cover_letter_path: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          job_id: string
+          linkedin_url: string | null
+          phone_country_code: string
+          phone_number: string
+          resume_path: string
+        }
+        Insert: {
+          country: string
+          cover_letter_path?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          job_id: string
+          linkedin_url?: string | null
+          phone_country_code: string
+          phone_number: string
+          resume_path: string
+        }
+        Update: {
+          country?: string
+          cover_letter_path?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          job_id?: string
+          linkedin_url?: string | null
+          phone_country_code?: string
+          phone_number?: string
+          resume_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           created_at: string

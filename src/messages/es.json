@@ -111,5 +111,31 @@
     "loginSubtitle": "Inicia sesion en el panel de administracion",
     "title": "Administracion",
     "accessDenied": "Acceso denegado. Se requieren credenciales de administrador."
+  },
+  "applicationForm": {
+    "title": "Aplicar a este puesto",
+    "subtitle": "Completa tus datos para enviar tu aplicacion",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "Juan Perez",
+    "email": "Correo electronico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "phone": "Numero de telefono",
+    "phonePlaceholder": "9999-0000",
+    "country": "Pais",
+    "selectCountry": "Seleccionar pais",
+    "linkedin": "Perfil de LinkedIn",
+    "linkedinPlaceholder": "https://linkedin.com/in/tuperfil",
+    "linkedinHint": "Opcional",
+    "resume": "Curriculum vitae",
+    "resumeHint": "PDF, maximo 5 MB",
+    "coverLetter": "Carta de presentacion",
+    "coverLetterHint": "PDF, maximo 5 MB (opcional)",
+    "submit": "Enviar aplicacion",
+    "submitting": "Enviando...",
+    "successTitle": "Aplicacion enviada!",
+    "successMessage": "Tu aplicacion ha sido recibida. La empresa la revisara y te contactara si esta interesada.",
+    "errorFileType": "Solo se permiten archivos PDF",
+    "errorFileSize": "El archivo debe ser menor a 5 MB",
+    "errorGeneric": "Algo salio mal. Intenta de nuevo."
   }
 }

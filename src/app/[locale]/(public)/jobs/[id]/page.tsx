@@ -3,13 +3,12 @@ import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import type { Database } from '@/types/database.types';
+import { ApplicationForm } from '@/components/jobs/ApplicationForm';
 import {
   MapPin,
   Briefcase,
   CalendarDays,
-  ExternalLink,
   ArrowLeft,
   Building2,
 } from 'lucide-react';
@@ -74,7 +73,7 @@ export default async function JobDetailPage({
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
         {/* Back link */}
         <Link
           href="/jobs"
@@ -171,37 +170,9 @@ export default async function JobDetailPage({
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-4">
-            {/* Apply CTA card */}
-            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-sm font-semibold text-slate-700">
-                {tCommon('apply')}
-              </h3>
-              <p className="mt-1 text-xs text-slate-400">
-                {t('applyExternal')}
-              </p>
-
-              {job.apply_url ? (
-                <Button
-                  asChild
-                  className="mt-4 w-full gap-2 text-white"
-                  style={{ backgroundColor: '#E8501C' }}
-                >
-                  <a
-                    href={job.apply_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {tJobs('applyNow')}
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </Button>
-              ) : (
-                <p className="mt-4 text-xs text-slate-400">
-                  No hay URL de aplicacion disponible.
-                </p>
-              )}
-            </div>
+          <div className="space-y-4 lg:sticky lg:top-20 lg:self-start">
+            {/* Application form */}
+            <ApplicationForm jobId={job.id} />
 
             {/* Job details card */}
             <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
