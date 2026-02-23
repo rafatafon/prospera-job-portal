@@ -104,7 +104,7 @@ export function JobForm() {
                 placeholder={t('descriptionPlaceholder')}
                 disabled={isPending}
                 rows={8}
-                className="resize-y border-slate-200 bg-white focus-visible:ring-1 leading-relaxed"
+                className="[field-sizing:fixed] max-h-80 resize-y border-slate-200 bg-white focus-visible:ring-1 leading-relaxed"
                 style={
                   { '--tw-ring-color': '#E8501C' } as React.CSSProperties
                 }
