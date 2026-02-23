@@ -111,8 +111,8 @@ export function JobForm() {
               />
             </div>
 
-            {/* Location + Work Mode + Employment Type — 3-col on sm+ */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {/* Location + Work Mode + Employment Type */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[2fr_1fr_1fr]">
               <div className="space-y-1.5">
                 <Label
                   htmlFor="location"
@@ -204,29 +204,6 @@ export function JobForm() {
               </div>
             </div>
 
-            {/* Apply URL */}
-            <div className="space-y-1.5">
-              <Label
-                htmlFor="apply_url"
-                className="text-sm font-medium text-slate-700"
-              >
-                {t('applyUrl')}
-              </Label>
-              <Input
-                id="apply_url"
-                name="apply_url"
-                type="url"
-                placeholder={t('applyUrlPlaceholder')}
-                disabled={isPending}
-                className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-                style={
-                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
-                }
-              />
-              <p className="text-xs text-slate-400">
-                URL externa donde los candidatos pueden aplicar al puesto.
-              </p>
-            </div>
           </div>
 
           {/* Error banner */}

@@ -110,8 +110,6 @@
     "locationPlaceholder": "Ej: Tegucigalpa, Honduras",
     "employmentType": "Tipo de empleo",
     "workMode": "Modalidad",
-    "applyUrl": "URL para aplicar",
-    "applyUrlPlaceholder": "https://ejemplo.com/aplicar",
     "saveDraft": "Guardar como borrador",
     "creating": "Creando..."
   },

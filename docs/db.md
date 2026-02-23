@@ -49,7 +49,6 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 | description | text NOT NULL | min 10 chars |
 | location | text | city name |
 | employment_type | employment_type | default 'full_time' |
-| apply_url | text | nullable for drafts |
 | status | job_status | default 'draft' |
 | published_at | timestamptz | set when status -> published |
 | created_at | timestamptz | |
