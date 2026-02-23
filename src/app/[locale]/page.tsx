@@ -4,7 +4,11 @@ import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { JobCard } from '@/components/jobs/JobCard';
 import { ArrowRight, Briefcase } from 'lucide-react';
+import type { Database } from '@/types/database.types';
+
+type EmploymentType = Database['public']['Enums']['employment_type'];
 
 /**
  * Landing page — /[locale]/
@@ -31,6 +35,23 @@ export default async function LandingPage({
 
   const t = await getTranslations('landing');
   const tCommon = await getTranslations('common');
+  const tJobs = await getTranslations('jobs');
+
+  // Fetch latest published jobs for the featured section
+  const { data: featuredJobs } = await supabase
+    .from('jobs')
+    .select('*, companies(name, slug, logo_url)')
+    .eq('status', 'published')
+    .order('published_at', { ascending: false })
+    .limit(6);
+
+  const jobList = featuredJobs ?? [];
+
+  const typeLabels: Record<EmploymentType, string> = {
+    full_time: tJobs('fullTime'),
+    part_time: tJobs('partTime'),
+    contract: tJobs('contract'),
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -110,21 +131,41 @@ export default async function LandingPage({
             </Link>
           </div>
 
-          {/* Empty state */}
-          <div className="mt-8 flex min-h-[200px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 py-16 text-center">
-            <Briefcase className="mx-auto h-10 w-10 text-slate-300" />
-            <p className="mt-4 text-sm font-medium text-slate-500">
-              {tCommon('noResults')}
-            </p>
-            <Button
-              asChild
-              size="sm"
-              className="mt-6 text-white"
-              style={{ backgroundColor: '#E8501C' }}
-            >
-              <Link href="/jobs">{t('ctaButton')}</Link>
-            </Button>
-          </div>
+          {jobList.length > 0 ? (
+            <div className="mt-8 grid grid-cols-1 gap-3">
+              {jobList.map((job) => {
+                const company = job.companies as {
+                  name: string;
+                  slug: string;
+                  logo_url: string | null;
+                } | null;
+
+                return (
+                  <JobCard
+                    key={job.id}
+                    job={job}
+                    company={company}
+                    typeLabel={typeLabels[job.employment_type]}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <div className="mt-8 flex min-h-[200px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 py-16 text-center">
+              <Briefcase className="mx-auto h-10 w-10 text-slate-300" />
+              <p className="mt-4 text-sm font-medium text-slate-500">
+                {tCommon('noResults')}
+              </p>
+              <Button
+                asChild
+                size="sm"
+                className="mt-6 text-white"
+                style={{ backgroundColor: '#E8501C' }}
+              >
+                <Link href="/jobs">{t('ctaButton')}</Link>
+              </Button>
+            </div>
+          )}
         </section>
       </main>
       <Footer />
