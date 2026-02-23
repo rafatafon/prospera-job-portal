@@ -2,23 +2,13 @@
 
 import { useState, useTransition, useRef } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import {
-  supportedCountries,
-  getCountryName,
-  DEFAULT_COUNTRY_CODE,
-  DEFAULT_PHONE_CODE,
-} from '@/lib/countries';
+import parsePhoneNumber from 'libphonenumber-js';
 import { submitApplication } from '@/app/[locale]/(public)/jobs/[id]/actions';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { CountryDropdown, type Country } from '@/components/ui/country-dropdown';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { AlertCircle, Loader2, CheckCircle2, Paperclip, X } from 'lucide-react';
 
 /* ── File upload zone ─────────────────────────────────────────────────────── */
@@ -112,17 +102,32 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
   const t = useTranslations('applicationForm');
   const locale = useLocale();
 
-  const [phoneCountryCode, setPhoneCountryCode] = useState(DEFAULT_PHONE_CODE);
-  const [country, setCountry] = useState(DEFAULT_COUNTRY_CODE);
+  const [phone, setPhone] = useState('');
+  const [country, setCountry] = useState('HN');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  function handleCountryChange(c: Country) {
+    setCountry(c.alpha2);
+  }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     const formData = new FormData(event.currentTarget);
-    formData.set('phone_country_code', phoneCountryCode);
+
+    // Parse E.164 phone into country code + national number
+    const parsed = parsePhoneNumber(phone);
+    if (parsed) {
+      formData.set('phone_country_code', `+${parsed.countryCallingCode}`);
+      formData.set('phone_number', parsed.nationalNumber);
+    } else {
+      // Fallback: store raw value
+      formData.set('phone_country_code', '+');
+      formData.set('phone_number', phone.replace(/^\+/, ''));
+    }
+
     formData.set('country', country);
     formData.set('job_id', jobId);
 
@@ -216,67 +221,34 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
             />
           </div>
 
-          {/* Phone — code picker + number */}
+          {/* Phone */}
           <div className="space-y-1.5">
             <Label className="text-sm font-medium text-slate-700">
               {t('phone')}
               <span className="ml-1 text-red-500" aria-hidden="true">*</span>
             </Label>
-            <div className="flex gap-2">
-              <Select
-                value={phoneCountryCode}
-                onValueChange={setPhoneCountryCode}
-                disabled={isPending}
-              >
-                <SelectTrigger className="h-10 w-[100px] shrink-0 border-slate-200 bg-white text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="max-h-60">
-                  {supportedCountries.map((c) => (
-                    <SelectItem key={c.code} value={c.phone_code}>
-                      {c.phone_code}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Input
-                id="phone_number"
-                name="phone_number"
-                type="tel"
-                required
-                placeholder={t('phonePlaceholder')}
-                disabled={isPending}
-                className="h-10 flex-1 border-slate-200 bg-white focus-visible:ring-1"
-                style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
-              />
-            </div>
+            <PhoneInput
+              defaultCountry="HN"
+              locale={locale}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder={t('phonePlaceholder')}
+              disabled={isPending}
+            />
           </div>
 
           {/* Country */}
           <div className="space-y-1.5">
-            <Label htmlFor="country_select" className="text-sm font-medium text-slate-700">
+            <Label className="text-sm font-medium text-slate-700">
               {t('country')}
               <span className="ml-1 text-red-500" aria-hidden="true">*</span>
             </Label>
-            <Select
-              value={country}
-              onValueChange={setCountry}
+            <CountryDropdown
+              locale={locale}
+              defaultValue="HND"
+              onChange={handleCountryChange}
               disabled={isPending}
-            >
-              <SelectTrigger
-                id="country_select"
-                className="h-10 w-full border-slate-200 bg-white"
-              >
-                <SelectValue placeholder={t('selectCountry')} />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                {supportedCountries.map((c) => (
-                  <SelectItem key={c.code} value={c.code}>
-                    {getCountryName(c.code, locale)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            />
           </div>
 
           {/* LinkedIn */}
