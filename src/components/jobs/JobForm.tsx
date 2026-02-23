@@ -23,8 +23,9 @@ export function JobForm() {
 
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  // Track selected employment type for the hidden input pattern with Select
+  // Track selected values for the hidden input pattern with Select
   const [employmentType, setEmploymentType] = useState<string>('full_time');
+  const [workMode, setWorkMode] = useState<string>('on_site');
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,6 +34,7 @@ export function JobForm() {
     // Inject employment type from controlled state since shadcn Select doesn't
     // natively submit as a form field
     formData.set('employment_type', employmentType);
+    formData.set('work_mode', workMode);
 
     startTransition(async () => {
       const result = await createJob(locale, formData);
@@ -109,8 +111,8 @@ export function JobForm() {
               />
             </div>
 
-            {/* Location + Employment Type — 2-col on sm+ */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Location + Work Mode + Employment Type — 3-col on sm+ */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="space-y-1.5">
                 <Label
                   htmlFor="location"
@@ -129,6 +131,41 @@ export function JobForm() {
                     { '--tw-ring-color': '#E8501C' } as React.CSSProperties
                   }
                 />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="work_mode"
+                  className="text-sm font-medium text-slate-700"
+                >
+                  {t('workMode')}
+                  <span className="ml-1 text-red-500" aria-hidden="true">
+                    *
+                  </span>
+                </Label>
+                <Select
+                  value={workMode}
+                  onValueChange={setWorkMode}
+                  disabled={isPending}
+                >
+                  <SelectTrigger
+                    id="work_mode"
+                    className="h-10 border-slate-200 bg-white"
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="on_site">
+                      {tJobs('onSite')}
+                    </SelectItem>
+                    <SelectItem value="remote">
+                      {tJobs('remote')}
+                    </SelectItem>
+                    <SelectItem value="hybrid">
+                      {tJobs('hybrid')}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-1.5">

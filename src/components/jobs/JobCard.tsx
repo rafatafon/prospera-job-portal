@@ -4,6 +4,7 @@ import type { Database } from '@/types/database.types';
 import { MapPin, Clock } from 'lucide-react';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
+type WorkMode = Database['public']['Enums']['work_mode'];
 
 /** Color accent per employment type for the card's left border on hover */
 const TYPE_ACCENT: Record<EmploymentType, string> = {
@@ -24,12 +25,19 @@ const TYPE_TEXT: Record<EmploymentType, string> = {
   contract: '#6d28d9',
 };
 
+const WORK_MODE_STYLE: Record<WorkMode, { bg: string; text: string }> = {
+  on_site: { bg: '#f1f5f9', text: '#475569' },
+  remote: { bg: '#ecfdf5', text: '#065f46' },
+  hybrid: { bg: '#eff6ff', text: '#1e40af' },
+};
+
 interface JobCardProps {
   job: {
     id: string;
     title: string;
     location: string | null;
     employment_type: EmploymentType;
+    work_mode: WorkMode;
     published_at: string | null;
     created_at: string;
   };
@@ -40,6 +48,8 @@ interface JobCardProps {
   } | null;
   /** Pre-translated employment type label */
   typeLabel: string;
+  /** Pre-translated work mode label */
+  workModeLabel?: string;
 }
 
 function formatRelativeDate(dateStr: string | null): string {
@@ -56,7 +66,7 @@ function formatRelativeDate(dateStr: string | null): string {
   return date.toLocaleDateString('es-HN', { month: 'short', day: 'numeric' });
 }
 
-export function JobCard({ job, company, typeLabel }: JobCardProps) {
+export function JobCard({ job, company, typeLabel, workModeLabel }: JobCardProps) {
   const accent = TYPE_ACCENT[job.employment_type];
   const typeBg = TYPE_BG[job.employment_type];
   const typeText = TYPE_TEXT[job.employment_type];
@@ -123,6 +133,18 @@ export function JobCard({ job, company, typeLabel }: JobCardProps) {
               >
                 {typeLabel}
               </span>
+              {/* Work mode badge */}
+              {workModeLabel && (
+                <span
+                  className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+                  style={{
+                    backgroundColor: WORK_MODE_STYLE[job.work_mode].bg,
+                    color: WORK_MODE_STYLE[job.work_mode].text,
+                  }}
+                >
+                  {workModeLabel}
+                </span>
+              )}
             </div>
           </div>
         </div>

@@ -45,13 +45,18 @@
     "contract": "Contrato",
     "postedOn": "Publicado el",
     "applyNow": "Aplicar ahora",
-    "noJobs": "No hay empleos disponibles en este momento"
+    "noJobs": "No hay empleos disponibles en este momento",
+    "onSite": "Presencial",
+    "remote": "Remoto",
+    "hybrid": "Hibrido",
+    "allWorkModes": "Todas las modalidades"
   },
   "jobDetail": {
     "description": "Descripcion del puesto",
     "applyExternal": "Aplicar en sitio externo",
     "location": "Ubicacion",
     "type": "Tipo de empleo",
+    "workMode": "Modalidad",
     "postedDate": "Fecha de publicacion",
     "company": "Empresa"
   },
@@ -104,6 +109,7 @@
     "locationField": "Ubicacion",
     "locationPlaceholder": "Ej: Tegucigalpa, Honduras",
     "employmentType": "Tipo de empleo",
+    "workMode": "Modalidad",
     "applyUrl": "URL para aplicar",
     "applyUrlPlaceholder": "https://ejemplo.com/aplicar",
     "saveDraft": "Guardar como borrador",

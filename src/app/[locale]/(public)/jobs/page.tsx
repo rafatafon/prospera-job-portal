@@ -6,6 +6,7 @@ import type { Database } from '@/types/database.types';
 import { Briefcase } from 'lucide-react';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
+type WorkMode = Database['public']['Enums']['work_mode'];
 
 export default async function JobsPage({
   params,
@@ -16,10 +17,11 @@ export default async function JobsPage({
     query?: string;
     location?: string;
     type?: string;
+    work_mode?: string;
   }>;
 }) {
   const { locale } = await params;
-  const { query, location, type } = await searchParams;
+  const { query, location, type, work_mode } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations('jobs');
@@ -43,6 +45,9 @@ export default async function JobsPage({
   if (type && ['full_time', 'part_time', 'contract'].includes(type)) {
     jobsQuery = jobsQuery.eq('employment_type', type as EmploymentType);
   }
+  if (work_mode && ['on_site', 'remote', 'hybrid'].includes(work_mode)) {
+    jobsQuery = jobsQuery.eq('work_mode', work_mode as WorkMode);
+  }
 
   const { data: jobs } = await jobsQuery;
   const jobList = jobs ?? [];
@@ -51,6 +56,12 @@ export default async function JobsPage({
     full_time: t('fullTime'),
     part_time: t('partTime'),
     contract: t('contract'),
+  };
+
+  const workModeLabels: Record<WorkMode, string> = {
+    on_site: t('onSite'),
+    remote: t('remote'),
+    hybrid: t('hybrid'),
   };
 
   return (
@@ -73,6 +84,7 @@ export default async function JobsPage({
               initialQuery={query}
               initialLocation={location}
               initialType={type}
+              initialWorkMode={work_mode}
             />
           </div>
         </div>
@@ -109,6 +121,7 @@ export default async function JobsPage({
                   job={job}
                   company={company}
                   typeLabel={typeLabels[job.employment_type]}
+                  workModeLabel={workModeLabels[job.work_mode]}
                 />
               );
             })}

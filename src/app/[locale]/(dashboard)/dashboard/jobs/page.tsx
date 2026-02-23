@@ -10,6 +10,7 @@ import { PlusCircle, Briefcase, MapPin, CalendarDays } from 'lucide-react';
 
 type JobStatus = Database['public']['Enums']['job_status'];
 type EmploymentType = Database['public']['Enums']['employment_type'];
+type WorkMode = Database['public']['Enums']['work_mode'];
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('es-HN', {
@@ -89,6 +90,12 @@ export default async function DashboardJobsPage({
     full_time: tJobs('fullTime'),
     part_time: tJobs('partTime'),
     contract: tJobs('contract'),
+  };
+
+  const workModeLabels: Record<WorkMode, string> = {
+    on_site: tJobs('onSite'),
+    remote: tJobs('remote'),
+    hybrid: tJobs('hybrid'),
   };
 
   const statusLabels: Record<JobStatus, string> = {
@@ -226,6 +233,9 @@ export default async function DashboardJobsPage({
                       <span className="flex items-center gap-1">
                         <Briefcase className="h-3 w-3" />
                         {typeLabels[job.employment_type]}
+                      </span>
+                      <span className="flex items-center gap-1 text-xs text-slate-500">
+                        {workModeLabels[job.work_mode]}
                       </span>
                       <span className="flex items-center gap-1">
                         <CalendarDays className="h-3 w-3" />

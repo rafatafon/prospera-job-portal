@@ -17,6 +17,7 @@ interface JobFiltersProps {
   initialQuery?: string;
   initialLocation?: string;
   initialType?: string;
+  initialWorkMode?: string;
 }
 
 const ALL_VALUE = '__all__';
@@ -25,23 +26,26 @@ export function JobFilters({
   initialQuery = '',
   initialLocation = '',
   initialType = '',
+  initialWorkMode = '',
 }: JobFiltersProps) {
   const t = useTranslations('jobs');
   const tCommon = useTranslations('common');
   const router = useRouter();
   const pathname = usePathname();
 
-  const hasActiveFilters = Boolean(initialQuery || initialLocation || initialType);
+  const hasActiveFilters = Boolean(initialQuery || initialLocation || initialType || initialWorkMode);
 
-  function buildParams(overrides: { query?: string; location?: string; type?: string }) {
+  function buildParams(overrides: { query?: string; location?: string; type?: string; work_mode?: string }) {
     const params = new URLSearchParams();
     const query = overrides.query !== undefined ? overrides.query : initialQuery;
     const location = overrides.location !== undefined ? overrides.location : initialLocation;
     const type = overrides.type !== undefined ? overrides.type : initialType;
+    const workMode = overrides.work_mode !== undefined ? overrides.work_mode : initialWorkMode;
 
     if (query) params.set('query', query);
     if (location) params.set('location', location);
     if (type) params.set('type', type);
+    if (workMode) params.set('work_mode', workMode);
 
     return params;
   }
@@ -55,6 +59,13 @@ export function JobFilters({
   function handleTypeChange(value: string) {
     const resolved = value === ALL_VALUE ? '' : value;
     const params = buildParams({ type: resolved });
+    const qs = params.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname);
+  }
+
+  function handleWorkModeChange(value: string) {
+    const resolved = value === ALL_VALUE ? '' : value;
+    const params = buildParams({ work_mode: resolved });
     const qs = params.toString();
     router.push(qs ? `${pathname}?${qs}` : pathname);
   }
@@ -91,6 +102,22 @@ export function JobFilters({
           <SelectItem value="full_time">{t('fullTime')}</SelectItem>
           <SelectItem value="part_time">{t('partTime')}</SelectItem>
           <SelectItem value="contract">{t('contract')}</SelectItem>
+        </SelectContent>
+      </Select>
+
+      {/* Work mode select */}
+      <Select
+        value={initialWorkMode || ALL_VALUE}
+        onValueChange={handleWorkModeChange}
+      >
+        <SelectTrigger className="h-10 w-full border-slate-200 bg-white sm:w-44">
+          <SelectValue placeholder={t('allWorkModes')} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={ALL_VALUE}>{t('allWorkModes')}</SelectItem>
+          <SelectItem value="on_site">{t('onSite')}</SelectItem>
+          <SelectItem value="remote">{t('remote')}</SelectItem>
+          <SelectItem value="hybrid">{t('hybrid')}</SelectItem>
         </SelectContent>
       </Select>
 

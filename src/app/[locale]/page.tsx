@@ -9,6 +9,7 @@ import { ArrowRight, Briefcase } from 'lucide-react';
 import type { Database } from '@/types/database.types';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
+type WorkMode = Database['public']['Enums']['work_mode'];
 
 /**
  * Landing page — /[locale]/
@@ -51,6 +52,12 @@ export default async function LandingPage({
     full_time: tJobs('fullTime'),
     part_time: tJobs('partTime'),
     contract: tJobs('contract'),
+  };
+
+  const workModeLabels: Record<WorkMode, string> = {
+    on_site: tJobs('onSite'),
+    remote: tJobs('remote'),
+    hybrid: tJobs('hybrid'),
   };
 
   return (
@@ -146,6 +153,7 @@ export default async function LandingPage({
                     job={job}
                     company={company}
                     typeLabel={typeLabels[job.employment_type]}
+                    workModeLabel={workModeLabels[job.work_mode]}
                   />
                 );
               })}

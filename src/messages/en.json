@@ -45,13 +45,18 @@
     "contract": "Contract",
     "postedOn": "Posted on",
     "applyNow": "Apply now",
-    "noJobs": "No jobs available at this time"
+    "noJobs": "No jobs available at this time",
+    "onSite": "On-site",
+    "remote": "Remote",
+    "hybrid": "Hybrid",
+    "allWorkModes": "All work modes"
   },
   "jobDetail": {
     "description": "Job description",
     "applyExternal": "Apply on external site",
     "location": "Location",
     "type": "Job type",
+    "workMode": "Work mode",
     "postedDate": "Posted date",
     "company": "Company"
   },
@@ -104,6 +109,7 @@
     "locationField": "Location",
     "locationPlaceholder": "E.g.: Tegucigalpa, Honduras",
     "employmentType": "Employment type",
+    "workMode": "Work mode",
     "applyUrl": "Apply URL",
     "applyUrlPlaceholder": "https://example.com/apply",
     "saveDraft": "Save as draft",

@@ -113,6 +113,7 @@ export type Database = {
           status: Database["public"]["Enums"]["job_status"]
           title: string
           updated_at: string
+          work_mode: Database["public"]["Enums"]["work_mode"]
         }
         Insert: {
           apply_url?: string | null
@@ -126,6 +127,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["job_status"]
           title: string
           updated_at?: string
+          work_mode?: Database["public"]["Enums"]["work_mode"]
         }
         Update: {
           apply_url?: string | null
@@ -139,6 +141,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["job_status"]
           title?: string
           updated_at?: string
+          work_mode?: Database["public"]["Enums"]["work_mode"]
         }
         Relationships: [
           {
@@ -204,6 +207,7 @@ export type Database = {
       employment_type: "full_time" | "part_time" | "contract"
       job_status: "draft" | "published" | "archived"
       user_role: "user" | "company" | "admin"
+      work_mode: "on_site" | "remote" | "hybrid"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -334,6 +338,7 @@ export const Constants = {
       employment_type: ["full_time", "part_time", "contract"],
       job_status: ["draft", "published", "archived"],
       user_role: ["user", "company", "admin"],
+      work_mode: ["on_site", "remote", "hybrid"],
     },
   },
 } as const

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
+type WorkMode = Database['public']['Enums']['work_mode'];
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('es-HN', {
@@ -66,6 +67,12 @@ export default async function JobDetailPage({
     full_time: tJobs('fullTime'),
     part_time: tJobs('partTime'),
     contract: tJobs('contract'),
+  };
+
+  const workModeLabels: Record<WorkMode, string> = {
+    on_site: tJobs('onSite'),
+    remote: tJobs('remote'),
+    hybrid: tJobs('hybrid'),
   };
 
   const typeBg = TYPE_BG[job.employment_type];
@@ -137,6 +144,11 @@ export default async function JobDetailPage({
                     {typeLabels[job.employment_type]}
                   </span>
 
+                  {/* Work mode */}
+                  <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-600">
+                    {workModeLabels[job.work_mode]}
+                  </span>
+
                   {job.location && (
                     <span className="flex items-center gap-1.5 text-sm text-slate-500">
                       <MapPin className="h-4 w-4" />
@@ -188,6 +200,18 @@ export default async function JobDetailPage({
                     </dt>
                     <dd className="mt-0.5 text-sm text-slate-700">
                       {typeLabels[job.employment_type]}
+                    </dd>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
+                  <div>
+                    <dt className="text-xs font-medium text-slate-400">
+                      {t('workMode')}
+                    </dt>
+                    <dd className="mt-0.5 text-sm text-slate-700">
+                      {workModeLabels[job.work_mode]}
                     </dd>
                   </div>
                 </div>

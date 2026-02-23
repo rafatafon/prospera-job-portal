@@ -10,6 +10,7 @@ const createJobSchema = z.object({
   description: z.string().min(10),
   location: z.string().optional(),
   employment_type: z.enum(['full_time', 'part_time', 'contract'] as const),
+  work_mode: z.enum(['on_site', 'remote', 'hybrid'] as const),
   apply_url: z.string().url().optional().or(z.literal('')),
 });
 
@@ -36,6 +37,7 @@ export async function createJob(
     description: formData.get('description'),
     location: formData.get('location') || undefined,
     employment_type: formData.get('employment_type'),
+    work_mode: formData.get('work_mode'),
     apply_url: formData.get('apply_url') || undefined,
   });
 
