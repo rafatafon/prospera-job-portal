@@ -77,7 +77,10 @@
     "publishedJobs": "Published jobs",
     "draftJobs": "Drafts",
     "createJob": "Create job",
-    "recentActivity": "Recent activity"
+    "recentActivity": "Recent activity",
+    "appliedTo": "applied to {jobTitle}",
+    "noActivity": "No recent activity",
+    "jobCreated": "Job created"
   },
   "dashboardJobs": {
     "title": "Manage jobs",
@@ -124,7 +127,7 @@
     "country": "Country",
     "selectCountry": "Select country",
     "linkedin": "LinkedIn profile",
-    "linkedinPlaceholder": "https://linkedin.com/in/yourprofile",
+    "linkedinPlaceholder": "linkedin.com/in/yourprofile",
     "linkedinHint": "Optional",
     "resume": "Resume",
     "resumeHint": "PDF, max 5 MB",
@@ -137,5 +140,18 @@
     "errorFileType": "Only PDF files are allowed",
     "errorFileSize": "File must be less than 5 MB",
     "errorGeneric": "Something went wrong. Please try again."
+  },
+  "dashboardApplications": {
+    "title": "Applications",
+    "applicant": "Applicant",
+    "job": "Job",
+    "date": "Date",
+    "phone": "Phone",
+    "country": "Country",
+    "resume": "Resume",
+    "coverLetter": "Cover letter",
+    "download": "Download",
+    "noApplications": "You haven't received any applications yet",
+    "linkedin": "LinkedIn"
   }
 }

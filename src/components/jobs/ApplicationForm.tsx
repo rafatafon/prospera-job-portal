@@ -131,6 +131,12 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
     formData.set('country', country);
     formData.set('job_id', jobId);
 
+    // Prepend https:// to LinkedIn URL if user omitted it
+    const linkedinRaw = formData.get('linkedin_url') as string;
+    if (linkedinRaw && !linkedinRaw.startsWith('http')) {
+      formData.set('linkedin_url', `https://${linkedinRaw}`);
+    }
+
     startTransition(async () => {
       const result = await submitApplication(formData);
       if ('error' in result) {
@@ -259,15 +265,22 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
                 {t('linkedinHint')}
               </span>
             </Label>
-            <Input
-              id="linkedin"
-              name="linkedin"
-              type="url"
-              placeholder={t('linkedinPlaceholder')}
-              disabled={isPending}
-              className="h-10 border-slate-200 bg-white focus-visible:ring-1"
+            <div
+              className="flex h-10 w-full overflow-hidden rounded-md border border-slate-200 bg-white focus-within:ring-1"
               style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
-            />
+            >
+              <span className="flex items-center border-r border-slate-200 bg-slate-50 px-3 text-xs text-slate-500 select-none">
+                https://
+              </span>
+              <input
+                id="linkedin"
+                name="linkedin_url"
+                type="text"
+                placeholder={t('linkedinPlaceholder')}
+                disabled={isPending}
+                className="flex-1 bg-transparent px-3 text-sm outline-none placeholder:text-slate-400 disabled:pointer-events-none disabled:opacity-50"
+              />
+            </div>
           </div>
 
           {/* Resume */}

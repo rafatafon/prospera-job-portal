@@ -77,7 +77,10 @@
     "publishedJobs": "Empleos publicados",
     "draftJobs": "Borradores",
     "createJob": "Crear empleo",
-    "recentActivity": "Actividad reciente"
+    "recentActivity": "Actividad reciente",
+    "appliedTo": "aplico a {jobTitle}",
+    "noActivity": "No hay actividad reciente",
+    "jobCreated": "Empleo creado"
   },
   "dashboardJobs": {
     "title": "Gestionar empleos",
@@ -124,7 +127,7 @@
     "country": "Pais",
     "selectCountry": "Seleccionar pais",
     "linkedin": "Perfil de LinkedIn",
-    "linkedinPlaceholder": "https://linkedin.com/in/tuperfil",
+    "linkedinPlaceholder": "linkedin.com/in/tuperfil",
     "linkedinHint": "Opcional",
     "resume": "Curriculum vitae",
     "resumeHint": "PDF, maximo 5 MB",
@@ -137,5 +140,18 @@
     "errorFileType": "Solo se permiten archivos PDF",
     "errorFileSize": "El archivo debe ser menor a 5 MB",
     "errorGeneric": "Algo salio mal. Intenta de nuevo."
+  },
+  "dashboardApplications": {
+    "title": "Aplicaciones",
+    "applicant": "Aplicante",
+    "job": "Empleo",
+    "date": "Fecha",
+    "phone": "Telefono",
+    "country": "Pais",
+    "resume": "CV",
+    "coverLetter": "Carta",
+    "download": "Descargar",
+    "noApplications": "Aun no has recibido aplicaciones",
+    "linkedin": "LinkedIn"
   }
 }

@@ -3,7 +3,14 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, Briefcase, Globe, FileText } from 'lucide-react';
+import {
+  PlusCircle,
+  Briefcase,
+  Globe,
+  FileText,
+  CalendarDays,
+  User,
+} from 'lucide-react';
 
 export default async function DashboardPage({
   params,
@@ -34,22 +41,82 @@ export default async function DashboardPage({
 
   const companyId = profile?.company_id;
 
-  // Count jobs by status for the company
+  // Fetch jobs with details for stats + activity feed
   let totalJobs = 0;
   let publishedJobs = 0;
   let draftJobs = 0;
+  let recentJobs: Array<{
+    id: string;
+    title: string;
+    status: string;
+    created_at: string;
+  }> = [];
 
   if (companyId) {
     const { data: jobs } = await supabase
       .from('jobs')
-      .select('status')
-      .eq('company_id', companyId);
+      .select('id, title, status, created_at')
+      .eq('company_id', companyId)
+      .order('created_at', { ascending: false });
 
     if (jobs) {
       totalJobs = jobs.length;
       publishedJobs = jobs.filter((j) => j.status === 'published').length;
       draftJobs = jobs.filter((j) => j.status === 'draft').length;
+      recentJobs = jobs.slice(0, 5);
     }
+  }
+
+  // Fetch recent applications (RLS scopes to company's jobs)
+  const { data: recentApps } = await supabase
+    .from('applications')
+    .select('id, full_name, created_at, jobs(title)')
+    .order('created_at', { ascending: false })
+    .limit(5);
+
+  // Build unified activity feed
+  type ActivityItem = {
+    id: string;
+    type: 'job' | 'application';
+    title: string;
+    subtitle: string;
+    date: string;
+  };
+
+  const statusLabels: Record<string, string> = {
+    draft: tDashboardJobs('draft'),
+    published: tDashboardJobs('published'),
+    archived: tDashboardJobs('archived'),
+  };
+
+  const jobItems: ActivityItem[] = recentJobs.map((job) => ({
+    id: `job-${job.id}`,
+    type: 'job',
+    title: job.title,
+    subtitle: statusLabels[job.status] ?? job.status,
+    date: job.created_at,
+  }));
+
+  const appItems: ActivityItem[] = (recentApps ?? []).map((app) => {
+    const job = app.jobs as { title: string } | null;
+    return {
+      id: `app-${app.id}`,
+      type: 'application',
+      title: app.full_name,
+      subtitle: t('appliedTo', { jobTitle: job?.title ?? '' }),
+      date: app.created_at,
+    };
+  });
+
+  const activityItems = [...jobItems, ...appItems]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5);
+
+  function formatDate(dateStr: string) {
+    return new Date(dateStr).toLocaleDateString(
+      locale === 'es' ? 'es-HN' : 'en-US',
+      { year: 'numeric', month: 'short', day: 'numeric' }
+    );
   }
 
   const stats = [
@@ -141,28 +208,71 @@ export default async function DashboardPage({
         })}
       </div>
 
-      {/* Quick actions */}
+      {/* Recent activity */}
       <div className="mt-10">
         <h2 className="mb-4 text-base font-semibold text-slate-700">
           {t('recentActivity')}
         </h2>
-        <div className="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center">
-          <Briefcase className="mx-auto h-8 w-8 text-slate-300" />
-          <p className="mt-3 text-sm text-slate-500">
-            {tDashboardJobs('noJobs')}
-          </p>
-          <Button
-            asChild
-            size="sm"
-            className="mt-4 gap-2 text-white"
-            style={{ backgroundColor: '#E8501C' }}
-          >
-            <Link href="/dashboard/jobs/new">
-              <PlusCircle className="h-4 w-4" />
-              {t('createJob')}
-            </Link>
-          </Button>
-        </div>
+        {activityItems.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center">
+            <Briefcase className="mx-auto h-8 w-8 text-slate-300" />
+            <p className="mt-3 text-sm text-slate-500">
+              {t('noActivity')}
+            </p>
+            <Button
+              asChild
+              size="sm"
+              className="mt-4 gap-2 text-white"
+              style={{ backgroundColor: '#E8501C' }}
+            >
+              <Link href="/dashboard/jobs/new">
+                <PlusCircle className="h-4 w-4" />
+                {t('createJob')}
+              </Link>
+            </Button>
+          </div>
+        ) : (
+          <div className="divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white shadow-sm">
+            {activityItems.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center gap-4 px-5 py-3.5"
+              >
+                <div
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+                  style={{
+                    backgroundColor:
+                      item.type === 'application' ? '#EFF6FF' : '#FFF5F0',
+                  }}
+                >
+                  {item.type === 'application' ? (
+                    <User
+                      className="h-4 w-4"
+                      style={{ color: '#3B82F6' }}
+                    />
+                  ) : (
+                    <Briefcase
+                      className="h-4 w-4"
+                      style={{ color: '#E8501C' }}
+                    />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-slate-900">
+                    {item.title}
+                  </p>
+                  <p className="truncate text-xs text-slate-500">
+                    {item.subtitle}
+                  </p>
+                </div>
+                <span className="shrink-0 flex items-center gap-1 text-xs text-slate-400">
+                  <CalendarDays className="h-3 w-3" />
+                  {formatDate(item.date)}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

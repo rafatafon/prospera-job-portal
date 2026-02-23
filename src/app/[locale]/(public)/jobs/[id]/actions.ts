@@ -43,6 +43,12 @@ function validatePdfFile(
 export async function submitApplication(
   formData: FormData,
 ): Promise<{ error: string } | { success: true }> {
+  // Normalize LinkedIn URL: prepend https:// if missing
+  const linkedinRaw = formData.get('linkedin_url') as string;
+  if (linkedinRaw && !linkedinRaw.startsWith('http')) {
+    formData.set('linkedin_url', `https://${linkedinRaw}`);
+  }
+
   // 1. Parse and validate text fields
   const parsed = applicationSchema.safeParse({
     full_name: formData.get('full_name'),
@@ -120,6 +126,7 @@ export async function submitApplication(
 
   // 9. Insert application row
   const { error: insertError } = await supabase.from('applications').insert({
+    id: applicationId,
     job_id: jobId,
     full_name: parsed.data.full_name,
     email: parsed.data.email,
