@@ -8,10 +8,12 @@ import type { User } from '@supabase/supabase-js';
 
 interface HeaderProps {
   user: User | null;
+  userRole?: 'user' | 'company' | 'admin' | null;
   showLogin?: boolean;
 }
 
-export async function Header({ user, showLogin = true }: HeaderProps) {
+export async function Header({ user, userRole, showLogin = true }: HeaderProps) {
+  const dashboardHref = userRole === 'admin' ? '/admin' : '/dashboard';
   const t = await getTranslations('common');
 
   return (
@@ -91,7 +93,7 @@ export async function Header({ user, showLogin = true }: HeaderProps) {
               style={{ backgroundColor: '#E8501C' }}
               className="rounded-full px-6 text-white hover:opacity-90"
             >
-              <Link href={user ? '/dashboard' : '/login'}>
+              <Link href={user ? dashboardHref : '/login'}>
                 {user ? t('dashboard') : t('companyLogin')}
               </Link>
             </Button>
@@ -100,7 +102,7 @@ export async function Header({ user, showLogin = true }: HeaderProps) {
 
         {/* Mobile right section — burger menu only (Company Login lives inside the menu) */}
         <div className="flex items-center md:hidden">
-          <MobileMenu user={user} />
+          <MobileMenu user={user} userRole={userRole} />
         </div>
       </div>
     </header>

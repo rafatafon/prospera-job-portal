@@ -14,9 +14,11 @@ import type { User } from '@supabase/supabase-js';
 
 interface MobileMenuProps {
   user: User | null;
+  userRole?: 'user' | 'company' | 'admin' | null;
 }
 
-export function MobileMenu({ user }: MobileMenuProps) {
+export function MobileMenu({ user, userRole }: MobileMenuProps) {
+  const dashboardHref = userRole === 'admin' ? '/admin' : '/dashboard';
   const [open, setOpen] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const t = useTranslations('common');
@@ -99,7 +101,7 @@ export function MobileMenu({ user }: MobileMenuProps) {
         <div className="mt-auto border-t border-slate-200 px-6 py-6">
           <div className="flex justify-end">
             <Link
-              href={user ? '/dashboard' : '/login'}
+              href={user ? dashboardHref : '/login'}
               onClick={() => setOpen(false)}
               className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
             >

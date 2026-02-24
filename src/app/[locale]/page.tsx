@@ -34,6 +34,16 @@ export default async function LandingPage({
     data: { user },
   } = await supabase.auth.getUser();
 
+  let userRole: 'user' | 'company' | 'admin' | null = null;
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+    userRole = profile?.role ?? null;
+  }
+
   const t = await getTranslations('landing');
   const tCommon = await getTranslations('common');
   const tJobs = await getTranslations('jobs');
@@ -63,7 +73,7 @@ export default async function LandingPage({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header user={user} showLogin={false} />
+      <Header user={user} userRole={userRole} showLogin={false} />
       <main className="flex-1">
         {/* Hero */}
         <section

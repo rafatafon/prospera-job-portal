@@ -12,9 +12,19 @@ export default async function PublicLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
+  let userRole: 'user' | 'company' | 'admin' | null = null;
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+    userRole = profile?.role ?? null;
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
-      <Header user={user} />
+      <Header user={user} userRole={userRole} />
       <main className="flex-1">{children}</main>
       <Footer />
     </div>
