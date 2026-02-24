@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
+import { toDateLocale } from '@/lib/locale';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import {
@@ -114,7 +115,7 @@ export default async function DashboardPage({
 
   function formatDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString(
-      locale === 'es' ? 'es-HN' : 'en-US',
+      toDateLocale(locale),
       { year: 'numeric', month: 'short', day: 'numeric' }
     );
   }
@@ -168,7 +169,7 @@ export default async function DashboardPage({
       {/* No company warning */}
       {!companyId && (
         <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-          Tu cuenta no esta asociada a una empresa. Contacta al administrador.
+          {t('noCompanyWarning')}
         </div>
       )}
 

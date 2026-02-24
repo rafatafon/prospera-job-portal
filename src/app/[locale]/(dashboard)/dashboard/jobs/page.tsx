@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { redirect, notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
+import { toDateLocale } from '@/lib/locale';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { JobStatusBadge } from '@/components/jobs/JobStatusBadge';
@@ -12,20 +13,13 @@ type JobStatus = Database['public']['Enums']['job_status'];
 type EmploymentType = Database['public']['Enums']['employment_type'];
 type WorkMode = Database['public']['Enums']['work_mode'];
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('es-HN', {
+function formatDate(dateStr: string, locale: string) {
+  return new Date(dateStr).toLocaleDateString(toDateLocale(locale), {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
 }
-
-const STATUS_TABS: Array<{ key: JobStatus | 'all'; label: string }> = [
-  { key: 'all', label: 'Todos' },
-  { key: 'draft', label: 'Borrador' },
-  { key: 'published', label: 'Publicados' },
-  { key: 'archived', label: 'Archivados' },
-];
 
 export default async function DashboardJobsPage({
   params,
@@ -85,6 +79,14 @@ export default async function DashboardJobsPage({
 
   const jobList = jobs ?? [];
 
+  // Build status tabs dynamically with translations
+  const statusTabs: Array<{ key: JobStatus | 'all'; label: string }> = [
+    { key: 'all', label: t('all') },
+    { key: 'draft', label: t('draft') },
+    { key: 'published', label: t('published') },
+    { key: 'archived', label: t('archived') },
+  ];
+
   // Build employment type label map with translations
   const typeLabels: Record<EmploymentType, string> = {
     full_time: tJobs('fullTime'),
@@ -115,7 +117,7 @@ export default async function DashboardJobsPage({
           <p className="mt-1 text-sm text-slate-500">
             {jobList.length === 0
               ? t('noJobs')
-              : `${jobList.length} empleo${jobList.length !== 1 ? 's' : ''}`}
+              : t(jobList.length === 1 ? 'jobCount' : 'jobCountPlural', { count: jobList.length })}
           </p>
         </div>
         <Button
@@ -133,7 +135,7 @@ export default async function DashboardJobsPage({
 
       {/* Status tabs */}
       <div className="mt-6 flex items-center gap-0.5 overflow-x-auto border-b border-slate-200 pb-0">
-        {STATUS_TABS.map((tab) => {
+        {statusTabs.map((tab) => {
           const isActive = tab.key === 'all' ? !activeStatus : tab.key === activeStatus;
           return (
             <Link
@@ -172,7 +174,7 @@ export default async function DashboardJobsPage({
               {t('noJobs')}
             </h3>
             <p className="mt-1 text-sm text-slate-400">
-              Empieza creando tu primer empleo.
+              {t('getStarted')}
             </p>
             <Button
               asChild
@@ -239,7 +241,7 @@ export default async function DashboardJobsPage({
                       </span>
                       <span className="flex items-center gap-1">
                         <CalendarDays className="h-3 w-3" />
-                        {formatDate(job.created_at)}
+                        {formatDate(job.created_at, locale)}
                       </span>
                     </div>
                   </div>

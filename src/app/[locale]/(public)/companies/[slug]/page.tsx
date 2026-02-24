@@ -21,6 +21,7 @@ export default async function CompanyProfilePage({
   const t = await getTranslations('companies');
   const tCommon = await getTranslations('common');
   const tJobs = await getTranslations('jobs');
+  const tJobCard = await getTranslations('jobCard');
 
   const supabase = await createClient();
 
@@ -101,8 +102,8 @@ export default async function CompanyProfilePage({
                   <span className="flex items-center gap-1.5 text-sm text-slate-500">
                     <Briefcase className="h-4 w-4" />
                     {jobList.length > 0
-                      ? `${jobList.length} empleo${jobList.length !== 1 ? 's' : ''} activo${jobList.length !== 1 ? 's' : ''}`
-                      : 'Sin empleos activos'}
+                      ? t(jobList.length === 1 ? 'activeJobCount' : 'activeJobCountPlural', { count: jobList.length })
+                      : t('noActiveJobs')}
                   </span>
 
                   {/* Website */}
@@ -138,7 +139,7 @@ export default async function CompanyProfilePage({
             </h2>
             {jobList.length > 0 && (
               <span className="text-sm text-slate-400">
-                {jobList.length} resultado{jobList.length !== 1 ? 's' : ''}
+                {t(jobList.length === 1 ? 'resultCount' : 'resultCountPlural', { count: jobList.length })}
               </span>
             )}
           </div>
@@ -152,7 +153,7 @@ export default async function CompanyProfilePage({
                 <Briefcase className="h-6 w-6" style={{ color: '#E8501C' }} />
               </div>
               <p className="mt-3 text-sm text-slate-500">
-                Esta empresa no tiene empleos activos en este momento.
+                {t('noActiveJobsDetail')}
               </p>
               <Button
                 asChild
@@ -175,6 +176,13 @@ export default async function CompanyProfilePage({
                     logo_url: company.logo_url,
                   }}
                   typeLabel={typeLabels[job.employment_type]}
+                  locale={locale}
+                  dateLabels={{
+                    today: tJobCard('today'),
+                    yesterday: tJobCard('yesterday'),
+                    daysAgo: tJobCard('daysAgo'),
+                    weeksAgo: tJobCard('weeksAgo'),
+                  }}
                 />
               ))}
             </div>

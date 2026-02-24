@@ -1,5 +1,6 @@
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
+import { toDateLocale } from '@/lib/locale';
 import type { Database } from '@/types/database.types';
 import { MapPin, Clock } from 'lucide-react';
 
@@ -31,6 +32,16 @@ const WORK_MODE_STYLE: Record<WorkMode, { bg: string; text: string }> = {
   hybrid: { bg: '#eff6ff', text: '#1e40af' },
 };
 
+/** Pre-translated relative date labels passed from the parent server component */
+export interface JobCardDateLabels {
+  today: string;
+  yesterday: string;
+  /** Template string with `{count}` placeholder, e.g. "Hace {count} dias" */
+  daysAgo: string;
+  /** Template string with `{count}` placeholder, e.g. "Hace {count} sem." */
+  weeksAgo: string;
+}
+
 interface JobCardProps {
   job: {
     id: string;
@@ -50,23 +61,48 @@ interface JobCardProps {
   typeLabel: string;
   /** Pre-translated work mode label */
   workModeLabel?: string;
+  /** Locale string used for locale-aware date formatting */
+  locale?: string;
+  /** Pre-translated labels for relative date display */
+  dateLabels?: JobCardDateLabels;
 }
 
-function formatRelativeDate(dateStr: string | null): string {
+function formatRelativeDate(
+  dateStr: string | null,
+  locale: string,
+  labels?: JobCardDateLabels,
+): string {
   if (!dateStr) return '';
   const date = new Date(dateStr);
   const now = new Date();
   const diffDays = Math.floor(
     (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24),
   );
-  if (diffDays === 0) return 'Hoy';
-  if (diffDays === 1) return 'Ayer';
-  if (diffDays < 7) return `Hace ${diffDays} dias`;
-  if (diffDays < 30) return `Hace ${Math.floor(diffDays / 7)} sem.`;
-  return date.toLocaleDateString('es-HN', { month: 'short', day: 'numeric' });
+  if (diffDays === 0) return labels?.today ?? 'Today';
+  if (diffDays === 1) return labels?.yesterday ?? 'Yesterday';
+  if (diffDays < 7) {
+    const template = labels?.daysAgo ?? '__count__ days ago';
+    return template.replace('__count__', String(diffDays));
+  }
+  if (diffDays < 30) {
+    const weeks = Math.floor(diffDays / 7);
+    const template = labels?.weeksAgo ?? '__count__w ago';
+    return template.replace('__count__', String(weeks));
+  }
+  return date.toLocaleDateString(toDateLocale(locale), {
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
-export function JobCard({ job, company, typeLabel, workModeLabel }: JobCardProps) {
+export function JobCard({
+  job,
+  company,
+  typeLabel,
+  workModeLabel,
+  locale = 'es',
+  dateLabels,
+}: JobCardProps) {
   const accent = TYPE_ACCENT[job.employment_type];
   const typeBg = TYPE_BG[job.employment_type];
   const typeText = TYPE_TEXT[job.employment_type];
@@ -124,7 +160,11 @@ export function JobCard({ job, company, typeLabel, workModeLabel }: JobCardProps
               )}
               <span className="flex items-center gap-1 text-xs text-slate-400">
                 <Clock className="h-3 w-3 shrink-0" />
-                {formatRelativeDate(job.published_at ?? job.created_at)}
+                {formatRelativeDate(
+                  job.published_at ?? job.created_at,
+                  locale,
+                  dateLabels,
+                )}
               </span>
               {/* Employment type badge */}
               <span

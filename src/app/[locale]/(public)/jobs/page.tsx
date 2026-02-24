@@ -26,6 +26,7 @@ export default async function JobsPage({
 
   const t = await getTranslations('jobs');
   const tCommon = await getTranslations('common');
+  const tJobCard = await getTranslations('jobCard');
 
   const supabase = await createClient();
 
@@ -74,7 +75,7 @@ export default async function JobsPage({
           </h1>
           <p className="mt-2 text-slate-500">
             {jobList.length > 0
-              ? `${jobList.length} empleo${jobList.length !== 1 ? 's' : ''} disponible${jobList.length !== 1 ? 's' : ''}`
+              ? t(jobList.length === 1 ? 'jobCount' : 'jobCountPlural', { count: jobList.length })
               : t('noJobs')}
           </p>
 
@@ -122,6 +123,13 @@ export default async function JobsPage({
                   company={company}
                   typeLabel={typeLabels[job.employment_type]}
                   workModeLabel={workModeLabels[job.work_mode]}
+                  locale={locale}
+                  dateLabels={{
+                    today: tJobCard('today'),
+                    yesterday: tJobCard('yesterday'),
+                    daysAgo: tJobCard('daysAgo'),
+                    weeksAgo: tJobCard('weeksAgo'),
+                  }}
                 />
               );
             })}

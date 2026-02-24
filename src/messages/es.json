@@ -25,7 +25,8 @@
     "close": "Cerrar",
     "showMore": "Ver mas",
     "companyLogin": "Acceso empresa",
-    "adminLogin": "Admin"
+    "adminLogin": "Admin",
+    "siteDescription": "Encuentra tu proximo empleo en Honduras"
   },
   "landing": {
     "heroTitle": "Encuentra tu proximo empleo en las empresas que forman parte de Prospera",
@@ -49,7 +50,9 @@
     "onSite": "Presencial",
     "remote": "Remoto",
     "hybrid": "Hibrido",
-    "allWorkModes": "Todas las modalidades"
+    "allWorkModes": "Todas las modalidades",
+    "jobCount": "{count} empleo disponible",
+    "jobCountPlural": "{count} empleos disponibles"
   },
   "jobDetail": {
     "description": "Descripcion del puesto",
@@ -58,14 +61,21 @@
     "type": "Tipo de empleo",
     "workMode": "Modalidad",
     "postedDate": "Fecha de publicacion",
-    "company": "Empresa"
+    "company": "Empresa",
+    "details": "Detalles del puesto"
   },
   "companies": {
     "title": "Empresas",
     "viewJobs": "Ver empleos",
     "noCompanies": "No hay empresas registradas",
     "website": "Sitio web",
-    "jobCount": "{count, plural, =0 {Sin empleos} one {# empleo} other {# empleos}}"
+    "jobCount": "{count, plural, =0 {Sin empleos} one {# empleo} other {# empleos}}",
+    "activeJobCount": "{count} empleo activo",
+    "activeJobCountPlural": "{count} empleos activos",
+    "noActiveJobs": "Sin empleos activos",
+    "noActiveJobsDetail": "Esta empresa no tiene empleos activos en este momento.",
+    "resultCount": "{count} resultado",
+    "resultCountPlural": "{count} resultados"
   },
   "login": {
     "title": "Portal empresarial",
@@ -85,7 +95,8 @@
     "recentActivity": "Actividad reciente",
     "appliedTo": "aplico a {jobTitle}",
     "noActivity": "No hay actividad reciente",
-    "jobCreated": "Empleo creado"
+    "jobCreated": "Empleo creado",
+    "noCompanyWarning": "Tu cuenta no esta asociada a una empresa. Contacta al administrador."
   },
   "dashboardJobs": {
     "title": "Gestionar empleos",
@@ -98,7 +109,11 @@
     "confirmPublish": "Estas seguro de que deseas publicar este empleo?",
     "confirmArchive": "Estas seguro de que deseas archivar este empleo?",
     "confirmDelete": "Estas seguro de que deseas eliminar este empleo? Esta accion no se puede deshacer.",
-    "noJobs": "Aun no has creado ningun empleo"
+    "noJobs": "Aun no has creado ningun empleo",
+    "all": "Todos",
+    "jobCount": "{count} empleo",
+    "jobCountPlural": "{count} empleos",
+    "getStarted": "Empieza creando tu primer empleo."
   },
   "jobForm": {
     "title": "Crear nuevo empleo",
@@ -111,7 +126,14 @@
     "employmentType": "Tipo de empleo",
     "workMode": "Modalidad",
     "saveDraft": "Guardar como borrador",
-    "creating": "Creando..."
+    "creating": "Creando...",
+    "saveDraftHelper": "puedes publicarlo despues."
+  },
+  "jobCard": {
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "daysAgo": "Hace __count__ dias",
+    "weeksAgo": "Hace __count__ sem."
   },
   "admin": {
     "loginTitle": "Acceso administrador",
@@ -156,6 +178,8 @@
     "coverLetter": "Carta",
     "download": "Descargar",
     "noApplications": "Aun no has recibido aplicaciones",
-    "linkedin": "LinkedIn"
+    "linkedin": "LinkedIn",
+    "count": "{count} aplicacion",
+    "countPlural": "{count} aplicaciones"
   }
 }

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
+import { toDateLocale } from '@/lib/locale';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -16,8 +17,8 @@ import {
 type EmploymentType = Database['public']['Enums']['employment_type'];
 type WorkMode = Database['public']['Enums']['work_mode'];
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('es-HN', {
+function formatDate(dateStr: string, locale: string) {
+  return new Date(dateStr).toLocaleDateString(toDateLocale(locale), {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -159,7 +160,7 @@ export default async function JobDetailPage({
                   {job.published_at && (
                     <span className="flex items-center gap-1.5 text-sm text-slate-500">
                       <CalendarDays className="h-4 w-4" />
-                      {formatDate(job.published_at)}
+                      {formatDate(job.published_at, locale)}
                     </span>
                   )}
                 </div>
@@ -174,9 +175,10 @@ export default async function JobDetailPage({
                 </h2>
               </div>
               <div className="p-6">
-                <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
-                  {job.description}
-                </p>
+                <div
+                  className="prose prose-sm prose-slate max-w-none"
+                  dangerouslySetInnerHTML={{ __html: job.description }}
+                />
               </div>
             </div>
           </div>
@@ -189,7 +191,7 @@ export default async function JobDetailPage({
             {/* Job details card */}
             <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
               <h3 className="mb-4 text-sm font-semibold text-slate-700">
-                Detalles del puesto
+                {t('details')}
               </h3>
               <dl className="space-y-3">
                 <div className="flex items-start gap-3">
@@ -238,7 +240,7 @@ export default async function JobDetailPage({
                         {t('postedDate')}
                       </dt>
                       <dd className="mt-0.5 text-sm text-slate-700">
-                        {formatDate(job.published_at)}
+                        {formatDate(job.published_at, locale)}
                       </dd>
                     </div>
                   </div>

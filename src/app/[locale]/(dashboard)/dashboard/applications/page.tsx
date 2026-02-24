@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { redirect, notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
+import { toDateLocale } from '@/lib/locale';
 import { getCountryName } from '@/lib/countries';
 import {
   FileText,
@@ -14,7 +15,7 @@ import {
 } from 'lucide-react';
 
 function formatDate(dateStr: string, locale: string) {
-  return new Date(dateStr).toLocaleDateString(locale === 'es' ? 'es-HN' : 'en-US', {
+  return new Date(dateStr).toLocaleDateString(toDateLocale(locale), {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -90,7 +91,7 @@ export default async function DashboardApplicationsPage({
         <p className="mt-1 text-sm text-slate-500">
           {appList.length === 0
             ? t('noApplications')
-            : `${appList.length} ${appList.length === 1 ? (locale === 'es' ? 'aplicacion' : 'application') : (locale === 'es' ? 'aplicaciones' : 'applications')}`}
+            : t(appList.length === 1 ? 'count' : 'countPlural', { count: appList.length })}
         </p>
       </div>
 

@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import {
   Select,
   SelectContent,
@@ -26,6 +26,7 @@ export function JobForm() {
   // Track selected values for the hidden input pattern with Select
   const [employmentType, setEmploymentType] = useState<string>('full_time');
   const [workMode, setWorkMode] = useState<string>('on_site');
+  const [description, setDescription] = useState<string>('');
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,6 +36,7 @@ export function JobForm() {
     // natively submit as a form field
     formData.set('employment_type', employmentType);
     formData.set('work_mode', workMode);
+    formData.set('description', description);
 
     startTransition(async () => {
       const result = await createJob(locale, formData);
@@ -52,7 +54,7 @@ export function JobForm() {
           {t('title')}
         </h1>
         <p className="mt-1 text-sm text-slate-500">
-          {t('saveDraft')} &mdash; puedes publicarlo despues.
+          {t('saveDraft')} &mdash; {t('saveDraftHelper')}
         </p>
       </div>
 
@@ -87,27 +89,17 @@ export function JobForm() {
 
             {/* Description */}
             <div className="space-y-1.5">
-              <Label
-                htmlFor="description"
-                className="text-sm font-medium text-slate-700"
-              >
+              <Label className="text-sm font-medium text-slate-700">
                 {t('descriptionField')}
                 <span className="ml-1 text-red-500" aria-hidden="true">
                   *
                 </span>
               </Label>
-              <Textarea
-                id="description"
-                name="description"
-                required
-                minLength={10}
+              <RichTextEditor
+                content={description}
+                onChange={setDescription}
                 placeholder={t('descriptionPlaceholder')}
                 disabled={isPending}
-                rows={8}
-                className="[field-sizing:fixed] max-h-80 resize-y border-slate-200 bg-white focus-visible:ring-1 leading-relaxed"
-                style={
-                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
-                }
               />
             </div>
 

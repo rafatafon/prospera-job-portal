@@ -37,6 +37,7 @@ export default async function LandingPage({
   const t = await getTranslations('landing');
   const tCommon = await getTranslations('common');
   const tJobs = await getTranslations('jobs');
+  const tJobCard = await getTranslations('jobCard');
 
   // Fetch latest published jobs for the featured section
   const { data: featuredJobs } = await supabase
@@ -154,6 +155,13 @@ export default async function LandingPage({
                     company={company}
                     typeLabel={typeLabels[job.employment_type]}
                     workModeLabel={workModeLabels[job.work_mode]}
+                    locale={locale}
+                    dateLabels={{
+                      today: tJobCard('today'),
+                      yesterday: tJobCard('yesterday'),
+                      daysAgo: tJobCard('daysAgo'),
+                      weeksAgo: tJobCard('weeksAgo'),
+                    }}
                   />
                 );
               })}

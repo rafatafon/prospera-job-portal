@@ -25,7 +25,8 @@
     "close": "Close",
     "showMore": "Show more",
     "companyLogin": "Company Login",
-    "adminLogin": "Admin"
+    "adminLogin": "Admin",
+    "siteDescription": "Find your next job in Honduras"
   },
   "landing": {
     "heroTitle": "Find your next job in the companies that form part of Prospera",
@@ -49,7 +50,9 @@
     "onSite": "On-site",
     "remote": "Remote",
     "hybrid": "Hybrid",
-    "allWorkModes": "All work modes"
+    "allWorkModes": "All work modes",
+    "jobCount": "{count} job available",
+    "jobCountPlural": "{count} jobs available"
   },
   "jobDetail": {
     "description": "Job description",
@@ -58,14 +61,21 @@
     "type": "Job type",
     "workMode": "Work mode",
     "postedDate": "Posted date",
-    "company": "Company"
+    "company": "Company",
+    "details": "Job details"
   },
   "companies": {
     "title": "Companies",
     "viewJobs": "View jobs",
     "noCompanies": "No companies registered",
     "website": "Website",
-    "jobCount": "{count, plural, =0 {No jobs} one {# job} other {# jobs}}"
+    "jobCount": "{count, plural, =0 {No jobs} one {# job} other {# jobs}}",
+    "activeJobCount": "{count} active job",
+    "activeJobCountPlural": "{count} active jobs",
+    "noActiveJobs": "No active jobs",
+    "noActiveJobsDetail": "This company has no active jobs at the moment.",
+    "resultCount": "{count} result",
+    "resultCountPlural": "{count} results"
   },
   "login": {
     "title": "Company Portal",
@@ -85,7 +95,8 @@
     "recentActivity": "Recent activity",
     "appliedTo": "applied to {jobTitle}",
     "noActivity": "No recent activity",
-    "jobCreated": "Job created"
+    "jobCreated": "Job created",
+    "noCompanyWarning": "Your account is not associated with a company. Contact the administrator."
   },
   "dashboardJobs": {
     "title": "Manage jobs",
@@ -98,7 +109,11 @@
     "confirmPublish": "Are you sure you want to publish this job?",
     "confirmArchive": "Are you sure you want to archive this job?",
     "confirmDelete": "Are you sure you want to delete this job? This action cannot be undone.",
-    "noJobs": "You haven't created any jobs yet"
+    "noJobs": "You haven't created any jobs yet",
+    "all": "All",
+    "jobCount": "{count} job",
+    "jobCountPlural": "{count} jobs",
+    "getStarted": "Get started by creating your first job."
   },
   "jobForm": {
     "title": "Create new job",
@@ -111,7 +126,14 @@
     "employmentType": "Employment type",
     "workMode": "Work mode",
     "saveDraft": "Save as draft",
-    "creating": "Creating..."
+    "creating": "Creating...",
+    "saveDraftHelper": "you can publish it later."
+  },
+  "jobCard": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "daysAgo": "__count__ days ago",
+    "weeksAgo": "__count__w ago"
   },
   "admin": {
     "loginTitle": "Admin Login",
@@ -156,6 +178,8 @@
     "coverLetter": "Cover letter",
     "download": "Download",
     "noApplications": "You haven't received any applications yet",
-    "linkedin": "LinkedIn"
+    "linkedin": "LinkedIn",
+    "count": "{count} application",
+    "countPlural": "{count} applications"
   }
 }
