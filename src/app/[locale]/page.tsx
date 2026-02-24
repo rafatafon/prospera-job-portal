@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getUser } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/Header';
@@ -30,9 +30,7 @@ export default async function LandingPage({
   setRequestLocale(locale);
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser(supabase);
 
   let userRole: 'user' | 'company' | 'admin' | null = null;
   if (user) {

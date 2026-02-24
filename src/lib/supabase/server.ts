@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import type { Database } from '@/types/database.types';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export async function createClient() {
   const cookieStore = await cookies();
@@ -27,4 +28,20 @@ export async function createClient() {
       },
     },
   );
+}
+
+/**
+ * Safe wrapper around supabase.auth.getUser() that catches stale-session
+ * errors (e.g. "Refresh Token Not Found") and returns null instead of throwing.
+ */
+export async function getUser(supabase: SupabaseClient<Database>) {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user;
+  } catch {
+    // Stale refresh token in cookies — treat as unauthenticated
+    return null;
+  }
 }
