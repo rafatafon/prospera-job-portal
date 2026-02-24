@@ -70,7 +70,7 @@ export function DashboardSidebar() {
             alt="Prospera"
             width={20}
             height={20}
-            className="h-5 w-5"
+            className="h-5 w-5 brightness-0 invert"
           />
           <span className="text-lg font-bold tracking-tight text-white">
             Prospera
