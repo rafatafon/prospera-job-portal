@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { AdminSidebar } from '@/components/layout/AdminSidebar';
+import { AdminTopBar } from '@/components/layout/AdminTopBar';
 
 export default async function AdminLayout({
   children,
@@ -42,13 +43,7 @@ export default async function AdminLayout({
       {/* Main area */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top bar */}
-        <div
-          className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6"
-        >
-          <span className="text-sm font-medium text-slate-500">
-            {user.email}
-          </span>
-        </div>
+        <AdminTopBar userEmail={user.email ?? null} locale={locale} />
 
         <main className="flex-1 overflow-y-auto">
           {children}

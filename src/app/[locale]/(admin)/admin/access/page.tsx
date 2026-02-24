@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { UserAccessControls } from '@/components/admin/UserAccessControls';
+import { CreateUserForm } from '@/components/admin/CreateUserForm';
 import { Users } from 'lucide-react';
 
 type UserRole = 'user' | 'company' | 'admin';
@@ -59,16 +60,19 @@ export default async function AdminAccessPage({
   return (
     <div className="p-6 lg:p-8">
       {/* Page header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-          {t('title')}
-        </h1>
-        <p className="mt-1 text-sm text-slate-500">{t('subtitle')}</p>
-        <p className="mt-2 text-xs text-slate-400">
-          {t(profiles.length === 1 ? 'userCount' : 'userCountPlural', {
-            count: profiles.length,
-          })}
-        </p>
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            {t('title')}
+          </h1>
+          <p className="mt-1 text-sm text-slate-500">{t('subtitle')}</p>
+          <p className="mt-2 text-xs text-slate-400">
+            {t(profiles.length === 1 ? 'userCount' : 'userCountPlural', {
+              count: profiles.length,
+            })}
+          </p>
+        </div>
+        <CreateUserForm companies={companies} />
       </div>
 
       {profiles.length === 0 ? (

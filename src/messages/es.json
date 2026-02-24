@@ -213,7 +213,16 @@
     "roleAdmin": "Administrador",
     "selectCompany": "Seleccionar empresa",
     "userCount": "{count} usuario",
-    "userCountPlural": "{count} usuarios"
+    "userCountPlural": "{count} usuarios",
+    "createUser": "Crear usuario",
+    "createUserTitle": "Crear nuevo usuario",
+    "createUserDescription": "Crear una nueva cuenta de usuario con correo y contrasena.",
+    "password": "Contrasena",
+    "passwordHint": "Minimo 8 caracteres",
+    "emailPlaceholder": "usuario@ejemplo.com",
+    "creating": "Creando...",
+    "userCreated": "Usuario creado exitosamente.",
+    "createUserError": "Error al crear el usuario."
   },
   "applicationForm": {
     "title": "Aplicar a este puesto",

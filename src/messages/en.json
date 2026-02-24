@@ -213,7 +213,16 @@
     "roleAdmin": "Admin",
     "selectCompany": "Select company",
     "userCount": "{count} user",
-    "userCountPlural": "{count} users"
+    "userCountPlural": "{count} users",
+    "createUser": "Create user",
+    "createUserTitle": "Create new user",
+    "createUserDescription": "Create a new user account with email and password.",
+    "password": "Password",
+    "passwordHint": "Minimum 8 characters",
+    "emailPlaceholder": "user@example.com",
+    "creating": "Creating...",
+    "userCreated": "User created successfully.",
+    "createUserError": "Failed to create user."
   },
   "applicationForm": {
     "title": "Apply for this position",
