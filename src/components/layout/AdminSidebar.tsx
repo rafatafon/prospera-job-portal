@@ -4,7 +4,7 @@ import { usePathname } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { LayoutDashboard, Building2, Briefcase } from 'lucide-react';
+import { LayoutDashboard, Building2, Briefcase, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NavItem {
@@ -31,21 +31,26 @@ const NAV_ITEMS: NavItem[] = [
     href: '/admin/jobs',
     icon: Briefcase,
   },
+  {
+    labelKey: 'access',
+    href: '/admin/access',
+    icon: ShieldCheck,
+  },
 ];
-
-const LABEL_MAP: Record<string, string> = {
-  overview: 'Overview',
-  companies: 'Companies',
-  jobs: 'Jobs',
-};
 
 export function AdminSidebar() {
   const pathname = usePathname();
   const tAdmin = useTranslations('admin');
+  const tCompanies = useTranslations('adminCompanies');
+  const tJobs = useTranslations('adminJobs');
+  const tAccess = useTranslations('adminAccess');
 
   function getLabel(key: string): string {
     if (key === 'overview') return tAdmin('title');
-    return LABEL_MAP[key] ?? key;
+    if (key === 'companies') return tCompanies('title');
+    if (key === 'jobs') return tJobs('title');
+    if (key === 'access') return tAccess('title');
+    return key;
   }
 
   function isActive(item: NavItem) {

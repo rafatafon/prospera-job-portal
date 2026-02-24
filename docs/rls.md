@@ -35,6 +35,19 @@
 | UPDATE | - | own company | any |
 | DELETE | - | own company | any |
 
+### storage.objects (company-logos bucket)
+
+| Operation | anon | company | admin |
+|-----------|------|---------|-------|
+| SELECT | yes (public bucket) | yes (public bucket) | yes |
+| INSERT | - | - | yes (`is_admin()`) |
+| UPDATE | - | - | yes (`is_admin()`) |
+| DELETE | - | - | yes (`is_admin()`) |
+
+**Policies:**
+- `Public can read company logos` -- SELECT for anyone where `bucket_id = 'company-logos'`
+- `Admins can manage company logos` -- ALL for admins where `bucket_id = 'company-logos' AND is_admin()`
+
 ## Performance Patterns
 
 All policy checks wrap helper functions in `(select ...)` for initPlan optimization:

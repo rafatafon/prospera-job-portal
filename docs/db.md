@@ -21,6 +21,7 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 | role | user_role | default 'user' |
 | company_id | uuid nullable | FK -> companies ON DELETE SET NULL |
 | full_name | text | from user_metadata at signup |
+| email | text nullable | copied from auth.users on signup |
 | avatar_url | text | |
 | created_at | timestamptz | |
 | updated_at | timestamptz | auto-updated via trigger |
@@ -73,7 +74,14 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 | `is_admin()` | boolean | Whether current user is admin |
 | `get_my_company_id()` | uuid | Current user's company_id from profiles |
 | `set_updated_at()` | trigger | Auto-sets updated_at on UPDATE |
-| `handle_new_user()` | trigger | Auto-creates profile on auth.users INSERT |
+| `handle_new_user()` | trigger | Auto-creates profile on auth.users INSERT (copies id, full_name, email) |
+
+## Storage Buckets
+
+| Bucket | Public | Read Policy | Write Policy |
+|--------|--------|-------------|--------------|
+| `application-documents` | false | Admins + company owners of the related job | Anon (via public form) |
+| `company-logos` | true | Anyone (public bucket) | Admins only (`is_admin()`) |
 
 ## Migrations Applied
 
@@ -81,3 +89,9 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 2. `create_tables` - all 3 tables + indexes + triggers
 3. `create_rls_policies` - RLS enabled + all policies
 4. `fix_set_updated_at_search_path` - set search_path on set_updated_at
+5. `create_applications_table` - applications table for job submissions
+6. `create_applications_storage_bucket` - storage bucket for application documents
+7. `fix_applications_storage_rls_policy` - fix RLS on application documents
+8. `add_work_mode_to_jobs` - work_mode enum (on_site, remote, hybrid) on jobs
+9. `add_email_to_profiles` - email column on profiles, backfill from auth.users, updated trigger
+10. `create_company_logos_bucket` - public storage bucket for company logos with admin-only writes
