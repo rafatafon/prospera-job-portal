@@ -1,11 +1,11 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
-import Image from 'next/image';
 import { toDateLocale } from '@/lib/locale';
 import { AdminJobActionButtons } from '@/components/admin/AdminJobActionButtons';
+import { CompanyLogo } from '@/components/ui/company-logo';
 import type { Database } from '@/types/database.types';
-import { Briefcase, MapPin, Building2, CalendarDays } from 'lucide-react';
+import { Briefcase, MapPin, CalendarDays } from 'lucide-react';
 
 type JobStatus = Database['public']['Enums']['job_status'];
 type EmploymentType = Database['public']['Enums']['employment_type'];
@@ -186,19 +186,11 @@ export default async function AdminJobsPage({
                     <div className="min-w-0 flex-1">
                       {/* Company row */}
                       <div className="mb-1.5 flex items-center gap-1.5">
-                        {company?.logo_url ? (
-                          <Image
-                            src={company.logo_url}
-                            alt={company.name}
-                            width={20}
-                            height={20}
-                            className="h-5 w-5 rounded-sm object-contain"
-                          />
-                        ) : (
-                          <div className="flex h-5 w-5 items-center justify-center rounded-sm bg-slate-100">
-                            <Building2 className="h-3 w-3 text-slate-400" />
-                          </div>
-                        )}
+                        <CompanyLogo
+                          name={company?.name ?? ''}
+                          logoUrl={company?.logo_url ?? null}
+                          size="xs"
+                        />
                         <span className="text-xs font-medium text-slate-500">
                           {company?.name ?? t('company')}
                         </span>

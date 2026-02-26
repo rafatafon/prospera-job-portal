@@ -2,8 +2,8 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { toDateLocale } from '@/lib/locale';
 import { Link } from '@/i18n/navigation';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { CompanyLogo } from '@/components/ui/company-logo';
 import type { Database } from '@/types/database.types';
 import { ApplicationForm } from '@/components/jobs/ApplicationForm';
 import {
@@ -105,19 +105,11 @@ export default async function JobDetailPage({
               <div className="p-6">
                 {/* Company + logo row */}
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50">
-                    {company?.logo_url ? (
-                      <Image
-                        src={company.logo_url}
-                        alt={company.name}
-                        width={48}
-                        height={48}
-                        className="h-full w-full object-contain"
-                      />
-                    ) : (
-                      <Building2 className="h-6 w-6 text-slate-400" />
-                    )}
-                  </div>
+                  <CompanyLogo
+                    name={company?.name ?? ''}
+                    logoUrl={company?.logo_url ?? null}
+                    size="md"
+                  />
                   <div>
                     {company && (
                       <Link

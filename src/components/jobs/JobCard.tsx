@@ -1,6 +1,6 @@
 import { Link } from '@/i18n/navigation';
-import Image from 'next/image';
 import { toDateLocale } from '@/lib/locale';
+import { CompanyLogo } from '@/components/ui/company-logo';
 import type { Database } from '@/types/database.types';
 import { MapPin, Clock } from 'lucide-react';
 
@@ -119,24 +119,11 @@ export function JobCard({
 
         <div className="flex items-start gap-3 p-4 sm:gap-4 sm:p-5">
           {/* Company logo */}
-          <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50 sm:h-12 sm:w-12"
-            aria-hidden="true"
-          >
-            {company?.logo_url ? (
-              <Image
-                src={company.logo_url}
-                alt={company.name}
-                width={48}
-                height={48}
-                className="h-full w-full object-contain"
-              />
-            ) : (
-              <span className="text-sm font-bold text-slate-400 sm:text-base">
-                {(company?.name ?? 'E').charAt(0).toUpperCase()}
-              </span>
-            )}
-          </div>
+          <CompanyLogo
+            name={company?.name ?? 'E'}
+            logoUrl={company?.logo_url ?? null}
+            size="sm"
+          />
 
           {/* Content */}
           <div className="min-w-0 flex-1">

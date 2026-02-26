@@ -1,12 +1,12 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { JobCard } from '@/components/jobs/JobCard';
+import { CompanyLogo } from '@/components/ui/company-logo';
 import type { Database } from '@/types/database.types';
-import { Globe, Briefcase, Building2, ArrowLeft } from 'lucide-react';
+import { Globe, Briefcase, ArrowLeft } from 'lucide-react';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
 
@@ -77,19 +77,11 @@ export default async function CompanyProfilePage({
           <div className="p-6 sm:p-8">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
               {/* Logo */}
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
-                {company.logo_url ? (
-                  <Image
-                    src={company.logo_url}
-                    alt={company.name}
-                    width={80}
-                    height={80}
-                    className="h-full w-full object-contain"
-                  />
-                ) : (
-                  <Building2 className="h-9 w-9 text-slate-400" />
-                )}
-              </div>
+              <CompanyLogo
+                name={company.name}
+                logoUrl={company.logo_url}
+                size="lg"
+              />
 
               {/* Company info */}
               <div className="flex-1">

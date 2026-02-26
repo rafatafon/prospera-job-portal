@@ -1,9 +1,9 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { CompanyActionButtons } from '@/components/admin/CompanyActionButtons';
+import { CompanyLogo } from '@/components/ui/company-logo';
 import {
   Building2,
   Plus,
@@ -119,21 +119,12 @@ export default async function AdminCompaniesPage({
                     {/* Company info */}
                     <div className="flex min-w-0 flex-1 items-center gap-3">
                       {/* Logo */}
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50">
-                        {company.logo_url ? (
-                          <Image
-                            src={company.logo_url}
-                            alt={company.name}
-                            width={40}
-                            height={40}
-                            className="h-full w-full object-contain"
-                          />
-                        ) : (
-                          <span className="text-sm font-bold text-slate-400">
-                            {company.name.charAt(0).toUpperCase()}
-                          </span>
-                        )}
-                      </div>
+                      <CompanyLogo
+                        name={company.name}
+                        logoUrl={company.logo_url}
+                        size="sm"
+                        className="h-10 w-10 sm:h-10 sm:w-10"
+                      />
 
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
