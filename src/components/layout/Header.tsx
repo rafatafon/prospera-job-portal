@@ -44,7 +44,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
           >
             <Link
               href="/jobs"
-              className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-white/60 hover:text-slate-900"
+              className="rounded-full px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white/60 hover:text-slate-700"
             >
               {t('jobs')}
             </Link>
@@ -53,7 +53,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
             <div className="group relative">
               <button
                 type="button"
-                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-white/60 hover:text-slate-900"
+                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white/60 hover:text-slate-700"
               >
                 {t('business')}
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:rotate-180" />

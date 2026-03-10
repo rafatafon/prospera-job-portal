@@ -75,7 +75,7 @@ export default async function LandingPage({
       <Header user={user} userRole={userRole} showLogin={false} />
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative -mt-20 overflow-hidden pt-20 min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh]">
+        <section className="relative -mt-20 flex min-h-[80vh] flex-col overflow-hidden pt-20 sm:min-h-[85vh] lg:min-h-screen">
           {/* Background image */}
           <Image
             src="/hero-image/hero-job-prospera.avif"
@@ -102,11 +102,11 @@ export default async function LandingPage({
             aria-hidden="true"
           />
 
-          <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+          <div className="relative mt-auto mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-28">
             <div className="max-w-3xl">
 
               {/* Headline */}
-              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 drop-shadow-sm sm:text-5xl lg:text-6xl">
+              <h1 className="text-5xl font-normal leading-[1.1] tracking-tight text-slate-900 drop-shadow-sm sm:text-6xl lg:text-7xl">
                 {t('heroTitle')}
               </h1>
 
