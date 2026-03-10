@@ -39,6 +39,7 @@ yarn-error.log*
 
 # claude agent memory (session-specific)
 .claude/agent-memory/
+.claude/settings.json
 
 # dev screenshots / artifacts
 landing-page.png
