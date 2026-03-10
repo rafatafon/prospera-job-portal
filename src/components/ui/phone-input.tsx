@@ -83,11 +83,11 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
 
     // Set default calling code on first focus if no value yet
     const handleFocus = useCallback(() => {
-      if (!hasInitialized && defaultCountry && (!value || value === "+")) {
+      if (!hasInitialized && defaultCountry && (!value || value === "+" || value === "+ ")) {
         const callingCode = getCallingCode(defaultCountry);
         if (callingCode) {
           const syntheticEvent = {
-            target: { value: callingCode },
+            target: { value: callingCode + " " },
           } as React.ChangeEvent<HTMLInputElement>;
           onChange?.(syntheticEvent);
           setHasInitialized(true);
@@ -119,7 +119,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           }
         }
 
-        const newValue = nationalPart ? callingCode + nationalPart : callingCode;
+        const newValue = nationalPart ? callingCode + " " + nationalPart : callingCode + " ";
 
         const syntheticEvent = {
           target: { value: newValue },
@@ -148,9 +148,10 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           setDisplayFlag(parsed.country.toLowerCase());
           setSelectedCountryAlpha2(parsed.country);
 
+          const formatted = "+" + parsed.countryCallingCode + " " + parsed.nationalNumber;
           const syntheticEvent = {
             ...e,
-            target: { ...e.target, value: parsed.number },
+            target: { ...e.target, value: formatted },
           } as React.ChangeEvent<HTMLInputElement>;
           onChange?.(syntheticEvent);
         } else {
@@ -302,7 +303,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           type="tel"
           autoComplete="tel"
           disabled={disabled}
-          className="flex w-full border-none bg-transparent text-sm transition-colors placeholder:text-muted-foreground outline-none h-10 py-1 px-2 leading-none disabled:cursor-not-allowed"
+          className="flex w-full border-none bg-transparent text-sm transition-colors placeholder:text-muted-foreground outline-none h-10 py-1 pl-3 pr-2 leading-none disabled:cursor-not-allowed"
           {...props}
         />
       </div>
