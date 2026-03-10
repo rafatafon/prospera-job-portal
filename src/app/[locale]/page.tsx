@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { JobCard } from '@/components/jobs/JobCard';
 import { ArrowRight, Briefcase } from 'lucide-react';
+import Image from 'next/image';
 import type { Database } from '@/types/database.types';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
@@ -74,41 +75,43 @@ export default async function LandingPage({
       <Header user={user} userRole={userRole} showLogin={false} />
       <main className="flex-1">
         {/* Hero */}
-        <section
-          className="relative -mt-20 overflow-hidden pt-20"
-          style={{
-            background:
-              'linear-gradient(135deg, #FFF8F5 0%, #ffffff 50%, #FFFBF8 100%)',
-          }}
-        >
-          {/* Decorative grid */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                'linear-gradient(#E8501C 1px, transparent 1px), linear-gradient(to right, #E8501C 1px, transparent 1px)',
-              backgroundSize: '48px 48px',
-            }}
+        <section className="relative -mt-20 overflow-hidden pt-20 min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh]">
+          {/* Background image */}
+          <Image
+            src="/hero-image/hero-job-prospera.avif"
+            alt=""
+            fill
+            priority
+            className="object-cover"
             aria-hidden="true"
           />
 
-          {/* Decorative blob */}
+          {/* Light overlay for text readability */}
           <div
-            className="pointer-events-none absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full opacity-10 blur-3xl"
-            style={{ backgroundColor: '#E8501C' }}
+            className="pointer-events-none absolute inset-0 bg-white/40"
+            aria-hidden="true"
+          />
+
+          {/* Bottom gradient fade to white */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[40%]"
+            style={{
+              background:
+                'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,1) 100%)',
+            }}
             aria-hidden="true"
           />
 
           <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
             <div className="max-w-3xl">
-              
+
               {/* Headline */}
-              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 drop-shadow-sm sm:text-5xl lg:text-6xl">
                 {t('heroTitle')}
               </h1>
 
               {/* Sub-headline */}
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:text-xl">
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-700 drop-shadow-sm sm:text-xl">
                 {t('heroSubtitle')}
               </p>
 
