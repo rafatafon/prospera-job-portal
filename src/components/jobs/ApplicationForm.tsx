@@ -189,7 +189,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
         <p className="mt-0.5 text-xs text-slate-400">{t('subtitle')}</p>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="scrollbar-visible max-h-[calc(100vh-12rem)]">
         <div className="space-y-5 px-6 py-5">
           {/* Full name */}
           <div className="space-y-1.5">
