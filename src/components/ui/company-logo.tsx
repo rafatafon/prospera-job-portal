@@ -13,28 +13,32 @@ interface CompanyLogoProps {
 
 const SIZE_CONFIG = {
   xs: {
-    container: 'h-5 w-5 p-0.5 rounded',
+    container: 'h-5 w-5 rounded',
+    fallbackPadding: 'p-0.5',
     imagePx: 20,
     fallbackIcon: 'h-2.5 w-2.5',
     fallbackText: 'text-[8px] font-bold',
     fallbackType: 'icon' as const,
   },
   sm: {
-    container: 'h-10 w-10 sm:h-12 sm:w-12 p-1.5 rounded-lg',
+    container: 'h-10 w-10 sm:h-12 sm:w-12 rounded-lg',
+    fallbackPadding: 'p-1.5',
     imagePx: 48,
     fallbackIcon: 'h-4 w-4 sm:h-5 sm:w-5',
     fallbackText: 'text-sm font-bold sm:text-base',
     fallbackType: 'initial' as const,
   },
   md: {
-    container: 'h-12 w-12 p-1.5 rounded-lg',
+    container: 'h-12 w-12 rounded-lg',
+    fallbackPadding: 'p-1.5',
     imagePx: 48,
     fallbackIcon: 'h-6 w-6',
     fallbackText: 'text-base font-bold',
     fallbackType: 'icon' as const,
   },
   lg: {
-    container: 'h-20 w-20 p-2 rounded-xl',
+    container: 'h-20 w-20 rounded-xl',
+    fallbackPadding: 'p-2',
     imagePx: 80,
     fallbackIcon: 'h-9 w-9',
     fallbackText: 'text-xl font-bold',
@@ -42,6 +46,7 @@ const SIZE_CONFIG = {
   },
 } satisfies Record<CompanyLogoSize, {
   container: string;
+  fallbackPadding: string;
   imagePx: number;
   fallbackIcon: string;
   fallbackText: string;
@@ -61,6 +66,7 @@ export function CompanyLogo({
       className={cn(
         'flex shrink-0 items-center justify-center overflow-hidden border border-slate-100 bg-slate-50',
         config.container,
+        !logoUrl && config.fallbackPadding,
         className,
       )}
       aria-hidden="true"
@@ -71,7 +77,7 @@ export function CompanyLogo({
           alt={name}
           width={config.imagePx}
           height={config.imagePx}
-          className="max-h-full max-w-full object-contain"
+          className="h-full w-full object-cover"
         />
       ) : config.fallbackType === 'icon' ? (
         <Building2 className={cn('text-slate-400', config.fallbackIcon)} />
