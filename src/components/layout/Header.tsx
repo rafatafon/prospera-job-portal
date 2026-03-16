@@ -49,6 +49,15 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
               {t('jobs')}
             </Link>
 
+            {userRole === 'company' && (
+              <Link
+                href="/talent"
+                className="rounded-full px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white/60 hover:text-slate-700"
+              >
+                {t('openTalent')}
+              </Link>
+            )}
+
             {/* Business dropdown — CSS hover */}
             <div className="group relative">
               <button
@@ -84,9 +93,9 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
           </nav>
         </div>
 
-        {/* Desktop CTA — orange pill, pinned right */}
-        {(user || showLogin) && (
-          <div className="absolute right-0 hidden md:flex">
+        {/* Desktop CTA — always render container for stable hydration */}
+        <div className="absolute right-0 hidden md:flex">
+          {(user || showLogin) && (
             <Button
               asChild
               size="sm"
@@ -97,8 +106,8 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
                 {user ? t('dashboard') : t('companyLogin')}
               </Link>
             </Button>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Mobile right section — burger menu only (Company Login lives inside the menu) */}
         <div className="flex items-center md:hidden">

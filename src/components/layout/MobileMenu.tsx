@@ -63,6 +63,15 @@ export function MobileMenu({ user, userRole }: MobileMenuProps) {
           >
             {t('jobs')}
           </Link>
+          {userRole === 'company' && (
+            <Link
+              href="/talent"
+              onClick={() => setOpen(false)}
+              className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+            >
+              {t('openTalent')}
+            </Link>
+          )}
           <a
             href="https://www.prospera.co/en/business"
             target="_blank"

@@ -64,6 +64,60 @@ export type Database = {
           },
         ]
       }
+      candidates: {
+        Row: {
+          availability: Database["public"]["Enums"]["candidate_availability"]
+          bio: string | null
+          created_at: string
+          cv_path: string | null
+          full_name: string
+          headline: string | null
+          id: string
+          is_visible: boolean
+          linkedin_url: string | null
+          location: string | null
+          photo_url: string | null
+          skills: string[]
+          updated_at: string
+          user_id: string
+          years_of_experience: number | null
+        }
+        Insert: {
+          availability?: Database["public"]["Enums"]["candidate_availability"]
+          bio?: string | null
+          created_at?: string
+          cv_path?: string | null
+          full_name: string
+          headline?: string | null
+          id?: string
+          is_visible?: boolean
+          linkedin_url?: string | null
+          location?: string | null
+          photo_url?: string | null
+          skills?: string[]
+          updated_at?: string
+          user_id: string
+          years_of_experience?: number | null
+        }
+        Update: {
+          availability?: Database["public"]["Enums"]["candidate_availability"]
+          bio?: string | null
+          created_at?: string
+          cv_path?: string | null
+          full_name?: string
+          headline?: string | null
+          id?: string
+          is_visible?: boolean
+          linkedin_url?: string | null
+          location?: string | null
+          photo_url?: string | null
+          skills?: string[]
+          updated_at?: string
+          user_id?: string
+          years_of_experience?: number | null
+        }
+        Relationships: []
+      }
       companies: {
         Row: {
           created_at: string
@@ -207,6 +261,10 @@ export type Database = {
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
+      candidate_availability:
+        | "actively_looking"
+        | "open_to_offers"
+        | "not_available"
       employment_type: "full_time" | "part_time" | "contract"
       job_status: "draft" | "published" | "archived"
       user_role: "user" | "company" | "admin"
@@ -338,6 +396,11 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      candidate_availability: [
+        "actively_looking",
+        "open_to_offers",
+        "not_available",
+      ],
       employment_type: ["full_time", "part_time", "contract"],
       job_status: ["draft", "published", "archived"],
       user_role: ["user", "company", "admin"],

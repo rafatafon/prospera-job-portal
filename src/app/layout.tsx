@@ -1,14 +1,21 @@
-/**
- * Root layout — minimal pass-through.
- *
- * The actual <html> and <body> tags, fonts, and providers are defined in
- * `src/app/[locale]/layout.tsx`. This root layout exists only because
- * Next.js requires one at the `app/` level.
- */
+import { Inter } from 'next/font/google';
+import './globals.css';
+
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+});
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <html suppressHydrationWarning>
+      <body className={`${inter.variable} antialiased`}>
+        {children}
+      </body>
+    </html>
+  );
 }

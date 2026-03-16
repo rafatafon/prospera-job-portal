@@ -1,0 +1,229 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { createClient, getUser } from '@/lib/supabase/server';
+import { redirect, notFound } from 'next/navigation';
+import { Link } from '@/i18n/navigation';
+import Image from 'next/image';
+import {
+  ArrowLeft,
+  MapPin,
+  Briefcase,
+  Linkedin,
+  Download,
+  User,
+  Calendar,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import type { Database } from '@/types/database.types';
+
+type CandidateAvailability = Database['public']['Enums']['candidate_availability'];
+
+const AVAILABILITY_COLORS = {
+  actively_looking: 'bg-green-50 text-green-700 border-green-200',
+  open_to_offers: 'bg-amber-50 text-amber-700 border-amber-200',
+  not_available: 'bg-slate-50 text-slate-500 border-slate-200',
+} as const;
+
+export default async function CandidateDetailPage({
+  params,
+}: {
+  params: Promise<{ locale: string; id: string }>;
+}) {
+  const { locale, id } = await params;
+  setRequestLocale(locale);
+
+  const supabase = await createClient();
+  const user = await getUser(supabase);
+
+  if (!user) {
+    redirect(`/${locale}/login`);
+  }
+
+  // Only company and admin users
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single();
+
+  if (profile?.role !== 'company' && profile?.role !== 'admin') {
+    redirect(`/${locale}/jobs`);
+  }
+
+  const t = await getTranslations('talent');
+
+  // Fetch candidate
+  const { data: candidate } = await supabase
+    .from('candidates')
+    .select('*')
+    .eq('id', id)
+    .eq('is_visible', true)
+    .single();
+
+  if (!candidate) {
+    notFound();
+  }
+
+  // Generate signed URL for CV download
+  let cvUrl: string | null = null;
+  if (candidate.cv_path) {
+    const { data: signedData } = await supabase.storage
+      .from('candidate-cvs')
+      .createSignedUrl(candidate.cv_path, 120);
+    cvUrl = signedData?.signedUrl ?? null;
+  }
+
+  const availabilityLabels: Record<CandidateAvailability, string> = {
+    actively_looking: t('activelyLooking'),
+    open_to_offers: t('openToOffers'),
+    not_available: t('notAvailable'),
+  };
+
+  const joinedDate = new Date(candidate.created_at).toLocaleDateString(
+    locale === 'es' ? 'es-HN' : 'en-US',
+    { year: 'numeric', month: 'long' },
+  );
+
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
+      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+        {/* Back link */}
+        <Link
+          href="/talent"
+          className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition-colors hover:text-slate-800"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          {t('backToTalent')}
+        </Link>
+
+        {/* Profile card */}
+        <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div
+            className="h-1.5 w-full rounded-t-xl"
+            style={{ backgroundColor: '#E8501C' }}
+            aria-hidden="true"
+          />
+
+          <div className="p-6 sm:p-8">
+            {/* Header row */}
+            <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start">
+              {candidate.photo_url ? (
+                <Image
+                  src={candidate.photo_url}
+                  alt={candidate.full_name}
+                  width={96}
+                  height={96}
+                  className="h-24 w-24 shrink-0 rounded-full object-cover"
+                />
+              ) : (
+                <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-slate-100">
+                  <User className="h-10 w-10 text-slate-400" />
+                </div>
+              )}
+
+              <div className="text-center sm:text-left">
+                <h1 className="text-2xl font-bold text-slate-900">
+                  {candidate.full_name}
+                </h1>
+                {candidate.headline && (
+                  <p className="mt-1 text-base text-slate-500">
+                    {candidate.headline}
+                  </p>
+                )}
+
+                {/* Badges */}
+                <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
+                  <span
+                    className={`rounded-full border px-3 py-1 text-xs font-medium ${AVAILABILITY_COLORS[candidate.availability]}`}
+                  >
+                    {availabilityLabels[candidate.availability]}
+                  </span>
+                </div>
+
+                {/* Meta */}
+                <div className="mt-3 flex flex-wrap justify-center gap-4 text-sm text-slate-400 sm:justify-start">
+                  {candidate.location && (
+                    <span className="flex items-center gap-1.5">
+                      <MapPin className="h-4 w-4" />
+                      {candidate.location}
+                    </span>
+                  )}
+                  {candidate.years_of_experience != null && (
+                    <span className="flex items-center gap-1.5">
+                      <Briefcase className="h-4 w-4" />
+                      {t('yearsExperience').replace(
+                        '__count__',
+                        String(candidate.years_of_experience),
+                      )}
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="h-4 w-4" />
+                    {joinedDate}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Bio */}
+            {candidate.bio && (
+              <div className="mt-8">
+                <h2 className="text-sm font-semibold text-slate-700">{t('bio')}</h2>
+                <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-600">
+                  {candidate.bio}
+                </p>
+              </div>
+            )}
+
+            {/* Skills */}
+            {candidate.skills.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-sm font-semibold text-slate-700">
+                  {t('skills')}
+                </h2>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {candidate.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-600"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {cvUrl && (
+                <Button asChild className="gap-2 text-white hover:opacity-90" style={{ backgroundColor: '#E8501C' }}>
+                  <a href={cvUrl} target="_blank" rel="noopener noreferrer">
+                    <Download className="h-4 w-4" />
+                    {t('downloadCV')}
+                  </a>
+                </Button>
+              )}
+
+              {candidate.linkedin_url && (
+                <Button asChild variant="outline" className="gap-2">
+                  <a
+                    href={
+                      candidate.linkedin_url.startsWith('http')
+                        ? candidate.linkedin_url
+                        : `https://${candidate.linkedin_url}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                    {t('linkedin')}
+                  </a>
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
