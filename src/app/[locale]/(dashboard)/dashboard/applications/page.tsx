@@ -53,7 +53,8 @@ export default async function DashboardApplicationsPage({
 
   const { data: applications } = await supabase
     .from('applications')
-    .select('*, jobs(title, id)')
+    .select('*, jobs!inner(title, id, company_id)')
+    .eq('jobs.company_id', profile.company_id)
     .order('created_at', { ascending: false });
 
   const appList = applications ?? [];

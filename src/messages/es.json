@@ -25,6 +25,8 @@
     "close": "Cerrar",
     "showMore": "Ver mas",
     "companyLogin": "Acceso empresa",
+    "candidateLogin": "Acceso candidato",
+    "myProfile": "Mi Perfil",
     "adminLogin": "Admin",
     "siteDescription": "Encuentra tu proximo empleo en Honduras",
     "openTalent": "Talento Abierto"
@@ -310,7 +312,9 @@
     "errorCVSize": "El archivo debe ser menor a 5 MB",
     "activelyLooking": "Buscando activamente",
     "openToOffers": "Abierto a ofertas",
-    "notAvailable": "No disponible"
+    "notAvailable": "No disponible",
+    "sidebarTitle": "Candidato",
+    "sidebarProfile": "Mi Perfil"
   },
   "candidateAuth": {
     "loginTitle": "Acceso candidato",
@@ -330,6 +334,7 @@
     "signupLink": "Registrate aqui",
     "loginLink": "Inicia sesion",
     "errorGeneric": "Error de autenticacion",
+    "errorCandidateOnly": "Esta cuenta no es de candidato. Por favor use el acceso de empresa.",
     "passwordMismatch": "Las contraseñas no coinciden",
     "passwordMinLength": "La contraseña debe tener al menos 6 caracteres"
   },

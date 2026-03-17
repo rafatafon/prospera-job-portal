@@ -24,7 +24,7 @@ export function CandidateLoginForm() {
       const result = await candidateLogin(locale, formData);
       if (result?.error) {
         if (result.error === 'candidate_only') {
-          setError(t('errorGeneric'));
+          setError(t('errorCandidateOnly'));
         } else {
           setError(result.error);
         }

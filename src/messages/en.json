@@ -25,6 +25,8 @@
     "close": "Close",
     "showMore": "Show more",
     "companyLogin": "Company Login",
+    "candidateLogin": "Candidate Login",
+    "myProfile": "My Profile",
     "adminLogin": "Admin",
     "siteDescription": "Find your next job in Honduras",
     "openTalent": "Open Talent"
@@ -310,7 +312,9 @@
     "errorCVSize": "File must be less than 5 MB",
     "activelyLooking": "Actively looking",
     "openToOffers": "Open to offers",
-    "notAvailable": "Not available"
+    "notAvailable": "Not available",
+    "sidebarTitle": "Candidate",
+    "sidebarProfile": "My Profile"
   },
   "candidateAuth": {
     "loginTitle": "Candidate login",
@@ -330,6 +334,7 @@
     "signupLink": "Sign up here",
     "loginLink": "Log in",
     "errorGeneric": "Authentication error",
+    "errorCandidateOnly": "This account is not a candidate account. Please use Company Login.",
     "passwordMismatch": "Passwords don't match",
     "passwordMinLength": "Password must be at least 6 characters"
   },

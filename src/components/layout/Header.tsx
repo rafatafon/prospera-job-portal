@@ -94,19 +94,45 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
         </div>
 
         {/* Desktop CTA — always render container for stable hydration */}
-        <div className="absolute right-0 hidden md:flex">
-          {(user || showLogin) && (
-            <Button
-              asChild
-              size="sm"
-              style={{ backgroundColor: '#E8501C' }}
-              className="rounded-full px-6 text-white hover:opacity-90"
-            >
-              <Link href={user ? dashboardHref : '/login'}>
-                {user ? t('dashboard') : t('companyLogin')}
+        <div className="absolute right-0 hidden items-center gap-3 md:flex">
+          {user ? (
+            userRole === 'user' ? (
+              <Button
+                asChild
+                size="sm"
+                style={{ backgroundColor: '#E8501C' }}
+                className="rounded-full px-6 text-white hover:opacity-90"
+              >
+                <Link href="/candidate/profile">{t('myProfile')}</Link>
+              </Button>
+            ) : (
+              <Button
+                asChild
+                size="sm"
+                style={{ backgroundColor: '#E8501C' }}
+                className="rounded-full px-6 text-white hover:opacity-90"
+              >
+                <Link href={dashboardHref}>{t('dashboard')}</Link>
+              </Button>
+            )
+          ) : showLogin ? (
+            <>
+              <Link
+                href="/candidate/login"
+                className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
+              >
+                {t('candidateLogin')}
               </Link>
-            </Button>
-          )}
+              <Button
+                asChild
+                size="sm"
+                style={{ backgroundColor: '#E8501C' }}
+                className="rounded-full px-6 text-white hover:opacity-90"
+              >
+                <Link href="/login">{t('companyLogin')}</Link>
+              </Button>
+            </>
+          ) : null}
         </div>
 
         {/* Mobile right section — burger menu only (Company Login lives inside the menu) */}

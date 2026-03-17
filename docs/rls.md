@@ -35,6 +35,17 @@
 | UPDATE | - | own company | any |
 | DELETE | - | own company | any |
 
+### applications
+
+| Operation | anon | user (role='user') | company | admin |
+|-----------|------|--------------------|---------|-------|
+| SELECT | - | - | own company's jobs only (app-level filter) | all |
+| INSERT | yes (public form) | yes | - | - |
+| UPDATE | - | - | - | any |
+| DELETE | - | - | - | any |
+
+**Note:** Application-level filtering (`jobs.company_id = profile.company_id`) is enforced in the dashboard query. RLS policies should be added as defense-in-depth in a future migration.
+
 ### candidates
 
 | Operation | anon | user (role='user') | company | admin |
