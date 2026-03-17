@@ -9,6 +9,7 @@ import { upsertCandidateProfile } from '@/app/[locale]/candidate/profile/actions
 import { AlertCircle, CheckCircle, Loader2, X, Upload } from 'lucide-react';
 import Image from 'next/image';
 import type { Database } from '@/types/database.types';
+import { PhotoCropDialog } from '@/components/candidates/PhotoCropDialog';
 
 type CandidateRow = Database['public']['Tables']['candidates']['Row'];
 
@@ -25,6 +26,9 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
   const [skillInput, setSkillInput] = useState('');
   const [photoPreview, setPhotoPreview] = useState<string | null>(candidate?.photo_url ?? null);
   const [isVisible, setIsVisible] = useState(candidate?.is_visible ?? true);
+  const [cropDialogOpen, setCropDialogOpen] = useState(false);
+  const [rawImageSrc, setRawImageSrc] = useState<string | null>(null);
+  const [croppedFile, setCroppedFile] = useState<File | null>(null);
 
   function addSkill() {
     const trimmed = skillInput.trim();
@@ -49,9 +53,18 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => setPhotoPreview(reader.result as string);
+      reader.onloadend = () => {
+        setRawImageSrc(reader.result as string);
+        setCropDialogOpen(true);
+      };
       reader.readAsDataURL(file);
     }
+  }
+
+  function handleCropConfirm(file: File) {
+    setCroppedFile(file);
+    setPhotoPreview(URL.createObjectURL(file));
+    setCropDialogOpen(false);
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -62,6 +75,9 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
     const formData = new FormData(event.currentTarget);
     formData.set('skills', skills.join(','));
     formData.set('is_visible', isVisible ? 'true' : 'false');
+    if (croppedFile) {
+      formData.set('photo', croppedFile);
+    }
 
     startTransition(async () => {
       const result = await upsertCandidateProfile(formData);
@@ -84,13 +100,22 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
         <Label className="text-sm font-medium text-slate-700">{t('photo')}</Label>
         <div className="flex items-center gap-4">
           {photoPreview ? (
-            <Image
-              src={photoPreview}
-              alt=""
-              width={64}
-              height={64}
-              className="h-16 w-16 rounded-full object-cover"
-            />
+            <button
+              type="button"
+              onClick={() => {
+                if (rawImageSrc) setCropDialogOpen(true);
+              }}
+              className={rawImageSrc ? 'cursor-pointer' : ''}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photoPreview}
+                alt=""
+                width={64}
+                height={64}
+                className="h-16 w-16 rounded-full object-cover"
+              />
+            </button>
           ) : (
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-slate-400">
               <Upload className="h-6 w-6" />
@@ -108,6 +133,14 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
             <p className="mt-1 text-xs text-slate-400">{t('photoHint')}</p>
           </div>
         </div>
+        {rawImageSrc && (
+          <PhotoCropDialog
+            open={cropDialogOpen}
+            onOpenChange={setCropDialogOpen}
+            imageSrc={rawImageSrc}
+            onCropComplete={handleCropConfirm}
+          />
+        )}
       </div>
 
       {/* Full name */}
