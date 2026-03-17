@@ -119,7 +119,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
             <>
               <Link
                 href="/candidate/login"
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
+                className="rounded-full border border-white/60 bg-white/75 px-4 py-2 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
               >
                 {t('candidateLogin')}
               </Link>
