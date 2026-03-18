@@ -356,6 +356,14 @@
     "noApplications": "You haven't received any applications yet",
     "linkedin": "LinkedIn",
     "count": "{count} application",
-    "countPlural": "{count} applications"
+    "countPlural": "{count} applications",
+    "statusPending": "Pending",
+    "statusReviewed": "Reviewed",
+    "statusInterested": "Interested",
+    "statusDenied": "Denied",
+    "markReviewed": "Reviewed",
+    "markInterested": "Interested",
+    "markDenied": "Denied",
+    "filterAll": "All"
   }
 }

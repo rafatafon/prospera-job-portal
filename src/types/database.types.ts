@@ -27,6 +27,8 @@ export type Database = {
           phone_country_code: string
           phone_number: string
           resume_path: string
+          status: Database["public"]["Enums"]["application_status"]
+          updated_at: string | null
         }
         Insert: {
           country: string
@@ -40,6 +42,8 @@ export type Database = {
           phone_country_code: string
           phone_number: string
           resume_path: string
+          status?: Database["public"]["Enums"]["application_status"]
+          updated_at?: string | null
         }
         Update: {
           country?: string
@@ -53,6 +57,8 @@ export type Database = {
           phone_country_code?: string
           phone_number?: string
           resume_path?: string
+          status?: Database["public"]["Enums"]["application_status"]
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -261,6 +267,7 @@ export type Database = {
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
+      application_status: "pending" | "reviewed" | "interested" | "denied"
       candidate_availability:
         | "actively_looking"
         | "open_to_offers"
@@ -396,6 +403,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      application_status: ["pending", "reviewed", "interested", "denied"],
       candidate_availability: [
         "actively_looking",
         "open_to_offers",

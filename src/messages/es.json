@@ -356,6 +356,14 @@
     "noApplications": "Aun no has recibido aplicaciones",
     "linkedin": "LinkedIn",
     "count": "{count} aplicacion",
-    "countPlural": "{count} aplicaciones"
+    "countPlural": "{count} aplicaciones",
+    "statusPending": "Pendiente",
+    "statusReviewed": "Revisado",
+    "statusInterested": "Interesado",
+    "statusDenied": "Rechazado",
+    "markReviewed": "Revisado",
+    "markInterested": "Interesado",
+    "markDenied": "Rechazado",
+    "filterAll": "Todos"
   }
 }
