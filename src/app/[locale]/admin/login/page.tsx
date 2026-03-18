@@ -19,7 +19,7 @@ export default async function AdminLoginPage({
       {/* Left — hero image panel */}
       <div className="relative hidden h-48 shrink-0 overflow-hidden sm:block sm:h-56 lg:h-auto lg:w-1/2">
         <Image
-          src="/duna-tower.avif"
+          src="/login-image/duna-tower.avif"
           alt=""
           fill
           priority
@@ -45,7 +45,7 @@ export default async function AdminLoginPage({
               style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
             >
               <Image
-                src="/prospera-icon.svg"
+                src="/prospera-logo/prospera-icon.svg"
                 alt="Prospera"
                 width={20}
                 height={20}
@@ -80,7 +80,7 @@ export default async function AdminLoginPage({
           <div className="mb-8 flex items-center gap-2.5 sm:hidden">
             <Link href="/" className="flex items-center gap-2.5">
               <Image
-                src="/prospera-icon.svg"
+                src="/prospera-logo/prospera-icon.svg"
                 alt="Prospera"
                 width={28}
                 height={28}

@@ -28,7 +28,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}
           >
             <Image
-              src="/prospera-icon.svg"
+              src="/prospera-logo/prospera-icon.svg"
               alt="Prospera"
               width={22}
               height={22}
