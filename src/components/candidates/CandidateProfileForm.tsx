@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { upsertCandidateProfile } from '@/app/[locale]/candidate/profile/actions';
-import { AlertCircle, CheckCircle, Loader2, X, Upload } from 'lucide-react';
+import { AlertCircle, CheckCircle, Loader2, Upload } from 'lucide-react';
 import Image from 'next/image';
 import type { Database } from '@/types/database.types';
 import { PhotoCropDialog } from '@/components/candidates/PhotoCropDialog';
+import { SkillsAutocomplete } from '@/components/candidates/SkillsAutocomplete';
 
 type CandidateRow = Database['public']['Tables']['candidates']['Row'];
 
@@ -23,31 +24,11 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [skills, setSkills] = useState<string[]>(candidate?.skills ?? []);
-  const [skillInput, setSkillInput] = useState('');
   const [photoPreview, setPhotoPreview] = useState<string | null>(candidate?.photo_url ?? null);
   const [isVisible, setIsVisible] = useState(candidate?.is_visible ?? true);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [rawImageSrc, setRawImageSrc] = useState<string | null>(null);
   const [croppedFile, setCroppedFile] = useState<File | null>(null);
-
-  function addSkill() {
-    const trimmed = skillInput.trim();
-    if (trimmed && !skills.includes(trimmed)) {
-      setSkills([...skills, trimmed]);
-    }
-    setSkillInput('');
-  }
-
-  function removeSkill(skill: string) {
-    setSkills(skills.filter((s) => s !== skill));
-  }
-
-  function handleSkillKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addSkill();
-    }
-  }
 
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -214,31 +195,9 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
       {/* Skills */}
       <div className="space-y-1.5">
         <Label className="text-sm font-medium text-slate-700">{t('skills')}</Label>
-        <div className="flex flex-wrap gap-2">
-          {skills.map((skill) => (
-            <span
-              key={skill}
-              className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700"
-            >
-              {skill}
-              <button
-                type="button"
-                onClick={() => removeSkill(skill)}
-                className="text-slate-400 hover:text-slate-600"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </span>
-          ))}
-        </div>
-        <Input
-          type="text"
-          value={skillInput}
-          onChange={(e) => setSkillInput(e.target.value)}
-          onKeyDown={handleSkillKeyDown}
-          placeholder={t('skillsPlaceholder')}
-          className={inputClasses}
-          style={ringStyle}
+        <SkillsAutocomplete
+          skills={skills}
+          onSkillsChange={setSkills}
           disabled={isPending}
         />
       </div>
