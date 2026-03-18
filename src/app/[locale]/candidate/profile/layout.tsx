@@ -3,6 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { CandidateSidebar } from '@/components/layout/CandidateSidebar';
 import { CandidateTopBar } from '@/components/layout/CandidateTopBar';
+import { IdleTimeoutProvider } from '@/components/session/IdleTimeoutProvider';
 
 export default async function CandidateProfileLayout({
   children,
@@ -34,19 +35,21 @@ export default async function CandidateProfileLayout({
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
-      {/* Sidebar — desktop */}
-      <div className="hidden w-56 shrink-0 md:flex md:flex-col">
-        <CandidateSidebar />
-      </div>
+    <IdleTimeoutProvider locale={locale} loginPath="/candidate/login">
+      <div className="flex h-screen overflow-hidden bg-slate-50">
+        {/* Sidebar — desktop */}
+        <div className="hidden w-56 shrink-0 md:flex md:flex-col">
+          <CandidateSidebar />
+        </div>
 
-      {/* Main area */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <CandidateTopBar userEmail={user.email ?? null} locale={locale} />
-        <main className="flex-1 overflow-y-auto">
-          {children}
-        </main>
+        {/* Main area */}
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <CandidateTopBar userEmail={user.email ?? null} locale={locale} />
+          <main className="flex-1 overflow-y-auto">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </IdleTimeoutProvider>
   );
 }

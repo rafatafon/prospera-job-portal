@@ -10,5 +10,7 @@ export async function POST(
 
   await supabase.auth.signOut();
 
-  return NextResponse.redirect(new URL(`/${locale}`, request.url));
+  const response = NextResponse.redirect(new URL(`/${locale}`, request.url));
+  response.cookies.delete('session_started_at');
+  return response;
 }

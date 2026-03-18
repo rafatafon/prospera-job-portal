@@ -365,5 +365,12 @@
     "markInterested": "Interested",
     "markDenied": "Denied",
     "filterAll": "All"
+  },
+  "session": {
+    "expiringTitle": "Session Expiring",
+    "expiringMessage": "Your session will expire soon due to inactivity.",
+    "stayLoggedIn": "Stay Logged In",
+    "expired": "Your session has expired. Please log in again.",
+    "logOut": "Log Out"
   }
 }

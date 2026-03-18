@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 
 export async function login(
   locale: string,
@@ -46,5 +47,15 @@ export async function login(
   }
 
   revalidatePath('/', 'layout');
+
+  const cookieStore = await cookies();
+  cookieStore.set('session_started_at', Date.now().toString(), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 86400,
+  });
+
   redirect(`/${locale}/dashboard`);
 }

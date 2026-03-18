@@ -36,5 +36,15 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return { supabaseResponse, user };
+  // Check absolute session timeout (24h)
+  const sessionStarted = request.cookies.get('session_started_at')?.value;
+  let sessionExpired = false;
+  if (user && sessionStarted) {
+    const elapsed = Date.now() - parseInt(sessionStarted, 10);
+    if (elapsed > 24 * 60 * 60 * 1000) {
+      sessionExpired = true;
+    }
+  }
+
+  return { supabaseResponse, user: sessionExpired ? null : user, sessionExpired };
 }
