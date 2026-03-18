@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { candidateLogin } from '@/app/[locale]/candidate/login/actions';
 import { AlertCircle } from 'lucide-react';
 
-export function CandidateLoginForm() {
+export function CandidateLoginForm({ dark = false }: { dark?: boolean }) {
   const t = useTranslations('candidateAuth');
   const locale = useLocale();
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +36,7 @@ export function CandidateLoginForm() {
     <div className="w-full">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+          <Label htmlFor="email" className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-slate-700'}`}>
             {t('email')}
           </Label>
           <Input
@@ -46,14 +46,14 @@ export function CandidateLoginForm() {
             required
             autoComplete="email"
             placeholder="you@email.com"
-            className="h-11 rounded-lg border-slate-200 bg-white focus-visible:ring-1"
+            className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="password" className="text-sm font-medium text-slate-700">
+          <Label htmlFor="password" className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-slate-700'}`}>
             {t('password')}
           </Label>
           <Input
@@ -63,7 +63,7 @@ export function CandidateLoginForm() {
             required
             autoComplete="current-password"
             placeholder="••••••••"
-            className="h-11 rounded-lg border-slate-200 bg-white focus-visible:ring-1"
+            className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
           />
@@ -86,11 +86,11 @@ export function CandidateLoginForm() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-slate-500">
+      <p className={`mt-6 text-center text-sm ${dark ? 'text-white/60' : 'text-slate-500'}`}>
         {t('noAccount')}{' '}
         <Link
           href="/candidate/signup"
-          className="font-medium text-slate-900 transition-colors hover:text-slate-600"
+          className="font-medium transition-colors hover:opacity-80"
           style={{ color: '#E8501C' }}
         >
           {t('signupLink')}
@@ -100,7 +100,7 @@ export function CandidateLoginForm() {
       <p className="mt-4 text-center text-xs">
         <Link
           href="/"
-          className="font-medium text-slate-500 transition-colors hover:text-slate-900"
+          className={`font-medium transition-colors ${dark ? 'text-white/50 hover:text-white/80' : 'text-slate-500 hover:text-slate-900'}`}
         >
           &larr; Prospera
         </Link>
