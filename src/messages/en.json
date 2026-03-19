@@ -328,6 +328,7 @@
     "save": "Save profile",
     "saving": "Saving...",
     "saved": "Profile saved successfully",
+    "unsavedChanges": "You have unsaved changes",
     "errorGeneric": "Error saving profile",
     "errorPhotoType": "Only JPG or PNG images are allowed",
     "errorPhotoSize": "Image must be less than 2 MB",

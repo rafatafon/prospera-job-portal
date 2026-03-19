@@ -328,6 +328,7 @@
     "save": "Guardar perfil",
     "saving": "Guardando...",
     "saved": "Perfil guardado exitosamente",
+    "unsavedChanges": "Tienes cambios sin guardar",
     "errorGeneric": "Error al guardar el perfil",
     "errorPhotoType": "Solo se permiten imagenes JPG o PNG",
     "errorPhotoSize": "La imagen debe ser menor a 2 MB",

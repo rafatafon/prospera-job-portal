@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { upsertCandidateProfile } from '@/app/[locale]/candidate/profile/actions';
-import { AlertCircle, CheckCircle, Loader2, Upload } from 'lucide-react';
+import { AlertCircle, AlertTriangle, CheckCircle, Loader2, Upload } from 'lucide-react';
 import Image from 'next/image';
 import type { Database } from '@/types/database.types';
 import { PhotoCropDialog } from '@/components/candidates/PhotoCropDialog';
@@ -29,6 +29,17 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [rawImageSrc, setRawImageSrc] = useState<string | null>(null);
   const [croppedFile, setCroppedFile] = useState<File | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    if (!isDirty) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [isDirty]);
 
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -46,6 +57,7 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
     setCroppedFile(file);
     setPhotoPreview(URL.createObjectURL(file));
     setCropDialogOpen(false);
+    setIsDirty(true);
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -66,6 +78,7 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
         setError(result.error);
       } else {
         setSuccess(true);
+        setIsDirty(false);
         setTimeout(() => setSuccess(false), 3000);
       }
     });
@@ -75,7 +88,25 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
   const ringStyle = { '--tw-ring-color': '#E8501C' } as React.CSSProperties;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 px-6 py-6">
+    <form onSubmit={handleSubmit} onInput={() => setIsDirty(true)} className="space-y-6 px-6 py-6">
+      {/* Unsaved changes banner */}
+      {isDirty && (
+        <div className="sticky top-0 z-10 flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm text-amber-700">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 shrink-0" />
+            <span>{t('unsavedChanges')}</span>
+          </div>
+          <Button
+            type="submit"
+            size="sm"
+            variant="outline"
+            className="border-amber-300 text-amber-700 hover:bg-amber-100"
+          >
+            {t('save')}
+          </Button>
+        </div>
+      )}
+
       {/* Photo */}
       <div className="space-y-2">
         <Label className="text-sm font-medium text-slate-700">{t('photo')}</Label>
@@ -197,7 +228,7 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
         <Label className="text-sm font-medium text-slate-700">{t('skills')}</Label>
         <SkillsAutocomplete
           skills={skills}
-          onSkillsChange={setSkills}
+          onSkillsChange={(newSkills) => { setSkills(newSkills); setIsDirty(true); }}
           disabled={isPending}
         />
       </div>
@@ -287,7 +318,7 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
           type="button"
           role="switch"
           aria-checked={isVisible}
-          onClick={() => setIsVisible(!isVisible)}
+          onClick={() => { setIsVisible(!isVisible); setIsDirty(true); }}
           className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
             isVisible ? 'bg-green-500' : 'bg-slate-200'
           }`}
