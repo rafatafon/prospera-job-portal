@@ -55,7 +55,11 @@
     "hybrid": "Hybrid",
     "allWorkModes": "All work modes",
     "jobCount": "{count} job available",
-    "jobCountPlural": "{count} jobs available"
+    "jobCountPlural": "{count} jobs available",
+    "openAppTitle": "Looking for a job?",
+    "openAppSubtitle": "Create your profile so companies can find you.",
+    "openAppSignUp": "Sign Up",
+    "openAppLogIn": "Log In"
   },
   "jobDetail": {
     "description": "Job description",
