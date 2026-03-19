@@ -46,3 +46,6 @@ landing-page.png
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cursor
+.cursorignore
