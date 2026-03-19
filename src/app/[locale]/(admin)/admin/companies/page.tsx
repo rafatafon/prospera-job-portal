@@ -1,13 +1,8 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
-import { Link } from '@/i18n/navigation';
-import { Button } from '@/components/ui/button';
-import { CompanyActionButtons } from '@/components/admin/CompanyActionButtons';
 import { CompanyLogo } from '@/components/ui/company-logo';
 import {
   Building2,
-  Plus,
-  Pencil,
   Globe,
   Briefcase,
 } from 'lucide-react';
@@ -21,7 +16,6 @@ export default async function AdminCompaniesPage({
   setRequestLocale(locale);
 
   const t = await getTranslations('adminCompanies');
-  const tCommon = await getTranslations('common');
 
   const supabase = await createClient();
 
@@ -45,30 +39,18 @@ export default async function AdminCompaniesPage({
   return (
     <div className="p-6 lg:p-8">
       {/* Page header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            {t('title')}
-          </h1>
-          <p className="mt-1 text-sm text-slate-500">
-            {t(
-              companyList.length === 1
-                ? 'companyCount'
-                : 'companyCountPlural',
-              { count: companyList.length },
-            )}
-          </p>
-        </div>
-        <Button
-          asChild
-          className="gap-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: '#E8501C' }}
-        >
-          <Link href="/admin/companies/new">
-            <Plus className="h-4 w-4" />
-            {t('createCompany')}
-          </Link>
-        </Button>
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+          {t('title')}
+        </h1>
+        <p className="mt-1 text-sm text-slate-500">
+          {t(
+            companyList.length === 1
+              ? 'companyCount'
+              : 'companyCountPlural',
+            { count: companyList.length },
+          )}
+        </p>
       </div>
 
       {/* Companies list */}
@@ -85,14 +67,6 @@ export default async function AdminCompaniesPage({
               {t('noCompanies')}
             </h3>
             <p className="mt-1 text-sm text-slate-500">{t('getStarted')}</p>
-            <Button
-              asChild
-              size="sm"
-              className="mt-4 text-white"
-              style={{ backgroundColor: '#E8501C' }}
-            >
-              <Link href="/admin/companies/new">{t('createCompany')}</Link>
-            </Button>
           </div>
         ) : (
           <div className="space-y-2.5">
@@ -161,30 +135,6 @@ export default async function AdminCompaniesPage({
                           </span>
                         </div>
                       </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex shrink-0 items-center gap-1.5">
-                      <Button
-                        asChild
-                        size="sm"
-                        variant="ghost"
-                        className="h-7 gap-1 px-2 text-xs font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-800"
-                      >
-                        <Link href={`/admin/companies/${company.id}/edit`}>
-                          <Pencil className="h-3.5 w-3.5" />
-                          {tCommon('edit')}
-                        </Link>
-                      </Button>
-                      <CompanyActionButtons
-                        companyId={company.id}
-                        isActive={company.is_active}
-                        labelActive={t('active')}
-                        labelInactive={t('inactive')}
-                        labelDelete={tCommon('delete')}
-                        confirmDelete={t('confirmDelete')}
-                        confirmToggleInactive={t('confirmToggleInactive')}
-                      />
                     </div>
                   </div>
                 </div>

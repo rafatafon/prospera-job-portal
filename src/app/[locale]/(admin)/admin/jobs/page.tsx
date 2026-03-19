@@ -2,7 +2,6 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
 import { toDateLocale } from '@/lib/locale';
-import { AdminJobActionButtons } from '@/components/admin/AdminJobActionButtons';
 import { CompanyLogo } from '@/components/ui/company-logo';
 import type { Database } from '@/types/database.types';
 import { Briefcase, MapPin, CalendarDays } from 'lucide-react';
@@ -61,7 +60,6 @@ export default async function AdminJobsPage({
   setRequestLocale(locale);
 
   const t = await getTranslations('adminJobs');
-  const tCommon = await getTranslations('common');
   const tJobs = await getTranslations('jobs');
 
   const supabase = await createClient();
@@ -239,18 +237,6 @@ export default async function AdminJobsPage({
                         </span>
                       </div>
                     </div>
-
-                    {/* Action buttons */}
-                    <AdminJobActionButtons
-                      jobId={job.id}
-                      status={job.status}
-                      labelPublish={tCommon('publish')}
-                      labelArchive={tCommon('archive')}
-                      labelDelete={tCommon('delete')}
-                      confirmPublish={t('confirmPublish')}
-                      confirmArchive={t('confirmArchive')}
-                      confirmDelete={t('confirmDelete')}
-                    />
                   </div>
                 </div>
               );

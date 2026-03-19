@@ -366,6 +366,28 @@
     "passwordMismatch": "Las contraseñas no coinciden",
     "passwordMinLength": "La contraseña debe tener al menos 6 caracteres"
   },
+  "companyProfile": {
+    "title": "Perfil de empresa",
+    "subtitle": "Actualiza la informacion de tu empresa visible para los candidatos",
+    "menuLabel": "Perfil de empresa",
+    "noCompany": "Tu cuenta no esta vinculada a una empresa.",
+    "name": "Nombre de la empresa",
+    "namePlaceholder": "Ej: Corporacion Acme",
+    "slug": "Slug",
+    "slugHint": "Identificador para URL (generado automaticamente del nombre)",
+    "slugPlaceholder": "corporacion-acme",
+    "website": "Sitio web",
+    "websitePlaceholder": "https://ejemplo.com",
+    "description": "Descripcion",
+    "descriptionPlaceholder": "Breve descripcion de tu empresa...",
+    "logo": "Logo",
+    "uploadLogo": "Subir logo",
+    "removeLogo": "Eliminar logo",
+    "logoHint": "PNG, JPG o SVG. Maximo 2 MB.",
+    "save": "Guardar cambios",
+    "saving": "Guardando...",
+    "saved": "Perfil guardado exitosamente!"
+  },
   "companyAuth": {
     "signupTitle": "Registra tu empresa",
     "signupSubtitle": "Verifica tu RPN para crear una cuenta de empresa",

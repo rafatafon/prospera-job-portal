@@ -4,7 +4,7 @@ import { usePathname } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { LayoutDashboard, Briefcase, PlusCircle, FileText } from 'lucide-react';
+import { LayoutDashboard, Briefcase, PlusCircle, FileText, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NavItem {
@@ -36,6 +36,11 @@ const NAV_ITEMS: NavItem[] = [
     href: '/dashboard/jobs/new',
     icon: PlusCircle,
   },
+  {
+    labelKey: 'companyProfile',
+    href: '/dashboard/company',
+    icon: Building2,
+  },
 ];
 
 export function DashboardSidebar() {
@@ -43,12 +48,14 @@ export function DashboardSidebar() {
   const tDashboard = useTranslations('dashboard');
   const tDashboardJobs = useTranslations('dashboardJobs');
   const tApplications = useTranslations('dashboardApplications');
+  const tCompanyProfile = useTranslations('companyProfile');
 
   function getLabel(key: string) {
     if (key === 'title') return tDashboard('title');
     if (key === 'managejobs') return tDashboardJobs('title');
     if (key === 'applications') return tApplications('title');
     if (key === 'newjob') return tDashboardJobs('newJob');
+    if (key === 'companyProfile') return tCompanyProfile('menuLabel');
     return key;
   }
 

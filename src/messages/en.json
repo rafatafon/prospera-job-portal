@@ -366,6 +366,28 @@
     "passwordMismatch": "Passwords don't match",
     "passwordMinLength": "Password must be at least 6 characters"
   },
+  "companyProfile": {
+    "title": "Company Profile",
+    "subtitle": "Update your company information visible to job seekers",
+    "menuLabel": "Company Profile",
+    "noCompany": "Your account is not linked to a company.",
+    "name": "Company name",
+    "namePlaceholder": "E.g.: Acme Corporation",
+    "slug": "Slug",
+    "slugHint": "URL-friendly identifier (auto-generated from name)",
+    "slugPlaceholder": "acme-corporation",
+    "website": "Website",
+    "websitePlaceholder": "https://example.com",
+    "description": "Description",
+    "descriptionPlaceholder": "Brief description of your company...",
+    "logo": "Logo",
+    "uploadLogo": "Upload logo",
+    "removeLogo": "Remove logo",
+    "logoHint": "PNG, JPG, or SVG. Max 2 MB.",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "saved": "Profile saved successfully!"
+  },
   "companyAuth": {
     "signupTitle": "Register your company",
     "signupSubtitle": "Verify your RPN to create a company account",

@@ -9,7 +9,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Building2 } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 
 interface DashboardTopBarProps {
   companyName: string | null;
@@ -23,6 +24,7 @@ export async function DashboardTopBar({
   locale,
 }: DashboardTopBarProps) {
   const tCommon = await getTranslations('common');
+  const tCompanyProfile = await getTranslations('companyProfile');
 
   const initials = userEmail
     ? userEmail.slice(0, 2).toUpperCase()
@@ -63,6 +65,15 @@ export async function DashboardTopBar({
             <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuItem asChild>
+              <Link
+                href="/dashboard/company"
+                className="flex items-center gap-2 text-sm text-slate-700"
+              >
+                <Building2 className="h-4 w-4" />
+                {tCompanyProfile('menuLabel')}
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <form action={`/${locale}/auth/signout`} method="POST">

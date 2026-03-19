@@ -6,23 +6,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Link } from '@/i18n/navigation';
-import {
-  createCompany,
-  updateCompany,
-} from '@/app/[locale]/(admin)/admin/companies/actions';
+import { updateCompanyProfile } from '@/app/[locale]/(dashboard)/dashboard/company/actions';
 import {
   AlertCircle,
+  CheckCircle2,
   Loader2,
   X,
-  ArrowLeft,
   ImageIcon,
 } from 'lucide-react';
 import { toSlug } from '@/lib/utils';
 
-interface CompanyFormProps {
+interface CompanyProfileFormProps {
   locale: string;
-  initialData?: {
+  initialData: {
     id: string;
     name: string;
     slug: string;
@@ -32,22 +28,25 @@ interface CompanyFormProps {
   };
 }
 
-export function CompanyForm({ locale, initialData }: CompanyFormProps) {
-  const t = useTranslations('adminCompanies');
-  const tCommon = useTranslations('common');
+export function CompanyProfileForm({
+  locale,
+  initialData,
+}: CompanyProfileFormProps) {
+  const t = useTranslations('companyProfile');
 
-  const isEdit = !!initialData;
-  const [name, setName] = useState(initialData?.name ?? '');
-  const [slug, setSlug] = useState(initialData?.slug ?? '');
-  const [autoSlug, setAutoSlug] = useState(!isEdit);
+  const [name, setName] = useState(initialData.name);
+  const [slug, setSlug] = useState(initialData.slug);
+  // Start with auto-slug disabled since we're always editing an existing company
+  const [autoSlug, setAutoSlug] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   // Logo state
   const logoInputRef = useRef<HTMLInputElement>(null);
   const [logoFilename, setLogoFilename] = useState<string | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(
-    initialData?.logo_url ?? null,
+    initialData.logo_url ?? null,
   );
   const [removeLogo, setRemoveLogo] = useState(false);
 
@@ -82,6 +81,7 @@ export function CompanyForm({ locale, initialData }: CompanyFormProps) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
+    setSuccess(false);
 
     const formData = new FormData(e.currentTarget);
     formData.set('name', name);
@@ -91,32 +91,27 @@ export function CompanyForm({ locale, initialData }: CompanyFormProps) {
     }
 
     startTransition(async () => {
-      const result = isEdit
-        ? await updateCompany(locale, initialData!.id, formData)
-        : await createCompany(locale, formData);
+      const result = await updateCompanyProfile(
+        locale,
+        initialData.id,
+        formData,
+      );
 
       if (result && 'error' in result) {
         setError(result.error);
+      } else {
+        setSuccess(true);
       }
     });
   }
 
   return (
     <div className="mx-auto max-w-2xl">
-      {/* Back link */}
-      <Link
-        href="/admin/companies"
-        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition-colors hover:text-slate-800"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        {tCommon('back')}
-      </Link>
-
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-100 px-6 py-4">
-          <h1 className="text-lg font-semibold text-slate-900">
-            {isEdit ? t('editCompany') : t('createCompany')}
-          </h1>
+          <h2 className="text-lg font-semibold text-slate-900">
+            {t('title')}
+          </h2>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -140,9 +135,7 @@ export function CompanyForm({ locale, initialData }: CompanyFormProps) {
                 placeholder={t('namePlaceholder')}
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-                style={
-                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
-                }
+                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
               />
             </div>
 
@@ -165,9 +158,7 @@ export function CompanyForm({ locale, initialData }: CompanyFormProps) {
                 placeholder={t('slugPlaceholder')}
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white font-mono text-sm focus-visible:ring-1"
-                style={
-                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
-                }
+                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
               />
               <p className="text-xs text-slate-400">{t('slugHint')}</p>
             </div>
@@ -184,13 +175,11 @@ export function CompanyForm({ locale, initialData }: CompanyFormProps) {
                 id="website"
                 name="website"
                 type="url"
-                defaultValue={initialData?.website ?? ''}
+                defaultValue={initialData.website ?? ''}
                 placeholder={t('websitePlaceholder')}
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-                style={
-                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
-                }
+                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
               />
             </div>
 
@@ -205,14 +194,12 @@ export function CompanyForm({ locale, initialData }: CompanyFormProps) {
               <Textarea
                 id="description"
                 name="description"
-                defaultValue={initialData?.description ?? ''}
+                defaultValue={initialData.description ?? ''}
                 placeholder={t('descriptionPlaceholder')}
                 disabled={isPending}
                 rows={3}
                 className="[field-sizing:fixed] border-slate-200 bg-white focus-visible:ring-1"
-                style={
-                  { '--tw-ring-color': '#E8501C' } as React.CSSProperties
-                }
+                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
               />
             </div>
 
@@ -281,32 +268,29 @@ export function CompanyForm({ locale, initialData }: CompanyFormProps) {
             </div>
           )}
 
+          {/* Success banner */}
+          {success && (
+            <div className="mx-6 mb-4 flex items-center gap-2 rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700">
+              <CheckCircle2 className="h-4 w-4 shrink-0" />
+              <span>{t('saved')}</span>
+            </div>
+          )}
+
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 border-t border-slate-100 px-6 py-4">
-            <Link href="/admin/companies">
-              <Button
-                type="button"
-                variant="ghost"
-                className="text-sm text-slate-600"
-              >
-                {tCommon('cancel')}
-              </Button>
-            </Link>
+          <div className="flex items-center justify-end border-t border-slate-100 px-6 py-4">
             <Button
               type="submit"
               disabled={isPending}
               className="gap-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#0057FF' }}
             >
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  {isEdit ? t('saving') : t('creating')}
+                  {t('saving')}
                 </>
-              ) : isEdit ? (
-                tCommon('save')
               ) : (
-                t('createCompany')
+                t('save')
               )}
             </Button>
           </div>
