@@ -18,13 +18,7 @@ import {
   ArrowLeft,
   ImageIcon,
 } from 'lucide-react';
-
-function toSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
-}
+import { toSlug } from '@/lib/utils';
 
 interface CompanyFormProps {
   locale: string;

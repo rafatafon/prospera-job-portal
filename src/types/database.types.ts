@@ -132,6 +132,9 @@ export type Database = {
           is_active: boolean
           logo_url: string | null
           name: string
+          prospera_entity_id: string | null
+          registered_by: string | null
+          rpn: string | null
           slug: string
           updated_at: string
           website: string | null
@@ -143,6 +146,9 @@ export type Database = {
           is_active?: boolean
           logo_url?: string | null
           name: string
+          prospera_entity_id?: string | null
+          registered_by?: string | null
+          rpn?: string | null
           slug: string
           updated_at?: string
           website?: string | null
@@ -154,6 +160,9 @@ export type Database = {
           is_active?: boolean
           logo_url?: string | null
           name?: string
+          prospera_entity_id?: string | null
+          registered_by?: string | null
+          rpn?: string | null
           slug?: string
           updated_at?: string
           website?: string | null
@@ -265,6 +274,16 @@ export type Database = {
         Returns: Database["public"]["Enums"]["user_role"]
       }
       is_admin: { Args: never; Returns: boolean }
+      register_company: {
+        Args: {
+          p_entity_id: string
+          p_name: string
+          p_rpn: string
+          p_slug: string
+          p_user_id: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       application_status: "pending" | "reviewed" | "interested" | "denied"

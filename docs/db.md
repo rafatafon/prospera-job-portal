@@ -37,6 +37,9 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 | logo_url | text | |
 | website | text | |
 | description | text | |
+| rpn | text nullable | Registro Patronal Nacional — unique business identifier for RPN verification |
+| prospera_entity_id | text nullable | Prospera platform entity ID linked during verification |
+| registered_by | uuid nullable | FK -> auth.users ON DELETE SET NULL — user who registered this company |
 | is_active | boolean | default true, admin moderation toggle |
 | created_at | timestamptz | |
 | updated_at | timestamptz | auto-updated via trigger |
@@ -90,6 +93,8 @@ Open Talent profiles -- users who want to be discovered by companies.
 | idx_candidates_user_id | candidates | user_id |
 | idx_candidates_availability | candidates | availability |
 | idx_candidates_is_visible | candidates | is_visible |
+| idx_companies_rpn_unique | companies | rpn (UNIQUE, partial WHERE rpn IS NOT NULL) |
+| idx_companies_prospera_entity_id | companies | prospera_entity_id (partial WHERE IS NOT NULL) |
 
 ## Helper Functions (security definer)
 
@@ -100,6 +105,7 @@ Open Talent profiles -- users who want to be discovered by companies.
 | `get_my_company_id()` | uuid | Current user's company_id from profiles |
 | `set_updated_at()` | trigger | Auto-sets updated_at on UPDATE |
 | `handle_new_user()` | trigger | Auto-creates profile on auth.users INSERT (copies id, full_name, email) |
+| `register_company(p_user_id, p_name, p_slug, p_rpn, p_entity_id)` | uuid | Atomically creates company from RPN verification, resolves slug conflicts, links user as company owner |
 
 ## Storage Buckets
 
@@ -123,3 +129,4 @@ Open Talent profiles -- users who want to be discovered by companies.
 9. `add_email_to_profiles` - email column on profiles, backfill from auth.users, updated trigger
 10. `create_company_logos_bucket` - public storage bucket for company logos with admin-only writes
 11. `create_candidates_table_and_storage` - candidates table, candidate_availability enum, indexes, RLS, candidate-photos + candidate-cvs storage buckets
+12. `add_company_self_registration` - rpn, prospera_entity_id, registered_by columns on companies + indexes + register_company() function
