@@ -9,6 +9,7 @@ Supabase project: `pqmcymetprozeqrpmjud` (us-east-1)
 | `user_role` | user, company, admin |
 | `employment_type` | full_time, part_time, contract |
 | `job_status` | draft, published, archived |
+| `candidate_availability` | actively_looking, open_to_offers, not_available |
 
 ## Tables
 
@@ -55,6 +56,27 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 | created_at | timestamptz | |
 | updated_at | timestamptz | auto-updated via trigger |
 
+### candidates
+Open Talent profiles -- users who want to be discovered by companies.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | uuid PK | gen_random_uuid() |
+| user_id | uuid NOT NULL UNIQUE | FK -> auth.users ON DELETE CASCADE |
+| full_name | text NOT NULL | |
+| headline | text | short professional tagline |
+| bio | text | longer description |
+| location | text | city/region |
+| photo_url | text | public URL from candidate-photos bucket |
+| cv_path | text | storage path in candidate-cvs bucket ({user_id}/filename) |
+| skills | text[] | default '{}', free-text skill tags |
+| years_of_experience | integer | |
+| availability | candidate_availability | default 'actively_looking' |
+| linkedin_url | text | |
+| is_visible | boolean NOT NULL | default true, hides profile from company search when false |
+| created_at | timestamptz | |
+| updated_at | timestamptz | auto-updated via trigger |
+
 ## Indexes
 
 | Index | Table | Columns |
@@ -65,6 +87,9 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 | idx_jobs_location | jobs | location |
 | idx_jobs_status_published_at | jobs | (status, published_at DESC NULLS LAST) |
 | idx_profiles_company_id | profiles | company_id |
+| idx_candidates_user_id | candidates | user_id |
+| idx_candidates_availability | candidates | availability |
+| idx_candidates_is_visible | candidates | is_visible |
 
 ## Helper Functions (security definer)
 
@@ -82,6 +107,8 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 |--------|--------|-------------|--------------|
 | `application-documents` | false | Admins + company owners of the related job | Anon (via public form) |
 | `company-logos` | true | Anyone (public bucket) | Admins only (`is_admin()`) |
+| `candidate-photos` | true | Anyone (public bucket) | Own files only (`{user_id}/*`) |
+| `candidate-cvs` | false | Company users + admins + own files | Own files only (`{user_id}/*`) |
 
 ## Migrations Applied
 
@@ -95,3 +122,4 @@ Extends `auth.users`. Auto-created via `handle_new_user` trigger.
 8. `add_work_mode_to_jobs` - work_mode enum (on_site, remote, hybrid) on jobs
 9. `add_email_to_profiles` - email column on profiles, backfill from auth.users, updated trigger
 10. `create_company_logos_bucket` - public storage bucket for company logos with admin-only writes
+11. `create_candidates_table_and_storage` - candidates table, candidate_availability enum, indexes, RLS, candidate-photos + candidate-cvs storage buckets

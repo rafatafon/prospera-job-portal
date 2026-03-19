@@ -28,7 +28,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}
           >
             <Image
-              src="/prospera-icon.svg"
+              src="/prospera-logo/prospera-icon.svg"
               alt="Prospera"
               width={22}
               height={22}
@@ -48,6 +48,15 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
             >
               {t('jobs')}
             </Link>
+
+            {userRole === 'company' && (
+              <Link
+                href="/talent"
+                className="rounded-full px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white/60 hover:text-slate-700"
+              >
+                {t('openTalent')}
+              </Link>
+            )}
 
             {/* Business dropdown — CSS hover */}
             <div className="group relative">
@@ -84,21 +93,47 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
           </nav>
         </div>
 
-        {/* Desktop CTA — orange pill, pinned right */}
-        {(user || showLogin) && (
-          <div className="absolute right-0 hidden md:flex">
-            <Button
-              asChild
-              size="sm"
-              style={{ backgroundColor: '#E8501C' }}
-              className="rounded-full px-6 text-white hover:opacity-90"
-            >
-              <Link href={user ? dashboardHref : '/login'}>
-                {user ? t('dashboard') : t('companyLogin')}
+        {/* Desktop CTA — always render container for stable hydration */}
+        <div className="absolute right-0 hidden items-center gap-3 md:flex">
+          {user ? (
+            userRole === 'user' ? (
+              <Button
+                asChild
+                size="sm"
+                style={{ backgroundColor: '#E8501C' }}
+                className="rounded-full px-6 text-white hover:opacity-90"
+              >
+                <Link href="/candidate/profile">{t('myProfile')}</Link>
+              </Button>
+            ) : (
+              <Button
+                asChild
+                size="sm"
+                style={{ backgroundColor: '#E8501C' }}
+                className="rounded-full px-6 text-white hover:opacity-90"
+              >
+                <Link href={dashboardHref}>{t('dashboard')}</Link>
+              </Button>
+            )
+          ) : showLogin ? (
+            <>
+              <Link
+                href="/candidate/login"
+                className="rounded-full border border-white/60 bg-white/75 px-4 py-2 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
+              >
+                {t('candidateLogin')}
               </Link>
-            </Button>
-          </div>
-        )}
+              <Button
+                asChild
+                size="sm"
+                style={{ backgroundColor: '#E8501C' }}
+                className="rounded-full px-6 text-white hover:opacity-90"
+              >
+                <Link href="/login">{t('companyLogin')}</Link>
+              </Button>
+            </>
+          ) : null}
+        </div>
 
         {/* Mobile right section — burger menu only (Company Login lives inside the menu) */}
         <div className="flex items-center md:hidden">

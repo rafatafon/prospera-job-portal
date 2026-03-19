@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getUser } from '@/lib/supabase/server';
+import { Link } from '@/i18n/navigation';
 import { JobCard } from '@/components/jobs/JobCard';
 import { JobFilters } from '@/components/jobs/JobFilters';
 import type { Database } from '@/types/database.types';
@@ -29,6 +30,7 @@ export default async function JobsPage({
   const tJobCard = await getTranslations('jobCard');
 
   const supabase = await createClient();
+  const user = await getUser(supabase);
 
   // Base query: published jobs with company info
   let jobsQuery = supabase
@@ -93,6 +95,35 @@ export default async function JobsPage({
 
       {/* Job list */}
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+        {/* Open Application CTA — only for unauthenticated users */}
+        {!user && (
+          <div className="mb-6 flex flex-col items-start justify-between gap-4 rounded-xl border border-orange-100 bg-[#FFF5F0] px-5 py-4 sm:flex-row sm:items-center">
+            <div>
+              <p className="text-sm font-semibold text-slate-800">
+                {t('openAppTitle')}
+              </p>
+              <p className="mt-0.5 text-sm text-slate-500">
+                {t('openAppSubtitle')}
+              </p>
+            </div>
+            <div className="flex shrink-0 gap-2">
+              <Link
+                href="/candidate/signup"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                style={{ backgroundColor: '#E8501C' }}
+              >
+                {t('openAppSignUp')}
+              </Link>
+              <Link
+                href="/candidate/login"
+                className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+              >
+                {t('openAppLogIn')}
+              </Link>
+            </div>
+          </div>
+        )}
+
         {jobList.length === 0 ? (
           <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-white py-20 text-center">
             <div

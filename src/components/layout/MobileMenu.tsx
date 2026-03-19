@@ -63,6 +63,15 @@ export function MobileMenu({ user, userRole }: MobileMenuProps) {
           >
             {t('jobs')}
           </Link>
+          {userRole === 'company' && (
+            <Link
+              href="/talent"
+              onClick={() => setOpen(false)}
+              className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+            >
+              {t('openTalent')}
+            </Link>
+          )}
           <a
             href="https://www.prospera.co/en/business"
             target="_blank"
@@ -99,14 +108,43 @@ export function MobileMenu({ user, userRole }: MobileMenuProps) {
 
         {/* Bottom — Sign In / Dashboard */}
         <div className="mt-auto border-t border-slate-200 px-6 py-6">
-          <div className="flex justify-end">
-            <Link
-              href={user ? dashboardHref : '/login'}
-              onClick={() => setOpen(false)}
-              className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
-            >
-              {user ? t('dashboard') : t('companyLogin')}
-            </Link>
+          <div className="flex flex-col items-end gap-3">
+            {user ? (
+              userRole === 'user' ? (
+                <Link
+                  href="/candidate/profile"
+                  onClick={() => setOpen(false)}
+                  className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+                >
+                  {t('myProfile')}
+                </Link>
+              ) : (
+                <Link
+                  href={dashboardHref}
+                  onClick={() => setOpen(false)}
+                  className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+                >
+                  {t('dashboard')}
+                </Link>
+              )
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+                >
+                  {t('companyLogin')}
+                </Link>
+                <Link
+                  href="/candidate/login"
+                  onClick={() => setOpen(false)}
+                  className="text-xl font-medium text-slate-600 transition-colors hover:text-slate-900"
+                >
+                  {t('candidateLogin')}
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </SheetContent>

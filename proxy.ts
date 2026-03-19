@@ -1,4 +1,4 @@
-import { type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { routing } from '@/i18n/routing';
 import { updateSession } from '@/lib/supabase/middleware';
@@ -50,7 +50,28 @@ function isAdminRoute(pathname: string): boolean {
 
 export async function proxy(request: NextRequest) {
   // 1. Refresh Supabase auth tokens (must run on every request).
-  const { supabaseResponse, user } = await updateSession(request);
+  const { supabaseResponse, user, sessionExpired } =
+    await updateSession(request);
+
+  // Handle absolute session timeout (24h)
+  if (sessionExpired) {
+    const locale = extractLocale(request.nextUrl.pathname);
+    const path = stripLocale(request.nextUrl.pathname);
+    const loginUrl = request.nextUrl.clone();
+
+    if (matchesAny(path, ADMIN_PATHS)) {
+      loginUrl.pathname = `/${locale}/admin/login`;
+    } else if (path.startsWith('/candidate')) {
+      loginUrl.pathname = `/${locale}/candidate/login`;
+    } else {
+      loginUrl.pathname = `/${locale}/login`;
+    }
+    loginUrl.searchParams.set('reason', 'session_expired');
+
+    const response = NextResponse.redirect(loginUrl);
+    response.cookies.delete('session_started_at');
+    return response;
+  }
 
   // 2. Protect company dashboard routes — redirect to company login.
   if (isCompanyRoute(request.nextUrl.pathname) && !user) {

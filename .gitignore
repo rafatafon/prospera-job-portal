@@ -47,5 +47,5 @@ landing-page.png
 *.tsbuildinfo
 next-env.d.ts
 
-# cursor
+# cursorignore
 .cursorignore

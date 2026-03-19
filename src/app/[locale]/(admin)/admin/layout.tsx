@@ -3,6 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { AdminSidebar } from '@/components/layout/AdminSidebar';
 import { AdminTopBar } from '@/components/layout/AdminTopBar';
+import { IdleTimeoutProvider } from '@/components/session/IdleTimeoutProvider';
 
 export default async function AdminLayout({
   children,
@@ -34,21 +35,23 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
-      {/* Sidebar — desktop */}
-      <div className="hidden w-56 shrink-0 md:flex md:flex-col">
-        <AdminSidebar />
-      </div>
+    <IdleTimeoutProvider locale={locale} loginPath="/admin/login">
+      <div className="flex h-screen overflow-hidden bg-slate-50">
+        {/* Sidebar — desktop */}
+        <div className="hidden w-56 shrink-0 md:flex md:flex-col">
+          <AdminSidebar />
+        </div>
 
-      {/* Main area */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top bar */}
-        <AdminTopBar userEmail={user.email ?? null} locale={locale} />
+        {/* Main area */}
+        <div className="flex flex-1 flex-col overflow-hidden">
+          {/* Top bar */}
+          <AdminTopBar userEmail={user.email ?? null} locale={locale} />
 
-        <main className="flex-1 overflow-y-auto">
-          {children}
-        </main>
+          <main className="flex-1 overflow-y-auto">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </IdleTimeoutProvider>
   );
 }
