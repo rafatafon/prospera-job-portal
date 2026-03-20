@@ -91,7 +91,9 @@
     "password": "Password",
     "loginButton": "Log in",
     "loginError": "Invalid credentials. Please try again.",
-    "companyOnly": "This login is for company accounts only."
+    "companyOnly": "This login is for company accounts only.",
+    "forgotPassword": "Forgot password?",
+    "resetSuccess": "Your password has been updated. Please log in with your new password."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -364,7 +366,8 @@
     "errorGeneric": "Authentication error",
     "errorCandidateOnly": "This account is not a candidate account. Please use Company Login.",
     "passwordMismatch": "Passwords don't match",
-    "passwordMinLength": "Password must be at least 6 characters"
+    "passwordMinLength": "Password must be at least 6 characters",
+    "forgotPassword": "Forgot password?"
   },
   "companyProfile": {
     "title": "Company Profile",
@@ -451,6 +454,51 @@
     "markInterested": "Interested",
     "markDenied": "Denied",
     "filterAll": "All"
+  },
+  "forgotPassword": {
+    "title": "Reset your password",
+    "subtitle": "Enter your email and we'll send you a reset link",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "sendButton": "Send Reset Link",
+    "sending": "Sending...",
+    "successTitle": "Check your email",
+    "successMessage": "If an account exists with that email, we've sent a password reset link.",
+    "backToLogin": "Back to login"
+  },
+  "resetPassword": {
+    "title": "Set new password",
+    "subtitle": "Choose a new password for your account",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "resetButton": "Update Password",
+    "updating": "Updating...",
+    "errorMismatch": "Passwords do not match",
+    "errorMinLength": "Password must be at least 8 characters",
+    "errorExpired": "This reset link has expired. Please request a new one.",
+    "success": "Password updated successfully"
+  },
+  "accountSettings": {
+    "menuLabel": "Account Settings",
+    "title": "Account Settings",
+    "changePassword": "Change Password",
+    "changePasswordDescription": "Update the password you use to sign in",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "updatePassword": "Update Password",
+    "updating": "Updating...",
+    "passwordUpdated": "Password updated successfully",
+    "errorMismatch": "Passwords do not match",
+    "errorMinLength": "Password must be at least 8 characters",
+    "changeEmail": "Change Email",
+    "changeEmailDescription": "Update the email address associated with your account",
+    "currentEmail": "Current email",
+    "newEmail": "New email address",
+    "updateEmail": "Update Email",
+    "emailUpdateSent": "A confirmation link has been sent to your new email address",
+    "emailChanged": "Your email address has been updated successfully",
+    "errorSameEmail": "New email must be different from current email",
+    "errorInvalidEmail": "Please enter a valid email address"
   },
   "session": {
     "expiringTitle": "Session Expiring",

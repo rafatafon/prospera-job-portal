@@ -17,6 +17,21 @@ export async function GET(
     const { error } = await supabase.auth.verifyOtp({ type, token_hash });
 
     if (!error) {
+      // Recovery OTP: redirect to reset-password page (user now has a session)
+      if (type === 'recovery') {
+        return NextResponse.redirect(
+          new URL(`/${locale}/reset-password`, request.url),
+        );
+      }
+      // Email change verification: redirect to account settings with success flag
+      if (type === 'email_change') {
+        return NextResponse.redirect(
+          new URL(
+            `/${locale}/dashboard/account?emailChanged=true`,
+            request.url,
+          ),
+        );
+      }
       return NextResponse.redirect(new URL(next, request.url));
     }
   }

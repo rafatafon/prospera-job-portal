@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { ChevronDown, Building2 } from 'lucide-react';
+import { ChevronDown, Building2, Settings } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 
 interface DashboardTopBarProps {
@@ -25,6 +25,7 @@ export async function DashboardTopBar({
 }: DashboardTopBarProps) {
   const tCommon = await getTranslations('common');
   const tCompanyProfile = await getTranslations('companyProfile');
+  const tAccountSettings = await getTranslations('accountSettings');
 
   const initials = userEmail
     ? userEmail.slice(0, 2).toUpperCase()
@@ -72,6 +73,15 @@ export async function DashboardTopBar({
               >
                 <Building2 className="h-4 w-4" />
                 {tCompanyProfile('menuLabel')}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link
+                href="/dashboard/account"
+                className="flex items-center gap-2 text-sm text-slate-700"
+              >
+                <Settings className="h-4 w-4" />
+                {tAccountSettings('menuLabel')}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />

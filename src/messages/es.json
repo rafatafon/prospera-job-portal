@@ -91,7 +91,9 @@
     "password": "Contrasena",
     "loginButton": "Iniciar sesion",
     "loginError": "Credenciales incorrectas. Intenta de nuevo.",
-    "companyOnly": "Este acceso es solo para cuentas de empresa."
+    "companyOnly": "Este acceso es solo para cuentas de empresa.",
+    "forgotPassword": "Olvidaste tu contrasena?",
+    "resetSuccess": "Tu contrasena ha sido actualizada. Por favor inicia sesion con tu nueva contrasena."
   },
   "dashboard": {
     "title": "Panel de control",
@@ -364,7 +366,8 @@
     "errorGeneric": "Error de autenticacion",
     "errorCandidateOnly": "Esta cuenta no es de candidato. Por favor use el acceso de empresa.",
     "passwordMismatch": "Las contraseñas no coinciden",
-    "passwordMinLength": "La contraseña debe tener al menos 6 caracteres"
+    "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+    "forgotPassword": "Olvidaste tu contrasena?"
   },
   "companyProfile": {
     "title": "Perfil de empresa",
@@ -451,6 +454,51 @@
     "markInterested": "Interesado",
     "markDenied": "Rechazado",
     "filterAll": "Todos"
+  },
+  "forgotPassword": {
+    "title": "Restablecer tu contrasena",
+    "subtitle": "Ingresa tu correo y te enviaremos un enlace para restablecer tu contrasena",
+    "emailLabel": "Correo electronico",
+    "emailPlaceholder": "tu@email.com",
+    "sendButton": "Enviar enlace",
+    "sending": "Enviando...",
+    "successTitle": "Revisa tu correo",
+    "successMessage": "Si existe una cuenta con ese correo, hemos enviado un enlace para restablecer tu contrasena.",
+    "backToLogin": "Volver al inicio de sesion"
+  },
+  "resetPassword": {
+    "title": "Nueva contrasena",
+    "subtitle": "Elige una nueva contrasena para tu cuenta",
+    "newPassword": "Nueva contrasena",
+    "confirmPassword": "Confirmar contrasena",
+    "resetButton": "Actualizar Contrasena",
+    "updating": "Actualizando...",
+    "errorMismatch": "Las contrasenas no coinciden",
+    "errorMinLength": "La contrasena debe tener al menos 8 caracteres",
+    "errorExpired": "Este enlace ha expirado. Por favor solicita uno nuevo.",
+    "success": "Contrasena actualizada exitosamente"
+  },
+  "accountSettings": {
+    "menuLabel": "Configuracion de Cuenta",
+    "title": "Configuracion de Cuenta",
+    "changePassword": "Cambiar Contrasena",
+    "changePasswordDescription": "Actualiza la contrasena que usas para iniciar sesion",
+    "newPassword": "Nueva contrasena",
+    "confirmPassword": "Confirmar nueva contrasena",
+    "updatePassword": "Actualizar Contrasena",
+    "updating": "Actualizando...",
+    "passwordUpdated": "Contrasena actualizada exitosamente",
+    "errorMismatch": "Las contrasenas no coinciden",
+    "errorMinLength": "La contrasena debe tener al menos 8 caracteres",
+    "changeEmail": "Cambiar Correo",
+    "changeEmailDescription": "Actualiza el correo electronico asociado a tu cuenta",
+    "currentEmail": "Correo actual",
+    "newEmail": "Nuevo correo electronico",
+    "updateEmail": "Actualizar Correo",
+    "emailUpdateSent": "Se ha enviado un enlace de confirmacion a tu nuevo correo electronico",
+    "emailChanged": "Tu correo electronico ha sido actualizado exitosamente",
+    "errorSameEmail": "El nuevo correo debe ser diferente al correo actual",
+    "errorInvalidEmail": "Por favor ingresa un correo electronico valido"
   },
   "session": {
     "expiringTitle": "Sesion por expirar",

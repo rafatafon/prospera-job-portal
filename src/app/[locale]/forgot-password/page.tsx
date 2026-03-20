@@ -1,22 +1,18 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
-import { LoginForm } from '@/components/auth/LoginForm';
+import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
 
-export default async function LoginPage({
+export default async function ForgotPasswordPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ registered?: string; reset?: string }>;
 }) {
   const { locale } = await params;
-  const { registered, reset } = await searchParams;
   setRequestLocale(locale);
 
-  const t = await getTranslations('login');
+  const t = await getTranslations('forgotPassword');
   const tLanding = await getTranslations('landing');
-  const tCompanyAuth = await getTranslations('companyAuth');
 
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
@@ -96,41 +92,10 @@ export default async function LoginPage({
           </h1>
           <p className="mt-2 text-sm text-slate-500">{t('subtitle')}</p>
 
-          {/* Registration success banner */}
-          {registered === 'true' && (
-            <div className="mt-6 flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm text-emerald-700">
-              <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{tCompanyAuth('registrationSuccess')}</span>
-            </div>
-          )}
-
-          {/* Password reset success banner */}
-          {reset === 'true' && (
-            <div className="mt-6 flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm text-emerald-700">
-              <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{t('resetSuccess')}</span>
-            </div>
-          )}
-
           {/* Form */}
           <div className="mt-8">
-            <LoginForm />
+            <ForgotPasswordForm />
           </div>
-
-          {/* Register company link */}
-          <p className="mt-6 text-center text-sm text-slate-500">
-            <Link
-              href="/company/signup"
-              className="font-medium transition-colors hover:opacity-80"
-              style={{ color: '#E8501C' }}
-            >
-              {tCompanyAuth('registerCompany')}
-            </Link>
-          </p>
         </div>
       </div>
     </div>

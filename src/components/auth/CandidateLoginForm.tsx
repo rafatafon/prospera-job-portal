@@ -67,6 +67,15 @@ export function CandidateLoginForm({ dark = false }: { dark?: boolean }) {
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
           />
+          <div className="flex justify-end">
+            <Link
+              href="/forgot-password"
+              className="text-xs font-medium hover:opacity-80"
+              style={{ color: '#E8501C' }}
+            >
+              {t('forgotPassword')}
+            </Link>
+          </div>
         </div>
 
         {error && (
