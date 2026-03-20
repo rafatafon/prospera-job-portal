@@ -19,17 +19,19 @@ export default async function CompanySignupPage({
       {/* Left — hero image panel (same structure as candidate signup) */}
       <div className="relative hidden h-48 shrink-0 overflow-hidden sm:block sm:h-56 lg:h-auto lg:w-1/2">
         <Image
-          src="/open-application-login/prospera-live-in-the-future.jpg"
+          src="/login-image/duna-tower.avif"
           alt=""
           fill
           priority
-          className="object-cover object-center"
+          className="object-cover"
         />
+
+        {/* Gradient overlay for text readability */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.3) 100%)',
+              'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.05) 100%)',
           }}
           aria-hidden="true"
         />
@@ -60,14 +62,8 @@ export default async function CompanySignupPage({
         </div>
       </div>
 
-      {/* Right — dark form panel */}
-      <div
-        className="flex flex-1 flex-col items-center justify-center px-6 py-12 sm:px-10 lg:px-16"
-        style={{
-          background:
-            'linear-gradient(135deg, #0A2818 0%, #0f3520 50%, #0A2818 100%)',
-        }}
-      >
+      {/* Right — form panel */}
+      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 sm:px-10 lg:px-16">
         <div className="w-full max-w-sm">
           {/* Mobile logo */}
           <div className="mb-8 flex items-center gap-2.5 sm:hidden">
@@ -77,19 +73,19 @@ export default async function CompanySignupPage({
                 alt="Prospera"
                 width={28}
                 height={28}
-                className="h-7 w-7 brightness-0 invert"
+                className="h-7 w-7"
               />
-              <span className="text-sm font-semibold text-white">
+              <span className="text-sm font-semibold text-slate-900">
                 Prospera
               </span>
             </Link>
           </div>
 
           {/* Heading */}
-          <h1 className="text-2xl font-bold tracking-tight text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             {t('signupTitle')}
           </h1>
-          <p className="mt-2 text-sm text-white/60">{t('signupSubtitle')}</p>
+          <p className="mt-2 text-sm text-slate-500">{t('signupSubtitle')}</p>
 
           {/* Form */}
           <div className="mt-8">

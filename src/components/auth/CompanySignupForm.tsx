@@ -122,7 +122,7 @@ export function CompanySignupForm() {
           <Fragment key={s}>
             {s > 1 && (
               <div
-                className={`h-px w-8 ${s <= step ? 'bg-white/40' : 'bg-white/15'}`}
+                className={`h-px w-8 ${s <= step ? 'bg-slate-300' : 'bg-slate-200'}`}
               />
             )}
             <div
@@ -131,7 +131,7 @@ export function CompanySignupForm() {
                   ? 'bg-emerald-500 text-white'
                   : s === step
                     ? 'text-white'
-                    : 'border border-white/20 text-white/40'
+                    : 'border border-slate-300 text-slate-400'
               }`}
               style={s === step ? { backgroundColor: '#E8501C' } : undefined}
             >
@@ -140,7 +140,7 @@ export function CompanySignupForm() {
           </Fragment>
         ))}
       </div>
-      <p className="mt-2 text-center text-xs text-white/40">
+      <p className="mt-2 text-center text-xs text-slate-400">
         {t('stepLabel', { current: step, total: 3 })}
       </p>
     </div>
@@ -159,7 +159,7 @@ export function CompanySignupForm() {
 
   const bottomLinks = (
     <>
-      <p className="mt-6 text-center text-sm text-white/60">
+      <p className="mt-6 text-center text-sm text-slate-500">
         {t('hasAccount')}{' '}
         <Link
           href="/login"
@@ -172,7 +172,7 @@ export function CompanySignupForm() {
       <p className="mt-4 text-center text-xs">
         <Link
           href="/"
-          className="font-medium text-white/50 transition-colors hover:text-white/80"
+          className="font-medium text-slate-400 transition-colors hover:text-slate-600"
         >
           &larr; Prospera
         </Link>
@@ -183,9 +183,9 @@ export function CompanySignupForm() {
   // ─── Shared input class ───────────────────────────────────────────────────
 
   const inputClass =
-    'h-11 rounded-lg focus-visible:ring-1 border-white/20 bg-white/10 text-white placeholder:text-white/40';
+    'h-11 rounded-lg focus-visible:ring-1 border-slate-200 bg-white text-slate-900 placeholder:text-slate-400';
   const inputStyle = { '--tw-ring-color': '#E8501C' } as React.CSSProperties;
-  const labelClass = 'text-sm font-medium text-white/80';
+  const labelClass = 'text-sm font-medium text-slate-700';
 
   // ─── Render ───────────────────────────────────────────────────────────────
 
@@ -250,11 +250,11 @@ export function CompanySignupForm() {
                 <Building2 className="h-5 w-5 text-emerald-400" />
               </div>
               <div>
-                <p className="font-semibold leading-snug text-white">
+                <p className="font-semibold leading-snug text-slate-900">
                   {companyData.name}
                 </p>
                 {companyData.extension && (
-                  <p className="mt-0.5 text-sm text-white/60">
+                  <p className="mt-0.5 text-sm text-slate-500">
                     {companyData.extension}
                   </p>
                 )}
@@ -268,9 +268,9 @@ export function CompanySignupForm() {
               type="checkbox"
               checked={confirmed}
               onChange={(e) => setConfirmed(e.target.checked)}
-              className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/30 accent-orange-500"
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-orange-500"
             />
-            <span className="text-sm leading-relaxed text-white/70">
+            <span className="text-sm leading-relaxed text-slate-600">
               {t('confirmCheckbox')}
             </span>
           </label>
@@ -284,7 +284,7 @@ export function CompanySignupForm() {
               onClick={handleBack}
               disabled={isPending}
               variant="outline"
-              className="h-11 flex-1 rounded-lg border-white/20 bg-white/5 font-medium text-white hover:bg-white/10 hover:text-white disabled:opacity-60"
+              className="h-11 flex-1 rounded-lg border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-60"
             >
               {t('backButton')}
             </Button>
