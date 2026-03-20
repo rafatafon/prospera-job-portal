@@ -49,3 +49,6 @@ next-env.d.ts
 
 # cursorignore
 .cursorignore
+
+# email templates
+docs/email-templates/*.html
