@@ -69,7 +69,7 @@ export function CandidateLoginForm({ dark = false }: { dark?: boolean }) {
           />
           <div className="flex justify-end">
             <Link
-              href="/forgot-password"
+              href="/candidate/forgot-password"
               className="text-xs font-medium hover:opacity-80"
               style={{ color: '#E8501C' }}
             >

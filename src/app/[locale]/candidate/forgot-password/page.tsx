@@ -3,15 +3,12 @@ import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
 
-export default async function ForgotPasswordPage({
+export default async function CandidateForgotPasswordPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ from?: string }>;
 }) {
   const { locale } = await params;
-  const { from } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations('forgotPassword');
@@ -22,26 +19,21 @@ export default async function ForgotPasswordPage({
       {/* Left — hero image panel */}
       <div className="relative hidden h-48 shrink-0 overflow-hidden sm:block sm:h-56 lg:h-auto lg:w-1/2">
         <Image
-          src="/login-image/duna-tower.avif"
+          src="/open-application-login/prospera-live-in-the-future.jpg"
           alt=""
           fill
           priority
-          className="object-cover"
+          className="object-cover object-center"
         />
-
-        {/* Gradient overlay for text readability */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.05) 100%)',
+              'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.3) 100%)',
           }}
           aria-hidden="true"
         />
-
-        {/* Logo + tagline overlay */}
         <div className="absolute inset-0 flex flex-col justify-between p-6 lg:p-10">
-          {/* Top — logo */}
           <Link href="/" className="flex items-center gap-2.5">
             <div
               className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30"
@@ -57,8 +49,6 @@ export default async function ForgotPasswordPage({
             </div>
             <span className="text-sm font-semibold text-white">Prospera</span>
           </Link>
-
-          {/* Bottom — tagline (hidden on small banner, shown on lg) */}
           <div className="hidden lg:block">
             <h2 className="max-w-md text-3xl font-bold leading-tight text-white">
               {tLanding('heroTitle')}
@@ -70,8 +60,14 @@ export default async function ForgotPasswordPage({
         </div>
       </div>
 
-      {/* Right — form panel */}
-      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 sm:px-10 lg:px-16">
+      {/* Right — dark form panel */}
+      <div
+        className="flex flex-1 flex-col items-center justify-center px-6 py-12 sm:px-10 lg:px-16"
+        style={{
+          background:
+            'linear-gradient(135deg, #0A2818 0%, #0f3520 50%, #0A2818 100%)',
+        }}
+      >
         <div className="w-full max-w-sm">
           {/* Mobile logo (visible when image is hidden on xs) */}
           <div className="mb-8 flex items-center gap-2.5 sm:hidden">
@@ -81,23 +77,23 @@ export default async function ForgotPasswordPage({
                 alt="Prospera"
                 width={28}
                 height={28}
-                className="h-7 w-7"
+                className="h-7 w-7 brightness-0 invert"
               />
-              <span className="text-sm font-semibold text-slate-900">
+              <span className="text-sm font-semibold text-white">
                 Prospera
               </span>
             </Link>
           </div>
 
           {/* Heading */}
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-2xl font-bold tracking-tight text-white">
             {t('title')}
           </h1>
-          <p className="mt-2 text-sm text-slate-500">{t('subtitle')}</p>
+          <p className="mt-2 text-sm text-white/60">{t('subtitle')}</p>
 
           {/* Form */}
           <div className="mt-8">
-            <ForgotPasswordForm from={from ?? null} />
+            <ForgotPasswordForm from="candidate" dark />
           </div>
         </div>
       </div>

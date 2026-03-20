@@ -14,7 +14,7 @@ export async function requestPasswordReset(
     return { error: 'email_required' };
   }
 
-  // Save the user's locale so /auth/confirm can redirect to the correct language
+  // Save the user's locale and flow origin so /auth/confirm can redirect correctly
   const cookieStore = await cookies();
   cookieStore.set('reset_locale', locale, {
     httpOnly: true,
@@ -23,6 +23,17 @@ export async function requestPasswordReset(
     path: '/',
     maxAge: 3600, // 1 hour
   });
+
+  const from = formData.get('from') as string | null;
+  if (from) {
+    cookieStore.set('reset_from', from, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 3600,
+    });
+  }
 
   // No redirectTo needed — the email template uses a custom link
   // that routes through /auth/confirm with token_hash + type=recovery.

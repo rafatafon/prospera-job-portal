@@ -367,7 +367,8 @@
     "errorCandidateOnly": "This account is not a candidate account. Please use Company Login.",
     "passwordMismatch": "Passwords don't match",
     "passwordMinLength": "Password must be at least 6 characters",
-    "forgotPassword": "Forgot password?"
+    "forgotPassword": "Forgot password?",
+    "resetSuccess": "Your password has been updated. Please log in with your new password."
   },
   "companyProfile": {
     "title": "Company Profile",

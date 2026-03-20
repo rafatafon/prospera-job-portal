@@ -21,10 +21,15 @@ export async function GET(
       if (type === 'recovery') {
         const savedLocale =
           request.cookies.get('reset_locale')?.value || locale;
+        const savedFrom = request.cookies.get('reset_from')?.value;
+        const resetUrl = savedFrom === 'candidate'
+          ? `/${savedLocale}/candidate/reset-password`
+          : `/${savedLocale}/reset-password`;
         const response = NextResponse.redirect(
-          new URL(`/${savedLocale}/reset-password`, request.url),
+          new URL(resetUrl, request.url),
         );
         response.cookies.delete('reset_locale');
+        response.cookies.delete('reset_from');
         return response;
       }
       // Email change verification: redirect to account settings with success flag

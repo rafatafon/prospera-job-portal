@@ -5,10 +5,13 @@ import { CandidateLoginForm } from '@/components/auth/CandidateLoginForm';
 
 export default async function CandidateLoginPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ reset?: string }>;
 }) {
   const { locale } = await params;
+  const { reset } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations('candidateAuth');
@@ -90,6 +93,16 @@ export default async function CandidateLoginPage({
             {t('loginTitle')}
           </h1>
           <p className="mt-2 text-sm text-white/60">{t('loginSubtitle')}</p>
+
+          {/* Password reset success banner */}
+          {reset === 'true' && (
+            <div className="mt-6 flex items-center gap-2 rounded-lg border border-emerald-400/30 bg-emerald-500/20 px-3 py-2.5 text-sm text-emerald-300">
+              <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{t('resetSuccess')}</span>
+            </div>
+          )}
 
           {/* Form */}
           <div className="mt-8">

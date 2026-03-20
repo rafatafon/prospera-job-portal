@@ -5,10 +5,13 @@ import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 
 export default async function ResetPasswordPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { locale } = await params;
+  const { from } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations('resetPassword');
@@ -94,7 +97,7 @@ export default async function ResetPasswordPage({
 
           {/* Form */}
           <div className="mt-8">
-            <ResetPasswordForm />
+            <ResetPasswordForm from={from ?? null} />
           </div>
         </div>
       </div>
