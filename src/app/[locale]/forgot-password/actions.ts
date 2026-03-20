@@ -1,9 +1,10 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 
 export async function requestPasswordReset(
-  _locale: string,
+  locale: string,
   formData: FormData,
 ): Promise<{ error?: string; success?: boolean }> {
   const supabase = await createClient();
@@ -12,6 +13,16 @@ export async function requestPasswordReset(
   if (!email) {
     return { error: 'email_required' };
   }
+
+  // Save the user's locale so /auth/confirm can redirect to the correct language
+  const cookieStore = await cookies();
+  cookieStore.set('reset_locale', locale, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 3600, // 1 hour
+  });
 
   // No redirectTo needed — the email template uses a custom link
   // that routes through /auth/confirm with token_hash + type=recovery.

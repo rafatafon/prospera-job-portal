@@ -17,11 +17,15 @@ export async function GET(
     const { error } = await supabase.auth.verifyOtp({ type, token_hash });
 
     if (!error) {
-      // Recovery OTP: redirect to reset-password page (user now has a session)
+      // Recovery OTP: redirect to reset-password in the user's original locale
       if (type === 'recovery') {
-        return NextResponse.redirect(
-          new URL(`/${locale}/reset-password`, request.url),
+        const savedLocale =
+          request.cookies.get('reset_locale')?.value || locale;
+        const response = NextResponse.redirect(
+          new URL(`/${savedLocale}/reset-password`, request.url),
         );
+        response.cookies.delete('reset_locale');
+        return response;
       }
       // Email change verification: redirect to account settings with success flag
       if (type === 'email_change') {
