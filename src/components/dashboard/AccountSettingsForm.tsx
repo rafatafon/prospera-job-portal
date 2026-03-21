@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { changePassword, changeEmail } from '@/app/[locale]/(dashboard)/dashboard/account/actions';
 import { AlertCircle, CheckCircle } from 'lucide-react';
@@ -98,10 +99,9 @@ export function AccountSettingsForm({ userEmail, emailChanged = false }: Account
             <Label htmlFor="newPassword" className="text-sm font-medium text-slate-700">
               {t('newPassword')}
             </Label>
-            <Input
+            <PasswordInput
               id="newPassword"
               name="newPassword"
-              type="password"
               required
               autoComplete="new-password"
               placeholder="••••••••"
@@ -115,10 +115,9 @@ export function AccountSettingsForm({ userEmail, emailChanged = false }: Account
             <Label htmlFor="confirmPassword" className="text-sm font-medium text-slate-700">
               {t('confirmPassword')}
             </Label>
-            <Input
+            <PasswordInput
               id="confirmPassword"
               name="confirmPassword"
-              type="password"
               required
               autoComplete="new-password"
               placeholder="••••••••"

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { candidateSignup } from '@/app/[locale]/candidate/signup/actions';
 import { AlertCircle } from 'lucide-react';
@@ -82,13 +83,13 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
           <Label htmlFor="password" className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-slate-700'}`}>
             {t('password')}
           </Label>
-          <Input
+          <PasswordInput
             id="password"
             name="password"
-            type="password"
             required
             autoComplete="new-password"
             placeholder="••••••••"
+            dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
@@ -99,13 +100,13 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
           <Label htmlFor="confirm_password" className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-slate-700'}`}>
             {t('confirmPassword')}
           </Label>
-          <Input
+          <PasswordInput
             id="confirm_password"
             name="confirm_password"
-            type="password"
             required
             autoComplete="new-password"
             placeholder="••••••••"
+            dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}

@@ -4,7 +4,7 @@ import { useState, useTransition, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
 import { AlertCircle } from 'lucide-react';
@@ -107,13 +107,13 @@ export function ResetPasswordForm({ from, dark = false }: ResetPasswordFormProps
           <Label htmlFor="newPassword" className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-slate-700'}`}>
             {t('newPassword')}
           </Label>
-          <Input
+          <PasswordInput
             id="newPassword"
             name="newPassword"
-            type="password"
             required
             autoComplete="new-password"
             placeholder="••••••••"
+            dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
@@ -124,13 +124,13 @@ export function ResetPasswordForm({ from, dark = false }: ResetPasswordFormProps
           <Label htmlFor="confirmPassword" className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-slate-700'}`}>
             {t('confirmPassword')}
           </Label>
-          <Input
+          <PasswordInput
             id="confirmPassword"
             name="confirmPassword"
-            type="password"
             required
             autoComplete="new-password"
             placeholder="••••••••"
+            dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}

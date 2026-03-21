@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { AlertCircle, Building2, Check } from 'lucide-react';
 import { verifyRpn, registerCompany } from '@/app/[locale]/company/signup/actions';
@@ -345,10 +346,9 @@ export function CompanySignupForm() {
             <Label htmlFor="password" className={labelClass}>
               {t('password')}
             </Label>
-            <Input
+            <PasswordInput
               id="password"
               name="password"
-              type="password"
               required
               autoComplete="new-password"
               placeholder="••••••••"
@@ -362,10 +362,9 @@ export function CompanySignupForm() {
             <Label htmlFor="confirm_password" className={labelClass}>
               {t('confirmPassword')}
             </Label>
-            <Input
+            <PasswordInput
               id="confirm_password"
               name="confirm_password"
-              type="password"
               required
               autoComplete="new-password"
               placeholder="••••••••"

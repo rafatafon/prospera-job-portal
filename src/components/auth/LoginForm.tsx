@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { login } from '@/app/[locale]/login/actions';
 import { adminLogin } from '@/app/[locale]/admin/login/actions';
@@ -76,13 +77,13 @@ export function LoginForm({ variant = 'company', dark = false }: LoginFormProps)
           <Label htmlFor="password" className={`text-sm font-medium ${labelColor}`}>
             {t('password')}
           </Label>
-          <Input
+          <PasswordInput
             id="password"
             name="password"
-            type="password"
             required
             autoComplete="current-password"
             placeholder="••••••••"
+            dark={dark}
             className={inputClasses}
             style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
             disabled={isPending}
