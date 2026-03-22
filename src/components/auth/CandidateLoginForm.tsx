@@ -30,7 +30,7 @@ export function CandidateLoginForm({ dark = false }: { dark?: boolean }) {
         } else if (result.error === 'candidate_only') {
           setError(t('errorCandidateOnly'));
         } else {
-          setError(result.error);
+          setError(t('errorGeneric'));
         }
       }
     });

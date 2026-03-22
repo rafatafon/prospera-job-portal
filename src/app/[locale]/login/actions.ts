@@ -24,7 +24,7 @@ export async function login(
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    return { error: error.message };
+    return { error: 'invalid_credentials' };
   }
 
   // Fetch the user's profile to check their role.

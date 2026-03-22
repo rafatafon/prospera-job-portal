@@ -41,8 +41,25 @@ This policy ensures that non-admin users cannot escalate their own privileges by
 |-----------|------|---------|-------|
 | SELECT | active only | active + own | all |
 | INSERT | - | - | yes |
-| UPDATE | - | own company | any |
+| UPDATE | - | own company (no is_active/rpn/entity_id change) | any |
 | DELETE | - | - | any |
+
+**Restrictive Policy — `companies: block sensitive column changes`**
+
+Type: RESTRICTIVE (AND-combined with all permissive UPDATE policies)
+Operation: UPDATE | Role: authenticated
+USING: `true`
+WITH CHECK: `is_admin() OR (is_active unchanged AND rpn unchanged AND prospera_entity_id unchanged AND registered_by unchanged)`
+
+Prevents company users from modifying admin-managed fields. Uses `IS NOT DISTINCT FROM` for NULL-safe comparison.
+
+| Scenario | Expected | Policy That Governs |
+|----------|----------|---------------------|
+| Company updates own name/description | ALLOW | permissive + restrictive passes |
+| Company sets is_active = false | DENY | restrictive WITH CHECK fails |
+| Company changes rpn | DENY | restrictive WITH CHECK fails |
+| Company changes prospera_entity_id | DENY | restrictive WITH CHECK fails |
+| Admin changes any company field | ALLOW | restrictive passes (is_admin()) |
 
 ### jobs
 
@@ -153,6 +170,21 @@ All policy checks wrap helper functions in `(select ...)` for initPlan optimizat
 - `(select auth.uid())`
 
 Security definer helpers bypass RLS to avoid infinite recursion when policies on other tables check user role from profiles.
+
+## Security Definer Functions — Access Control
+
+### `register_company(uuid, text, text, text, text)`
+
+Type: SECURITY DEFINER | Runs with owner privileges, bypasses RLS.
+Purpose: Creates a company and sets `profiles.role = 'company'` + `profiles.company_id`.
+
+EXECUTE permissions:
+- `authenticated` — **REVOKED** (migration: `revoke_register_company_public_execute`)
+- `anon` — **REVOKED**
+- `public` — **REVOKED**
+- `service_role` — GRANTED (implicit; service_role bypasses grant checks)
+
+Rationale: This function performs privilege escalation. If EXECUTE were granted to `authenticated`, any user could self-promote to company role via `supabase.rpc('register_company')`. The application calls this function exclusively through the service_role client.
 
 ## Known Advisories
 

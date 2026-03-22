@@ -21,7 +21,7 @@ export async function candidateLogin(
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return { error: error.message };
+    return { error: 'invalid_credentials' };
   }
 
   const {
