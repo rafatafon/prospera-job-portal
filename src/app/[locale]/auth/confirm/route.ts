@@ -41,6 +41,28 @@ export async function GET(
           ),
         );
       }
+      // Signup confirmation: redirect based on user role
+      if (type === 'signup' || type === 'email') {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single();
+
+          if (profile?.role === 'user') {
+            return NextResponse.redirect(
+              new URL(`/${locale}/candidate/email-confirmed`, request.url),
+            );
+          }
+          if (profile?.role === 'admin') {
+            return NextResponse.redirect(
+              new URL(`/${locale}/admin`, request.url),
+            );
+          }
+        }
+      }
       return NextResponse.redirect(new URL(next, request.url));
     }
   }

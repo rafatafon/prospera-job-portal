@@ -41,9 +41,9 @@ export async function candidateSignup(
   });
 
   if (error) {
-    return { error: error.message };
+    return { error: 'signup_failed' };
   }
 
   revalidatePath('/', 'layout');
-  redirect(`/${locale}/candidate/profile`);
+  redirect(`/${locale}/candidate/verify-email`);
 }

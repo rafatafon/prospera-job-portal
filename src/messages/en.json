@@ -369,7 +369,16 @@
     "passwordMismatch": "Passwords don't match",
     "passwordMinLength": "Password must be at least 8 characters",
     "forgotPassword": "Forgot password?",
-    "resetSuccess": "Your password has been updated. Please log in with your new password."
+    "resetSuccess": "Your password has been updated. Please log in with your new password.",
+    "verifyEmailTitle": "Check your email",
+    "verifyEmailMessage": "We sent a confirmation link to your email. Click the link to verify your account.",
+    "resendEmail": "Resend email",
+    "resending": "Sending...",
+    "resent": "Email sent!",
+    "wrongEmail": "Wrong email? Sign up again",
+    "emailConfirmedTitle": "Email verified!",
+    "emailConfirmedMessage": "Your email has been confirmed. You can now log in to your account.",
+    "goToLogin": "Go to login"
   },
   "companyProfile": {
     "title": "Company Profile",

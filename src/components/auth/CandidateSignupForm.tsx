@@ -41,7 +41,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
         if (result.error === 'too_many_requests') {
           setError(tCommon('tooManyRequests'));
         } else {
-          setError(result.error);
+          setError(t('errorGeneric'));
         }
       }
     });

@@ -21,6 +21,11 @@ export default async function CandidateProfilePage({
     redirect(`/${locale}/candidate/login`);
   }
 
+  // Block access until email is confirmed
+  if (!user.email_confirmed_at) {
+    redirect(`/${locale}/candidate/verify-email`);
+  }
+
   // Verify role is 'user'
   const { data: profile } = await supabase
     .from('profiles')
