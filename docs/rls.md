@@ -14,8 +14,26 @@
 |-----------|------|---------|-------|
 | SELECT | all | all | all |
 | INSERT | - | own id (via trigger) | - |
-| UPDATE | - | own (no role change) | any |
+| UPDATE | - | own (no role/company_id change) | any |
 | DELETE | - | - | any |
+
+**Restrictive Policy — `profiles: block sensitive column changes`**
+
+Type: RESTRICTIVE (AND-combined with all permissive UPDATE policies)
+Operation: UPDATE | Role: authenticated
+USING: `true` (all rows visible for update consideration)
+WITH CHECK: `is_admin() OR (role unchanged AND company_id unchanged)`
+
+This policy ensures that non-admin users cannot escalate their own privileges by changing `role` (e.g., from 'user' to 'admin') or reassigning themselves to a different company by changing `company_id`. Admins are exempt because they need to assign roles and companies to users. Uses `IS NOT DISTINCT FROM` for NULL-safe comparison on `company_id`.
+
+| Scenario | Expected | Policy That Governs |
+|----------|----------|---------------------|
+| Company user updates own full_name | ALLOW | permissive + restrictive passes (no sensitive col change) |
+| Company user changes own role to admin | DENY | restrictive WITH CHECK fails (role mismatch) |
+| Company user changes own company_id | DENY | restrictive WITH CHECK fails (company_id mismatch) |
+| Company user sets company_id from NULL | DENY | restrictive WITH CHECK fails (IS NOT DISTINCT FROM) |
+| Admin changes any user's role | ALLOW | restrictive passes (is_admin() = true) |
+| Admin changes any user's company_id | ALLOW | restrictive passes (is_admin() = true) |
 
 ### companies
 

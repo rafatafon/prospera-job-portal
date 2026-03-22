@@ -3,6 +3,8 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 // Supabase project hostname used in CSP and image patterns
 const SUPABASE_HOST = 'pqmcymetprozeqrpmjud.supabase.co';
+// CDN used by react-circle-flags for country flag SVGs
+const FLAGS_CDN = 'react-circle-flags.pages.dev';
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -55,11 +57,11 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               // Tailwind + Next.js inject inline styles
               "style-src 'self' 'unsafe-inline'",
-              // Allow Supabase storage images, data URIs (base64 images), blobs (cropper)
-              `img-src 'self' https://${SUPABASE_HOST} data: blob:`,
+              // Allow Supabase storage images, flag CDN, data URIs (base64 images), blobs (cropper)
+              `img-src 'self' https://${SUPABASE_HOST} https://${FLAGS_CDN} data: blob:`,
               "font-src 'self'",
-              // Allow Supabase API connections
-              `connect-src 'self' https://${SUPABASE_HOST}`,
+              // Allow Supabase API connections and flag CDN (react-circle-flags fetches SVGs)
+              `connect-src 'self' https://${SUPABASE_HOST} https://${FLAGS_CDN}`,
               // Block framing entirely
               "frame-ancestors 'none'",
               "base-uri 'self'",
