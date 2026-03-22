@@ -44,7 +44,7 @@
 | UPDATE | - | - | - | any |
 | DELETE | - | - | - | any |
 
-**Note:** Application-level filtering (`jobs.company_id = profile.company_id`) is enforced in the dashboard query. RLS policies should be added as defense-in-depth in a future migration.
+**Note:** RLS policies are active on the `applications` table (company can read/update own, admin full access, anon/authenticated can insert for published jobs). Application-level filtering (`jobs.company_id = profile.company_id`) is also enforced in dashboard queries as defense-in-depth.
 
 ### candidates
 

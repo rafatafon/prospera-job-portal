@@ -4,14 +4,18 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
+import { rateLimit } from '@/lib/security/rate-limit';
 
 export async function candidateLogin(
   locale: string,
   formData: FormData,
 ): Promise<{ error: string } | void> {
+  const email = formData.get('email') as string;
+  const rateLimited = await rateLimit('login', email);
+  if (rateLimited) return { error: rateLimited.error };
+
   const supabase = await createClient();
 
-  const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });

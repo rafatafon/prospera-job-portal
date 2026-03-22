@@ -100,6 +100,7 @@ interface ApplicationFormProps {
 
 export function ApplicationForm({ jobId }: ApplicationFormProps) {
   const t = useTranslations('applicationForm');
+  const tCommon = useTranslations('common');
   const locale = useLocale();
 
   const [phone, setPhone] = useState('');
@@ -140,7 +141,11 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
     startTransition(async () => {
       const result = await submitApplication(formData);
       if ('error' in result) {
-        setError(result.error);
+        setError(
+          result.error === 'too_many_requests'
+            ? tCommon('tooManyRequests')
+            : result.error,
+        );
       } else {
         setSuccess(true);
       }

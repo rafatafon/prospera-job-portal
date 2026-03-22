@@ -2,11 +2,15 @@
 
 import { cookies } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
+import { rateLimit } from '@/lib/security/rate-limit';
 
 export async function requestPasswordReset(
   locale: string,
   formData: FormData,
 ): Promise<{ error?: string; success?: boolean }> {
+  const rateLimited = await rateLimit('passwordReset');
+  if (rateLimited) return { error: rateLimited.error };
+
   const supabase = await createClient();
   const email = (formData.get('email') as string)?.trim();
 

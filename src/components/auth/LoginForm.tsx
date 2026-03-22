@@ -34,7 +34,9 @@ export function LoginForm({ variant = 'company', dark = false }: LoginFormProps)
       const action = variant === 'admin' ? adminLogin : login;
       const result = await action(locale, formData);
       if (result?.error) {
-        if (result.error === 'company_only') {
+        if (result.error === 'too_many_requests') {
+          setError(tCommon('tooManyRequests'));
+        } else if (result.error === 'company_only') {
           setError(t('companyOnly'));
         } else if (result.error === 'access_denied') {
           setError(tAdmin('accessDenied'));

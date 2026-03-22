@@ -2,28 +2,31 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
+import { rateLimit } from '@/lib/security/rate-limit';
+import { validateFileMagicBytes } from '@/lib/security/file-validation';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
 const applicationSchema = z.object({
-  full_name: z.string().min(2, 'Full name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  phone_country_code: z.string().min(1, 'Phone country code is required'),
-  phone_number: z.string().min(6, 'Phone number must be at least 6 characters'),
-  country: z.string().min(1, 'Country is required'),
+  full_name: z.string().min(2, 'Full name must be at least 2 characters').max(100),
+  email: z.string().email('Invalid email address').max(254),
+  phone_country_code: z.string().min(1, 'Phone country code is required').max(5),
+  phone_number: z.string().min(6, 'Phone number must be at least 6 characters').max(20),
+  country: z.string().min(1, 'Country is required').max(5),
   job_id: z.string().uuid('Invalid job ID'),
   linkedin_url: z
     .string()
     .url('Invalid LinkedIn URL')
+    .max(500)
     .optional()
     .or(z.literal('')),
 });
 
-function validatePdfFile(
+async function validatePdfFile(
   file: FormDataEntryValue | null,
   fieldName: string,
   required: boolean,
-): { error?: string; file?: File } {
+): Promise<{ error?: string; file?: File }> {
   if (!file || !(file instanceof File) || file.size === 0) {
     if (required) return { error: `${fieldName} is required` };
     return {};
@@ -37,12 +40,20 @@ function validatePdfFile(
     return { error: `${fieldName} must be less than 5MB` };
   }
 
+  // Verify actual file content matches PDF magic bytes
+  const validBytes = await validateFileMagicBytes(file, 'pdf');
+  if (!validBytes) {
+    return { error: `${fieldName} does not appear to be a valid PDF file` };
+  }
+
   return { file };
 }
 
 export async function submitApplication(
   formData: FormData,
 ): Promise<{ error: string } | { success: true }> {
+  const rateLimited = await rateLimit('application');
+  if (rateLimited) return { error: rateLimited.error };
   // Normalize LinkedIn URL: prepend https:// if missing
   const linkedinRaw = formData.get('linkedin_url') as string;
   if (linkedinRaw && !linkedinRaw.startsWith('http')) {
@@ -65,12 +76,12 @@ export async function submitApplication(
   }
 
   // 2. Validate resume file (required)
-  const resumeResult = validatePdfFile(formData.get('resume'), 'Resume', true);
+  const resumeResult = await validatePdfFile(formData.get('resume'), 'Resume', true);
   if (resumeResult.error) return { error: resumeResult.error };
   const resumeFile = resumeResult.file!;
 
   // 3. Validate cover letter file (optional)
-  const coverLetterResult = validatePdfFile(
+  const coverLetterResult = await validatePdfFile(
     formData.get('cover_letter'),
     'Cover letter',
     false,

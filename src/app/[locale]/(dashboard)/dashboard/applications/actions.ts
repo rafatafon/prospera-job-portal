@@ -2,15 +2,28 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
 import type { Database } from '@/types/database.types';
+import { safeErrorMessage } from '@/lib/security/validation';
 
 type ApplicationStatus = Database['public']['Enums']['application_status'];
+
+const validStatuses: ApplicationStatus[] = ['pending', 'reviewed', 'interested', 'denied'];
+const applicationIdSchema = z.string().uuid('Invalid application ID');
 
 export async function updateApplicationStatus(
   locale: string,
   applicationId: string,
   status: ApplicationStatus,
 ): Promise<{ error: string } | { success: true }> {
+  // Validate inputs
+  if (!applicationIdSchema.safeParse(applicationId).success) {
+    return { error: 'Invalid application ID' };
+  }
+  if (!validStatuses.includes(status)) {
+    return { error: 'Invalid application status' };
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -41,7 +54,7 @@ export async function updateApplicationStatus(
     .update({ status })
     .eq('id', applicationId);
 
-  if (error) return { error: error.message };
+  if (error) return { error: safeErrorMessage(error) };
 
   revalidatePath(`/${locale}/dashboard/applications`);
   return { success: true };

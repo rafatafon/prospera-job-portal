@@ -29,7 +29,8 @@
     "myProfile": "Mi Perfil",
     "adminLogin": "Admin",
     "siteDescription": "Encuentra tu proximo empleo en Honduras",
-    "openTalent": "Talento Abierto"
+    "openTalent": "Talento Abierto",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor espera unos minutos e intenta de nuevo."
   },
   "landing": {
     "heroTitle": "Encuentra tu proximo empleo",
@@ -366,7 +367,7 @@
     "errorGeneric": "Error de autenticacion",
     "errorCandidateOnly": "Esta cuenta no es de candidato. Por favor use el acceso de empresa.",
     "passwordMismatch": "Las contraseñas no coinciden",
-    "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
     "forgotPassword": "Olvidaste tu contrasena?",
     "resetSuccess": "Tu contrasena ha sido actualizada. Por favor inicia sesion con tu nueva contrasena."
   },

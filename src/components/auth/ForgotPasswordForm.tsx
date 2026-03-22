@@ -16,6 +16,7 @@ interface ForgotPasswordFormProps {
 
 export function ForgotPasswordForm({ from, dark = false }: ForgotPasswordFormProps) {
   const t = useTranslations('forgotPassword');
+  const tCommon = useTranslations('common');
   const locale = useLocale();
 
   const [success, setSuccess] = useState(false);
@@ -31,7 +32,11 @@ export function ForgotPasswordForm({ from, dark = false }: ForgotPasswordFormPro
       if (from) formData.set('from', from);
       const result = await requestPasswordReset(locale, formData);
       if (result?.error) {
-        setError(result.error);
+        if (result.error === 'too_many_requests') {
+          setError(tCommon('tooManyRequests'));
+        } else {
+          setError(result.error);
+        }
       } else {
         setSuccess(true);
       }

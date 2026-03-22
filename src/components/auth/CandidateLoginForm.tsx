@@ -12,6 +12,7 @@ import { AlertCircle } from 'lucide-react';
 
 export function CandidateLoginForm({ dark = false }: { dark?: boolean }) {
   const t = useTranslations('candidateAuth');
+  const tCommon = useTranslations('common');
   const locale = useLocale();
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -24,7 +25,9 @@ export function CandidateLoginForm({ dark = false }: { dark?: boolean }) {
     startTransition(async () => {
       const result = await candidateLogin(locale, formData);
       if (result?.error) {
-        if (result.error === 'candidate_only') {
+        if (result.error === 'too_many_requests') {
+          setError(tCommon('tooManyRequests'));
+        } else if (result.error === 'candidate_only') {
           setError(t('errorCandidateOnly'));
         } else {
           setError(result.error);

@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { CompanyLogo } from '@/components/ui/company-logo';
 import type { Database } from '@/types/database.types';
 import { ApplicationForm } from '@/components/jobs/ApplicationForm';
+import { sanitizeHtml } from '@/lib/security/sanitize';
 import {
   MapPin,
   Briefcase,
@@ -169,7 +170,7 @@ export default async function JobDetailPage({
               <div className="p-6">
                 <div
                   className="prose prose-sm prose-slate max-w-none"
-                  dangerouslySetInnerHTML={{ __html: job.description }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(job.description ?? '') }}
                 />
               </div>
             </div>

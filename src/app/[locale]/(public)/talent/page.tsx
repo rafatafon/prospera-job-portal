@@ -5,6 +5,7 @@ import { CandidateCard } from '@/components/candidates/CandidateCard';
 import { CandidateFilters } from '@/components/candidates/CandidateFilters';
 import { Users } from 'lucide-react';
 import type { Database } from '@/types/database.types';
+import { sanitizeSearchInput } from '@/lib/security/sanitize';
 
 type CandidateAvailability = Database['public']['Enums']['candidate_availability'];
 
@@ -52,11 +53,14 @@ export default async function TalentPage({
     .eq('is_visible', true)
     .order('created_at', { ascending: false });
 
-  // Search filter
+  // Search filter — sanitize to prevent PostgREST filter injection
   if (filters.query) {
-    query = query.or(
-      `full_name.ilike.%${filters.query}%,headline.ilike.%${filters.query}%`,
-    );
+    const safeQuery = sanitizeSearchInput(filters.query);
+    if (safeQuery) {
+      query = query.or(
+        `full_name.ilike.%${safeQuery}%,headline.ilike.%${safeQuery}%`,
+      );
+    }
   }
 
   // Availability filter

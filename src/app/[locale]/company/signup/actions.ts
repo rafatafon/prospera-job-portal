@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { verifyAndLookupRpn } from '@/lib/prospera/client';
 import { toSlug } from '@/lib/utils';
+import { rateLimit } from '@/lib/security/rate-limit';
 
 // ---------------------------------------------------------------------------
 // Schemas
@@ -46,6 +47,9 @@ type ActionError = {
 export async function verifyRpn(
   rpn: string,
 ): Promise<VerifyRpnSuccess | ActionError> {
+  const rateLimited = await rateLimit('signup');
+  if (rateLimited) return { error: rateLimited.error, code: 'rate_limited' };
+
   // Validate input
   const parsed = rpnSchema.safeParse(rpn);
   if (!parsed.success) {
@@ -126,6 +130,9 @@ export async function registerCompany(
   locale: string,
   formData: FormData,
 ): Promise<ActionError | void> {
+  const rateLimited = await rateLimit('signup');
+  if (rateLimited) return { error: rateLimited.error, code: 'rate_limited' };
+
   // Extract and validate fields
   const raw = {
     rpn: formData.get('rpn') as string,

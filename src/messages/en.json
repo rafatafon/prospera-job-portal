@@ -29,7 +29,8 @@
     "myProfile": "My Profile",
     "adminLogin": "Admin",
     "siteDescription": "Find your next job in Honduras",
-    "openTalent": "Open Talent"
+    "openTalent": "Open Talent",
+    "tooManyRequests": "Too many requests. Please wait a few minutes and try again."
   },
   "landing": {
     "heroTitle": "Find your next job",
@@ -366,7 +367,7 @@
     "errorGeneric": "Authentication error",
     "errorCandidateOnly": "This account is not a candidate account. Please use Company Login.",
     "passwordMismatch": "Passwords don't match",
-    "passwordMinLength": "Password must be at least 6 characters",
+    "passwordMinLength": "Password must be at least 8 characters",
     "forgotPassword": "Forgot password?",
     "resetSuccess": "Your password has been updated. Please log in with your new password."
   },

@@ -12,6 +12,7 @@ import { AlertCircle } from 'lucide-react';
 
 export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
   const t = useTranslations('candidateAuth');
+  const tCommon = useTranslations('common');
   const locale = useLocale();
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -24,7 +25,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
     const password = formData.get('password') as string;
     const confirmPassword = formData.get('confirm_password') as string;
 
-    if (password.length < 6) {
+    if (password.length < 8) {
       setError(t('passwordMinLength'));
       return;
     }
@@ -37,7 +38,11 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
     startTransition(async () => {
       const result = await candidateSignup(locale, formData);
       if (result?.error) {
-        setError(result.error);
+        if (result.error === 'too_many_requests') {
+          setError(tCommon('tooManyRequests'));
+        } else {
+          setError(result.error);
+        }
       }
     });
   }
