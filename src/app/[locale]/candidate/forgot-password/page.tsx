@@ -19,19 +19,11 @@ export default async function CandidateForgotPasswordPage({
       {/* Left — hero image panel */}
       <div className="relative hidden h-48 shrink-0 overflow-hidden sm:block sm:h-56 lg:h-auto lg:w-1/2">
         <Image
-          src="/open-application-login/prospera-live-in-the-future.jpg"
+          src="/open-application-login/bitcoin-center-1.avif"
           alt=""
           fill
           priority
           className="object-cover object-center"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.3) 100%)',
-          }}
-          aria-hidden="true"
         />
         <div className="absolute inset-0 flex flex-col justify-between p-6 lg:p-10">
           <Link href="/" className="flex items-center gap-2.5">
