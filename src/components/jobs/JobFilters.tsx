@@ -110,7 +110,7 @@ export function JobFilters({
         value={initialWorkMode || ALL_VALUE}
         onValueChange={handleWorkModeChange}
       >
-        <SelectTrigger className="h-10 w-full border-slate-200 bg-white sm:w-44">
+        <SelectTrigger className="h-10 w-full border-slate-200 bg-white sm:w-52">
           <SelectValue placeholder={t('allWorkModes')} />
         </SelectTrigger>
         <SelectContent>
