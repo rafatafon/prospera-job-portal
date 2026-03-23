@@ -56,6 +56,11 @@ export async function GET(
               new URL(`/${locale}/candidate/email-confirmed`, request.url),
             );
           }
+          if (profile?.role === 'company') {
+            return NextResponse.redirect(
+              new URL(`/${locale}/company/email-confirmed`, request.url),
+            );
+          }
           if (profile?.role === 'admin') {
             return NextResponse.redirect(
               new URL(`/${locale}/admin`, request.url),

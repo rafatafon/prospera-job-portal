@@ -24,6 +24,11 @@ export default async function DashboardLayout({
     redirect(`/${locale}/login`);
   }
 
+  // Block access until email is confirmed
+  if (!user.email_confirmed_at) {
+    redirect(`/${locale}/company/verify-email`);
+  }
+
   // Fetch profile and company
   const { data: profile } = await supabase
     .from('profiles')

@@ -441,7 +441,16 @@
     "errorEmailExists": "This email is already registered.",
     "errorPasswordMinLength": "Password must be at least 8 characters",
     "errorPasswordMismatch": "Passwords don't match",
-    "errorGeneric": "An error occurred. Please try again."
+    "errorGeneric": "An error occurred. Please try again.",
+    "verifyEmailTitle": "Check your email",
+    "verifyEmailMessage": "We sent a confirmation link to your email. Click the link to verify your account.",
+    "resendEmail": "Resend email",
+    "resending": "Sending...",
+    "resent": "Email sent!",
+    "wrongEmail": "Wrong email? Sign up again",
+    "emailConfirmedTitle": "Email verified!",
+    "emailConfirmedMessage": "Your email has been confirmed. You can now log in to your account.",
+    "goToLogin": "Go to login"
   },
   "dashboardApplications": {
     "title": "Applications",

@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { createClient } from '@/lib/supabase/server';
 import { verifyAndLookupRpn } from '@/lib/prospera/client';
 import { toSlug } from '@/lib/utils';
 import { rateLimit } from '@/lib/security/rate-limit';
@@ -174,16 +175,16 @@ export async function registerCompany(
     };
   }
 
-  // Create auth user
-  const { data: authData, error: authError } = await admin.auth.admin.createUser({
+  // Create auth user via regular signUp (sends confirmation email automatically)
+  const supabase = await createClient();
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
-    email_confirm: true,
-    user_metadata: { full_name: fullName },
+    options: { data: { full_name: fullName } },
   });
 
-  if (authError) {
-    if (authError.message.includes('already been registered')) {
+  if (signUpError) {
+    if (signUpError.message.includes('already been registered')) {
       return {
         error: 'An account with this email already exists.',
         code: 'email_exists',
@@ -195,7 +196,13 @@ export async function registerCompany(
     };
   }
 
-  const userId = authData.user.id;
+  const userId = signUpData.user?.id;
+  if (!userId) {
+    return {
+      error: 'Unable to create account. Please try again.',
+      code: 'auth_error',
+    };
+  }
 
   // Generate slug and register company via RPC
   const slug = toSlug(companyName);
@@ -227,5 +234,5 @@ export async function registerCompany(
   }
 
   revalidatePath('/');
-  redirect(`/${locale}/login?registered=true`);
+  redirect(`/${locale}/company/verify-email`);
 }

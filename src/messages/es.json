@@ -441,7 +441,16 @@
     "errorEmailExists": "Este correo electronico ya esta registrado.",
     "errorPasswordMinLength": "La contrasena debe tener al menos 8 caracteres",
     "errorPasswordMismatch": "Las contrasenas no coinciden",
-    "errorGeneric": "Ocurrio un error. Intenta de nuevo."
+    "errorGeneric": "Ocurrio un error. Intenta de nuevo.",
+    "verifyEmailTitle": "Revisa tu correo electronico",
+    "verifyEmailMessage": "Enviamos un enlace de confirmacion a tu correo. Haz clic en el enlace para verificar tu cuenta.",
+    "resendEmail": "Reenviar correo",
+    "resending": "Enviando...",
+    "resent": "Correo enviado!",
+    "wrongEmail": "Correo incorrecto? Registrate de nuevo",
+    "emailConfirmedTitle": "Correo verificado!",
+    "emailConfirmedMessage": "Tu correo ha sido confirmado. Ya puedes iniciar sesion en tu cuenta.",
+    "goToLogin": "Ir a iniciar sesion"
   },
   "dashboardApplications": {
     "title": "Aplicaciones",
