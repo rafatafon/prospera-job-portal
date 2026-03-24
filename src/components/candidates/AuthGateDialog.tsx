@@ -2,6 +2,7 @@
 
 import { XIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { Dialog as DialogPrimitive } from 'radix-ui'
 
 import {
   Dialog,
@@ -25,37 +26,35 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPortal>
-        {/* Custom overlay with blur — avoids modifying shared dialog.tsx */}
+        {/* Blurred overlay */}
         <DialogOverlay className="backdrop-blur-sm bg-black/40" />
 
-        {/* Custom content div — mirrors DialogContent positioning without its default overlay */}
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed top-[50%] left-[50%] z-50 w-full max-w-[calc(100%-2rem)] sm:max-w-md translate-x-[-50%] translate-y-[-50%] focus:outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-        >
-          {/* Card with Prospera brand orange top rule */}
-          <div className="relative bg-white rounded-xl shadow-2xl overflow-hidden">
-            {/* Orange accent rule at the top — the one memorable visual */}
+        {/* Centering container — fixed full-screen flex, centers child reliably */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+          <DialogPrimitive.Content
+            className="pointer-events-auto relative w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden focus:outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 duration-200"
+          >
+            {/* Brand orange top rule */}
             <div
               className="h-[3px] w-full"
               style={{ backgroundColor: '#E8501C' }}
               aria-hidden="true"
             />
 
-            <div className="px-6 pt-6 pb-7">
-              {/* Close button */}
-              <DialogClose
-                className="absolute top-4 right-4 rounded-sm opacity-60 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400 disabled:pointer-events-none"
-                aria-label="Close"
-              >
-                <XIcon className="size-4 text-slate-500" />
-                <span className="sr-only">Close</span>
-              </DialogClose>
+            {/* Close button — absolute top-right */}
+            <DialogClose
+              className="absolute top-4 right-4 rounded-sm opacity-50 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400 disabled:pointer-events-none"
+              aria-label="Close"
+            >
+              <XIcon className="size-4 text-slate-500" />
+              <span className="sr-only">Close</span>
+            </DialogClose>
 
-              {/* Icon lockup — small orange shield/lock badge for visual anchor */}
+            {/* Content — centered layout */}
+            <div className="px-8 pt-8 pb-8 flex flex-col items-center text-center">
+              {/* Shield/lock icon badge */}
               <div
-                className="mb-5 inline-flex items-center justify-center w-10 h-10 rounded-full"
+                className="mb-5 flex items-center justify-center w-12 h-12 rounded-full"
                 style={{ backgroundColor: '#FEF0EB' }}
                 aria-hidden="true"
               >
@@ -63,7 +62,7 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="size-5"
+                  className="size-6"
                   aria-hidden="true"
                 >
                   <path
@@ -91,23 +90,22 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
                 </svg>
               </div>
 
-              {/* Title & description */}
-              <div className="mb-6">
-                <DialogTitle className="text-[#0A1628] text-xl font-semibold leading-snug mb-2">
-                  {t('authGateTitle')}
-                </DialogTitle>
-                <DialogDescription className="text-slate-500 text-sm leading-relaxed">
-                  {t('authGateDescription')}
-                </DialogDescription>
-              </div>
+              {/* Title */}
+              <DialogTitle className="text-[#0A1628] text-xl font-semibold leading-snug mb-2">
+                {t('authGateTitle')}
+              </DialogTitle>
 
-              {/* CTAs — stacked on mobile, side-by-side on sm+ */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                {/* Primary: sign up — Prospera orange */}
+              {/* Description */}
+              <DialogDescription className="text-slate-500 text-sm leading-relaxed mb-7 max-w-xs">
+                {t('authGateDescription')}
+              </DialogDescription>
+
+              {/* CTAs — stacked full width */}
+              <div className="flex flex-col gap-3 w-full">
                 <Button
                   asChild
                   size="lg"
-                  className="flex-1 font-medium text-white shadow-sm hover:opacity-90 transition-opacity"
+                  className="w-full font-medium text-white shadow-sm hover:opacity-90 transition-opacity"
                   style={{ backgroundColor: '#E8501C', borderColor: '#E8501C' }}
                 >
                   <Link href="/company/signup">
@@ -115,12 +113,11 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
                   </Link>
                 </Button>
 
-                {/* Secondary: login — outline */}
                 <Button
                   asChild
                   variant="outline"
                   size="lg"
-                  className="flex-1 font-medium text-slate-700 border-slate-300 hover:bg-slate-50 transition-colors"
+                  className="w-full font-medium text-slate-700 border-slate-200 hover:bg-slate-50 transition-colors"
                 >
                   <Link href="/login">
                     {t('authGateLogin')}
@@ -128,7 +125,7 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
                 </Button>
               </div>
             </div>
-          </div>
+          </DialogPrimitive.Content>
         </div>
       </DialogPortal>
     </Dialog>
