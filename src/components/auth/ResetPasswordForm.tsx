@@ -59,7 +59,7 @@ export function ResetPasswordForm({ from, dark = false }: ResetPasswordFormProps
       const { error } = await supabase.auth.updateUser({ password: newPassword });
 
       if (error) {
-        setFormError(error.message);
+        setFormError(t('errorGeneric'));
       } else {
         // Sign out so user logs in with new password
         await supabase.auth.signOut();

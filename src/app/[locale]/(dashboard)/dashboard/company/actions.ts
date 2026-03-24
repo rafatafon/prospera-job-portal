@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { safeErrorMessage } from '@/lib/security/validation';
+import { validateFileMagicBytes } from '@/lib/security/file-validation';
 
 const MAX_LOGO_SIZE = 2 * 1024 * 1024; // 2 MB
 const ACCEPTED_IMAGE_TYPES = [
@@ -122,6 +124,14 @@ export async function updateCompanyProfile(
     if (logoFile.size > MAX_LOGO_SIZE) {
       return { error: 'Logo must be less than 2MB' };
     }
+    // Validate magic bytes for raster images (SVG is text-based, skip)
+    if (logoFile.type === 'image/png' || logoFile.type === 'image/jpeg' || logoFile.type === 'image/jpg') {
+      const expectedType = logoFile.type === 'image/png' ? 'png' as const : 'jpeg' as const;
+      const validBytes = await validateFileMagicBytes(logoFile, expectedType);
+      if (!validBytes) {
+        return { error: 'Logo does not appear to be a valid image file' };
+      }
+    }
     if (currentCompany?.logo_url) {
       await deleteLogo(supabase, currentCompany.logo_url);
     }
@@ -145,7 +155,7 @@ export async function updateCompanyProfile(
     .eq('id', companyId);
 
   if (updateError) {
-    return { error: updateError.message };
+    return { error: safeErrorMessage(updateError) };
   }
 
   revalidatePath(`/${locale}/dashboard/company`);

@@ -496,6 +496,7 @@
     "errorMismatch": "Las contrasenas no coinciden",
     "errorMinLength": "La contrasena debe tener al menos 8 caracteres",
     "errorExpired": "Este enlace ha expirado. Por favor solicita uno nuevo.",
+    "errorGeneric": "Algo salio mal. Por favor, intentalo de nuevo.",
     "success": "Contrasena actualizada exitosamente"
   },
   "accountSettings": {

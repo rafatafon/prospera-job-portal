@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { safeErrorMessage } from '@/lib/security/validation';
 
 export async function changePassword(
   formData: FormData,
@@ -28,7 +29,7 @@ export async function changePassword(
   const { error } = await supabase.auth.updateUser({ password: newPassword });
 
   if (error) {
-    return { error: error.message };
+    return { error: safeErrorMessage(error) };
   }
 
   return { success: true };
@@ -59,7 +60,7 @@ export async function changeEmail(
   const { error } = await supabase.auth.updateUser({ email: newEmail });
 
   if (error) {
-    return { error: error.message };
+    return { error: safeErrorMessage(error) };
   }
 
   // Supabase automatically sends confirmation to new email

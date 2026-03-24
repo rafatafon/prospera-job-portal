@@ -496,6 +496,7 @@
     "errorMismatch": "Passwords do not match",
     "errorMinLength": "Password must be at least 8 characters",
     "errorExpired": "This reset link has expired. Please request a new one.",
+    "errorGeneric": "Something went wrong. Please try again.",
     "success": "Password updated successfully"
   },
   "accountSettings": {

@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
 
+const isDev = process.env.NODE_ENV === 'development';
 // Supabase project hostname used in CSP and image patterns
 const SUPABASE_HOST = 'pqmcymetprozeqrpmjud.supabase.co';
 // CDN used by react-circle-flags for country flag SVGs
@@ -54,7 +55,7 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               // Next.js requires unsafe-inline for inline scripts; unsafe-eval for dev HMR
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
               // Tailwind + Next.js inject inline styles
               "style-src 'self' 'unsafe-inline'",
               // Allow Supabase storage images, flag CDN, data URIs (base64 images), blobs (cropper)
