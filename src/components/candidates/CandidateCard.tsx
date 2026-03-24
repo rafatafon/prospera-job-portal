@@ -149,11 +149,12 @@ export function CandidateCard({
       <div
         role="button"
         tabIndex={0}
+        aria-label={`${viewProfileLabel}: ${candidate.full_name}`}
         onClick={() => setShowAuthGate(true)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') setShowAuthGate(true);
         }}
-        className="group block cursor-pointer rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md focus:outline-none"
+        className="group block cursor-pointer rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md focus:ring-2 focus:ring-[#E8501C]/50 focus:ring-offset-2 focus:outline-none"
       >
         {cardContent}
       </div>
