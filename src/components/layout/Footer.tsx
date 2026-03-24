@@ -56,7 +56,7 @@ export async function Footer() {
           </a>
           {/* X (Twitter) */}
           <a
-            href="https://x.com/prosperaglobal.com"
+            href="https://x.com/prosperaglobal"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
@@ -68,7 +68,7 @@ export async function Footer() {
           </a>
           {/* YouTube */}
           <a
-            href="https://www.youtube.com/@prosperahn255.com"
+            href="https://www.youtube.com/@prosperahn255"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
