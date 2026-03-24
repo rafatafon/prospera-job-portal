@@ -9,7 +9,7 @@
  * @module security/sanitize
  */
 
-import DOMPurify from 'isomorphic-dompurify';
+import sanitize from 'sanitize-html';
 
 // ---------------------------------------------------------------------------
 // HTML sanitization (for rich-text output like TipTap job descriptions)
@@ -41,28 +41,37 @@ const ALLOWED_TAGS = [
 ];
 
 /** Attributes safe for the allowed tags. */
-const ALLOWED_ATTR = ['href', 'target', 'rel', 'class'];
-
-// Force all anchor tags to have rel="noopener noreferrer" for safety
-DOMPurify.addHook('afterSanitizeAttributes', (node) => {
-  if (node.tagName === 'A') {
-    node.setAttribute('rel', 'noopener noreferrer');
-    // Only allow http(s) links
-    const href = node.getAttribute('href') ?? '';
-    if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('/')) {
-      node.removeAttribute('href');
-    }
-  }
-});
+const ALLOWED_ATTR: Record<string, string[]> = {
+  a: ['href', 'target', 'rel', 'class'],
+  span: ['class'],
+  '*': ['class'],
+};
 
 /**
  * Sanitize HTML content for safe rendering.
  * Strips all tags and attributes not in the TipTap allowlist.
  */
 export function sanitizeHtml(dirty: string): string {
-  return DOMPurify.sanitize(dirty, {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR,
+  return sanitize(dirty, {
+    allowedTags: ALLOWED_TAGS,
+    allowedAttributes: ALLOWED_ATTR,
+    allowedSchemes: ['http', 'https'],
+    transformTags: {
+      a: (tagName, attribs) => ({
+        tagName,
+        attribs: {
+          ...attribs,
+          rel: 'noopener noreferrer',
+          // Strip non-http(s) and non-relative hrefs
+          ...(attribs.href &&
+            !attribs.href.startsWith('http://') &&
+            !attribs.href.startsWith('https://') &&
+            !attribs.href.startsWith('/')
+            ? { href: '' }
+            : {}),
+        },
+      }),
+    },
   });
 }
 
