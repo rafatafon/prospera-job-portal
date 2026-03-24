@@ -285,7 +285,11 @@
     "viewProfile": "View profile",
     "backToTalent": "Back to Open Talent",
     "accessRestricted": "Only registered companies can access this section",
-    "loginToAccess": "Log in as a company to view candidates"
+    "loginToAccess": "Log in as a company to view candidates",
+    "authGateTitle": "Company Access Required",
+    "authGateDescription": "To view this profile you have to be an Entity in Prospera",
+    "signUpCompany": "Sign Up for Company Portal",
+    "authGateLogin": "Login"
   },
   "candidateProfile": {
     "title": "My candidate profile",

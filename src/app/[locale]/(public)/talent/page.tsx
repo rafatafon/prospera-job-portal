@@ -1,6 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient, getUser } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
 import { CandidateCard } from '@/components/candidates/CandidateCard';
 import { CandidateFilters } from '@/components/candidates/CandidateFilters';
 import { Users } from 'lucide-react';
@@ -28,19 +27,18 @@ export default async function TalentPage({
   const supabase = await createClient();
   const user = await getUser(supabase);
 
-  if (!user) {
-    redirect(`/${locale}/login`);
-  }
+  // Derive auth state for candidate card gating (no redirects — page is public)
+  let isAuthenticated = false;
+  let userRole: string | null = null;
 
-  // Only company and admin users can access
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single();
-
-  if (profile?.role !== 'company' && profile?.role !== 'admin') {
-    redirect(`/${locale}/jobs`);
+  if (user) {
+    isAuthenticated = true;
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+    userRole = profile?.role ?? null;
   }
 
   const t = await getTranslations('talent');
@@ -119,6 +117,8 @@ export default async function TalentPage({
                     : ''
                 }
                 viewProfileLabel={t('viewProfile')}
+                isAuthenticated={isAuthenticated}
+                userRole={userRole}
               />
             ))}
           </div>
