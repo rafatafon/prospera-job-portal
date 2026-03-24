@@ -47,7 +47,13 @@ export async function upsertCandidateProfile(
     skills: formData.get('skills') || '',
     years_of_experience: formData.get('years_of_experience') || '',
     availability: formData.get('availability') || 'actively_looking',
-    linkedin_url: formData.get('linkedin_url') || '',
+    linkedin_url: (() => {
+      const raw = (formData.get('linkedin_url') as string) || '';
+      if (!raw) return '';
+      // Strip any protocol the user may have pasted, then always prepend https://
+      const stripped = raw.replace(/^https?:\/\//, '');
+      return `https://${stripped}`;
+    })(),
     is_visible: formData.get('is_visible') === 'true' ? 'true' : 'false',
   });
 

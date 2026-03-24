@@ -49,14 +49,12 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
               {t('jobs')}
             </Link>
 
-            {userRole === 'company' && (
-              <Link
-                href="/talent"
-                className="rounded-full px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white/60 hover:text-slate-700"
-              >
-                {t('openTalent')}
-              </Link>
-            )}
+            <Link
+              href="/talent"
+              className="rounded-full px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-white/60 hover:text-slate-700"
+            >
+              {t('openTalent')}
+            </Link>
 
             {/* Business dropdown — CSS hover */}
             <div className="group relative">

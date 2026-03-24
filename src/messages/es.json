@@ -285,7 +285,11 @@
     "viewProfile": "Ver perfil",
     "backToTalent": "Volver a Talento Abierto",
     "accessRestricted": "Solo empresas registradas pueden acceder a esta seccion",
-    "loginToAccess": "Inicia sesion como empresa para ver candidatos"
+    "loginToAccess": "Inicia sesion como empresa para ver candidatos",
+    "authGateTitle": "Acceso de Empresa Requerido",
+    "authGateDescription": "Para ver este perfil debes ser una Entidad en Prospera",
+    "signUpCompany": "Registrate en el Portal de Empresas",
+    "authGateLogin": "Iniciar Sesion"
   },
   "candidateProfile": {
     "title": "Mi perfil de candidato",

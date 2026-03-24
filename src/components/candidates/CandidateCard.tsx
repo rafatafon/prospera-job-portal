@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { MapPin, Briefcase, User } from 'lucide-react';
+import { AuthGateDialog } from './AuthGateDialog';
 
 interface CandidateCardProps {
   candidate: {
@@ -18,6 +20,8 @@ interface CandidateCardProps {
   availabilityLabel: string;
   experienceLabel: string;
   viewProfileLabel: string;
+  isAuthenticated: boolean;
+  userRole: string | null;
 }
 
 const AVAILABILITY_COLORS = {
@@ -31,16 +35,19 @@ export function CandidateCard({
   availabilityLabel,
   experienceLabel,
   viewProfileLabel,
+  isAuthenticated,
+  userRole,
 }: CandidateCardProps) {
+  const [showAuthGate, setShowAuthGate] = useState(false);
   const maxSkills = 4;
   const visibleSkills = candidate.skills.slice(0, maxSkills);
   const remainingCount = candidate.skills.length - maxSkills;
 
-  return (
-    <Link
-      href={`/talent/${candidate.id}`}
-      className="group block rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md focus:outline-none"
-    >
+  const canAccessProfile =
+    isAuthenticated && (userRole === 'company' || userRole === 'admin');
+
+  const cardContent = (
+    <>
       <div className="flex gap-4">
         {/* Photo */}
         {candidate.photo_url ? (
@@ -123,6 +130,35 @@ export function CandidateCard({
           {viewProfileLabel} &rarr;
         </span>
       </div>
-    </Link>
+    </>
+  );
+
+  if (canAccessProfile) {
+    return (
+      <Link
+        href={`/talent/${candidate.id}`}
+        className="group block rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md focus:outline-none"
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label={`${viewProfileLabel}: ${candidate.full_name}`}
+        onClick={() => setShowAuthGate(true)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') setShowAuthGate(true);
+        }}
+        className="group block cursor-pointer rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md focus:ring-2 focus:ring-[#E8501C]/50 focus:ring-offset-2 focus:outline-none"
+      >
+        {cardContent}
+      </div>
+      <AuthGateDialog open={showAuthGate} onOpenChange={setShowAuthGate} />
+    </>
   );
 }
