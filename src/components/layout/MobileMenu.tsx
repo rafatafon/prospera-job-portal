@@ -108,7 +108,24 @@ export function MobileMenu({ user, userRole }: MobileMenuProps) {
         <div className="mt-auto border-t border-slate-200 px-6 py-6">
           <div className="flex flex-col items-end gap-3">
             {user ? (
-              userRole === 'user' ? (
+              userRole === 'company' ? (
+                <>
+                  <Link
+                    href="/candidate/profile"
+                    onClick={() => setOpen(false)}
+                    className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+                  >
+                    {t('myProfile')}
+                  </Link>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setOpen(false)}
+                    className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+                  >
+                    {t('dashboard')}
+                  </Link>
+                </>
+              ) : userRole === 'user' ? (
                 <Link
                   href="/candidate/profile"
                   onClick={() => setOpen(false)}

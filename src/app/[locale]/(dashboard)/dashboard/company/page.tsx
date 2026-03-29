@@ -29,7 +29,7 @@ export default async function CompanyProfilePage({
 
   if (!profile?.company_id) {
     return (
-      <div className="p-6 lg:p-8">
+      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
           {t('title')}
         </h1>
@@ -46,7 +46,7 @@ export default async function CompanyProfilePage({
 
   if (!company) {
     return (
-      <div className="p-6 lg:p-8">
+      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
           {t('title')}
         </h1>
@@ -56,7 +56,7 @@ export default async function CompanyProfilePage({
   }
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
           {t('title')}

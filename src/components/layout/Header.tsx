@@ -94,7 +94,24 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
         {/* Desktop CTA — always render container for stable hydration */}
         <div className="absolute right-0 hidden items-center gap-3 md:flex">
           {user ? (
-            userRole === 'user' ? (
+            userRole === 'company' ? (
+              <>
+                <Link
+                  href="/candidate/profile"
+                  className="rounded-full border border-white/60 bg-white/75 px-4 py-2 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
+                >
+                  {t('myProfile')}
+                </Link>
+                <Button
+                  asChild
+                  size="sm"
+                  style={{ backgroundColor: '#E8501C' }}
+                  className="rounded-full px-6 text-white hover:opacity-90"
+                >
+                  <Link href="/dashboard">{t('dashboard')}</Link>
+                </Button>
+              </>
+            ) : userRole === 'user' ? (
               <Button
                 asChild
                 size="sm"

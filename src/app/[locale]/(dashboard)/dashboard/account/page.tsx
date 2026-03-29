@@ -26,14 +26,14 @@ export default async function AccountSettingsPage({
   }
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
           {t('title')}
         </h1>
       </div>
 
-      <div className="max-w-xl">
+      <div>
         <AccountSettingsForm
           userEmail={user.email ?? null}
           emailChanged={emailChanged === 'true'}

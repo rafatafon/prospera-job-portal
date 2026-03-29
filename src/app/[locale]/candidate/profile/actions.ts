@@ -34,7 +34,7 @@ export async function upsertCandidateProfile(
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'user') {
+  if (profile?.role !== 'user' && profile?.role !== 'company') {
     return { error: 'Only candidates can create profiles' };
   }
 

@@ -12,7 +12,11 @@ import {
 } from '@/components/ui/sheet';
 import { CandidateSidebar } from '@/components/layout/CandidateSidebar';
 
-export function CandidateMobileSidebarTrigger() {
+interface CandidateMobileSidebarTriggerProps {
+  role?: string;
+}
+
+export function CandidateMobileSidebarTrigger({ role }: CandidateMobileSidebarTriggerProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -31,7 +35,7 @@ export function CandidateMobileSidebarTrigger() {
         <SheetHeader className="sr-only">
           <SheetTitle>Navigation</SheetTitle>
         </SheetHeader>
-        <CandidateSidebar />
+        <CandidateSidebar role={role} />
       </SheetContent>
     </Sheet>
   );

@@ -4,7 +4,7 @@ import { usePathname } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { User } from 'lucide-react';
+import { User, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NavItem {
@@ -21,9 +21,19 @@ const NAV_ITEMS: NavItem[] = [
     icon: User,
     exact: true,
   },
+  {
+    labelKey: 'sidebarRegisterCompany',
+    href: '/candidate/register-company',
+    icon: Building2,
+    exact: true,
+  },
 ];
 
-export function CandidateSidebar() {
+interface CandidateSidebarProps {
+  role?: string;
+}
+
+export function CandidateSidebar({ role }: CandidateSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations('candidateProfile');
 
@@ -58,7 +68,13 @@ export function CandidateSidebar() {
         className="flex-1 space-y-1 px-3 py-4"
         aria-label={t('sidebarTitle')}
       >
-        {NAV_ITEMS.map((item) => {
+        {NAV_ITEMS.filter((item) => {
+          // Hide "Register Company" for users who are already company/admin
+          if (item.href === '/candidate/register-company' && role && role !== 'user') {
+            return false;
+          }
+          return true;
+        }).map((item) => {
           const active = isActive(item);
           const Icon = item.icon;
           return (

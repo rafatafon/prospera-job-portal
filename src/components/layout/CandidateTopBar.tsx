@@ -14,11 +14,13 @@ import { ChevronDown } from 'lucide-react';
 interface CandidateTopBarProps {
   userEmail: string | null;
   locale: string;
+  role?: string;
 }
 
 export async function CandidateTopBar({
   userEmail,
   locale,
+  role,
 }: CandidateTopBarProps) {
   const tCommon = await getTranslations('common');
 
@@ -30,7 +32,7 @@ export async function CandidateTopBar({
     <header className="flex h-16 shrink-0 items-center border-b border-slate-200 bg-white px-4 sm:px-6">
       {/* Mobile sidebar trigger */}
       <div className="md:hidden">
-        <CandidateMobileSidebarTrigger />
+        <CandidateMobileSidebarTrigger role={role} />
       </div>
 
       {/* Spacer */}

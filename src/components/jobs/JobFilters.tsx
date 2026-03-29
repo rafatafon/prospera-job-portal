@@ -3,14 +3,6 @@
 import { useRouter, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { Search, X } from 'lucide-react';
 
 interface JobFiltersProps {
@@ -19,8 +11,6 @@ interface JobFiltersProps {
   initialType?: string;
   initialWorkMode?: string;
 }
-
-const ALL_VALUE = '__all__';
 
 export function JobFilters({
   initialQuery = '',
@@ -56,16 +46,14 @@ export function JobFilters({
     router.push(qs ? `${pathname}?${qs}` : pathname);
   }
 
-  function handleTypeChange(value: string) {
-    const resolved = value === ALL_VALUE ? '' : value;
-    const params = buildParams({ type: resolved });
+  function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const params = buildParams({ type: e.target.value });
     const qs = params.toString();
     router.push(qs ? `${pathname}?${qs}` : pathname);
   }
 
-  function handleWorkModeChange(value: string) {
-    const resolved = value === ALL_VALUE ? '' : value;
-    const params = buildParams({ work_mode: resolved });
+  function handleWorkModeChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const params = buildParams({ work_mode: e.target.value });
     const qs = params.toString();
     router.push(qs ? `${pathname}?${qs}` : pathname);
   }
@@ -84,54 +72,46 @@ export function JobFilters({
           placeholder={t('searchPlaceholder')}
           defaultValue={initialQuery}
           onChange={handleQueryChange}
-          className="h-10 border-slate-200 bg-white pl-9 focus-visible:ring-1"
+          className="h-10 rounded-lg border-slate-200 bg-white pl-9 focus-visible:ring-1"
           style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
         />
       </div>
 
       {/* Job type select */}
-      <Select
-        value={initialType || ALL_VALUE}
-        onValueChange={handleTypeChange}
+      <select
+        value={initialType}
+        onChange={handleTypeChange}
+        className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 focus-visible:outline-none focus-visible:ring-1 sm:w-44"
+        style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
       >
-        <SelectTrigger className="h-10 w-full border-slate-200 bg-white sm:w-44">
-          <SelectValue placeholder={t('allTypes')} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={ALL_VALUE}>{t('allTypes')}</SelectItem>
-          <SelectItem value="full_time">{t('fullTime')}</SelectItem>
-          <SelectItem value="part_time">{t('partTime')}</SelectItem>
-          <SelectItem value="contract">{t('contract')}</SelectItem>
-        </SelectContent>
-      </Select>
+        <option value="">{t('allTypes')}</option>
+        <option value="full_time">{t('fullTime')}</option>
+        <option value="part_time">{t('partTime')}</option>
+        <option value="contract">{t('contract')}</option>
+      </select>
 
       {/* Work mode select */}
-      <Select
-        value={initialWorkMode || ALL_VALUE}
-        onValueChange={handleWorkModeChange}
+      <select
+        value={initialWorkMode}
+        onChange={handleWorkModeChange}
+        className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 focus-visible:outline-none focus-visible:ring-1 sm:w-52"
+        style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
       >
-        <SelectTrigger className="h-10 w-full border-slate-200 bg-white sm:w-52">
-          <SelectValue placeholder={t('allWorkModes')} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={ALL_VALUE}>{t('allWorkModes')}</SelectItem>
-          <SelectItem value="on_site">{t('onSite')}</SelectItem>
-          <SelectItem value="remote">{t('remote')}</SelectItem>
-          <SelectItem value="hybrid">{t('hybrid')}</SelectItem>
-        </SelectContent>
-      </Select>
+        <option value="">{t('allWorkModes')}</option>
+        <option value="on_site">{t('onSite')}</option>
+        <option value="remote">{t('remote')}</option>
+        <option value="hybrid">{t('hybrid')}</option>
+      </select>
 
       {/* Clear filters */}
       {hasActiveFilters && (
-        <Button
-          variant="ghost"
-          size="sm"
+        <button
           onClick={handleClearFilters}
-          className="h-10 gap-1.5 text-slate-500 hover:text-slate-800"
+          className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
         >
           <X className="h-3.5 w-3.5" />
           {tCommon('clearFilters')}
-        </Button>
+        </button>
       )}
     </div>
   );

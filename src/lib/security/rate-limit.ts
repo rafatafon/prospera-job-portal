@@ -101,10 +101,10 @@ async function getClientIp(): Promise<string> {
 // ---------------------------------------------------------------------------
 
 const LIMITS = {
-  login: { limit: 5, windowSeconds: 300 }, // 5 attempts per 5 min
-  signup: { limit: 3, windowSeconds: 600 }, // 3 attempts per 10 min
-  passwordReset: { limit: 3, windowSeconds: 600 }, // 3 attempts per 10 min
-  application: { limit: 5, windowSeconds: 300 }, // 5 submissions per 5 min
+  login: { limit: 10, windowSeconds: 300 }, // 10 attempts per 5 min
+  signup: { limit: 10, windowSeconds: 1800 }, // 10 attempts per 30 min
+  passwordReset: { limit: 5, windowSeconds: 900 }, // 5 attempts per 15 min
+  application: { limit: 10, windowSeconds: 600 }, // 10 submissions per 10 min
 } as const;
 
 type ActionType = keyof typeof LIMITS;

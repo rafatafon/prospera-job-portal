@@ -5,7 +5,7 @@ import { CandidateSidebar } from '@/components/layout/CandidateSidebar';
 import { CandidateTopBar } from '@/components/layout/CandidateTopBar';
 import { IdleTimeoutProvider } from '@/components/session/IdleTimeoutProvider';
 
-export default async function CandidateProfileLayout({
+export default async function RegisterCompanyLayout({
   children,
   params,
 }: {
@@ -30,8 +30,9 @@ export default async function CandidateProfileLayout({
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'user' && profile?.role !== 'company') {
-    redirect(`/${locale}/`);
+  // Already a company user — redirect to dashboard
+  if (profile?.role === 'company' || profile?.role === 'admin') {
+    redirect(`/${locale}/dashboard`);
   }
 
   return (

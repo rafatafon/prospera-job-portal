@@ -94,7 +94,7 @@ Prevents company users from modifying admin-managed fields. Uses `IS NOT DISTINC
 - `candidates_select_own` -- SELECT for authenticated where `user_id = auth.uid()`
 - `candidates_select_company` -- SELECT for authenticated where `get_my_role() = 'company' AND is_visible = true`
 - `candidates_select_admin` -- SELECT for authenticated where `is_admin()`
-- `candidates_insert_own` -- INSERT for authenticated where `user_id = auth.uid() AND get_my_role() = 'user'`
+- `candidates_insert_own` -- INSERT for authenticated where `user_id = auth.uid() AND get_my_role() IN ('user', 'company')` (dual-role: company users can also create candidate profiles)
 - `candidates_update_own` -- UPDATE for authenticated where `user_id = auth.uid()` (USING + WITH CHECK)
 - `candidates_delete_own` -- DELETE for authenticated where `user_id = auth.uid()`
 - `candidates_delete_admin` -- DELETE for authenticated where `is_admin()`
@@ -111,7 +111,7 @@ Prevents company users from modifying admin-managed fields. Uses `IS NOT DISTINC
 | Admin reads any candidate | ALLOW | candidates_select_admin |
 | User inserts own profile | ALLOW | candidates_insert_own |
 | User inserts profile for another user_id | DENY | (WITH CHECK filters by auth.uid()) |
-| Company user tries to insert candidate | DENY | (WITH CHECK requires role='user') |
+| Company user tries to insert candidate | ALLOW | candidates_insert_own (role IN ('user','company')) |
 | User updates own profile | ALLOW | candidates_update_own |
 | User updates another user's profile | DENY | (USING filters by user_id) |
 | User deletes own profile | ALLOW | candidates_delete_own |

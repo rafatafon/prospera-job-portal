@@ -39,7 +39,7 @@ export async function candidateLogin(
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'user') {
+  if (profile?.role !== 'user' && profile?.role !== 'company') {
     await supabase.auth.signOut();
     return { error: 'candidate_only' };
   }

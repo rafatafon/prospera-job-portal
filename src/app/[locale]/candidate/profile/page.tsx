@@ -33,7 +33,7 @@ export default async function CandidateProfilePage({
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'user') {
+  if (profile?.role !== 'user' && profile?.role !== 'company') {
     redirect(`/${locale}/dashboard`);
   }
 
