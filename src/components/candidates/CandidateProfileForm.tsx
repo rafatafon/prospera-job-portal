@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { upsertCandidateProfile } from '@/app/[locale]/candidate/profile/actions';
 import { AlertCircle, AlertTriangle, CheckCircle, Loader2, Upload } from 'lucide-react';
-import Image from 'next/image';
+
 import type { Database } from '@/types/database.types';
 import { PhotoCropDialog } from '@/components/candidates/PhotoCropDialog';
 import { SkillsAutocomplete } from '@/components/candidates/SkillsAutocomplete';

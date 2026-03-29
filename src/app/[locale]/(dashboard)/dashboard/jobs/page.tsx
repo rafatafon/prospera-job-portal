@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { redirect, notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { toDateLocale } from '@/lib/locale';
+import { formatDate } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { JobStatusBadge } from '@/components/jobs/JobStatusBadge';
@@ -12,14 +12,6 @@ import { PlusCircle, Briefcase, MapPin, CalendarDays } from 'lucide-react';
 type JobStatus = Database['public']['Enums']['job_status'];
 type EmploymentType = Database['public']['Enums']['employment_type'];
 type WorkMode = Database['public']['Enums']['work_mode'];
-
-function formatDate(dateStr: string, locale: string) {
-  return new Date(dateStr).toLocaleDateString(toDateLocale(locale), {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-}
 
 export default async function DashboardJobsPage({
   params,

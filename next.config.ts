@@ -3,7 +3,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const isDev = process.env.NODE_ENV === 'development';
 // Supabase project hostname used in CSP and image patterns
-const SUPABASE_HOST = 'pqmcymetprozeqrpmjud.supabase.co';
+const SUPABASE_HOST = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'https://localhost').hostname;
 // CDN used by react-circle-flags for country flag SVGs
 const FLAGS_CDN = 'react-circle-flags.pages.dev';
 
@@ -55,14 +55,14 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               // Next.js requires unsafe-inline for inline scripts; unsafe-eval for dev HMR
-              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
+              `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ''}`,
               // Tailwind + Next.js inject inline styles
               "style-src 'self' 'unsafe-inline'",
               // Allow Supabase storage images, flag CDN, data URIs (base64 images), blobs (cropper)
               `img-src 'self' https://${SUPABASE_HOST} https://${FLAGS_CDN} data: blob:`,
               "font-src 'self'",
-              // Allow Supabase API connections and flag CDN (react-circle-flags fetches SVGs)
-              `connect-src 'self' https://${SUPABASE_HOST} https://${FLAGS_CDN}`,
+              // Allow Supabase API connections, flag CDN (react-circle-flags), and Vercel Analytics
+              `connect-src 'self' https://${SUPABASE_HOST} https://${FLAGS_CDN} https://va.vercel-scripts.com`,
               // Block framing entirely
               "frame-ancestors 'none'",
               "base-uri 'self'",

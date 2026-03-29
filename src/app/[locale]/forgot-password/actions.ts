@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 import { rateLimit } from '@/lib/security/rate-limit';
+import { emailSchema } from '@/lib/security/validation';
 
 export async function requestPasswordReset(
   locale: string,
@@ -12,11 +13,17 @@ export async function requestPasswordReset(
   if (rateLimited) return { error: rateLimited.error };
 
   const supabase = await createClient();
-  const email = (formData.get('email') as string)?.trim();
+  const rawEmail = (formData.get('email') as string)?.trim();
 
-  if (!email) {
+  if (!rawEmail) {
     return { error: 'email_required' };
   }
+
+  const parsed = emailSchema.safeParse(rawEmail);
+  if (!parsed.success) {
+    return { error: 'invalid_email' };
+  }
+  const email = parsed.data;
 
   // Save the user's locale and flow origin so /auth/confirm can redirect correctly
   const cookieStore = await cookies();

@@ -34,6 +34,8 @@ export function ForgotPasswordForm({ from, dark = false }: ForgotPasswordFormPro
       if (result?.error) {
         if (result.error === 'too_many_requests') {
           setError(tCommon('tooManyRequests'));
+        } else if (result.error === 'email_required' || result.error === 'invalid_email') {
+          setError(t('invalidEmail'));
         } else {
           setError(result.error);
         }

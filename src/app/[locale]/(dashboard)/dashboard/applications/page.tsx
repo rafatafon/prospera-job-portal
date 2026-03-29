@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { redirect, notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { toDateLocale } from '@/lib/locale';
+import { formatDate } from '@/lib/utils';
 import { getCountryName } from '@/lib/countries';
 import { ApplicationStatusBadge } from '@/components/applications/ApplicationStatusBadge';
 import { ApplicationStatusActions } from '@/components/applications/ApplicationStatusActions';
@@ -28,14 +28,6 @@ const ACCENT_COLORS: Record<ApplicationStatus, string> = {
   interested: '#16a34a',
   denied: '#94a3b8',
 };
-
-function formatDate(dateStr: string, locale: string) {
-  return new Date(dateStr).toLocaleDateString(toDateLocale(locale), {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-}
 
 export default async function DashboardApplicationsPage({
   params,

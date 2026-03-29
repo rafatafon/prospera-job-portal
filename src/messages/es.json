@@ -1,4 +1,12 @@
 {
+  "errors": {
+    "somethingWentWrong": "Algo salio mal",
+    "errorMessage": "Ocurrio un error inesperado. Por favor intenta de nuevo.",
+    "tryAgain": "Intentar de nuevo",
+    "goToDashboard": "Ir al panel de control",
+    "goToAdmin": "Ir al panel de administracion",
+    "goHome": "Ir al inicio"
+  },
   "common": {
     "login": "Iniciar sesion",
     "logout": "Cerrar sesion",
@@ -488,7 +496,8 @@
     "sending": "Enviando...",
     "successTitle": "Revisa tu correo",
     "successMessage": "Si existe una cuenta con ese correo, hemos enviado un enlace para restablecer tu contrasena.",
-    "backToLogin": "Volver al inicio de sesion"
+    "backToLogin": "Volver al inicio de sesion",
+    "invalidEmail": "Por favor ingresa un correo electronico valido"
   },
   "resetPassword": {
     "title": "Nueva contrasena",

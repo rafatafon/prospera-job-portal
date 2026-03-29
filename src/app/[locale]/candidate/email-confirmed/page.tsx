@@ -107,7 +107,7 @@ export default async function EmailConfirmedPage({
           <div className="mt-8">
             <Link
               href="/candidate/login"
-              className="flex w-full items-center justify-center rounded-md bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
+              className="flex w-full items-center justify-center rounded-md bg-[#E8501C] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#d04518]"
             >
               {t('goToLogin')}
             </Link>

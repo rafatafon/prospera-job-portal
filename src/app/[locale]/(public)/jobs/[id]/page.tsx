@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
-import { toDateLocale } from '@/lib/locale';
+import { formatDateLong } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
 import { notFound } from 'next/navigation';
 import { CompanyLogo } from '@/components/ui/company-logo';
@@ -17,14 +17,6 @@ import {
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
 type WorkMode = Database['public']['Enums']['work_mode'];
-
-function formatDate(dateStr: string, locale: string) {
-  return new Date(dateStr).toLocaleDateString(toDateLocale(locale), {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
 
 const TYPE_BG: Record<EmploymentType, string> = {
   full_time: '#FFF5F0',
@@ -153,7 +145,7 @@ export default async function JobDetailPage({
                   {job.published_at && (
                     <span className="flex items-center gap-1.5 text-sm text-slate-500">
                       <CalendarDays className="h-4 w-4" />
-                      {formatDate(job.published_at, locale)}
+                      {formatDateLong(job.published_at, locale)}
                     </span>
                   )}
                 </div>
@@ -233,7 +225,7 @@ export default async function JobDetailPage({
                         {t('postedDate')}
                       </dt>
                       <dd className="mt-0.5 text-sm text-slate-700">
-                        {formatDate(job.published_at, locale)}
+                        {formatDateLong(job.published_at, locale)}
                       </dd>
                     </div>
                   </div>

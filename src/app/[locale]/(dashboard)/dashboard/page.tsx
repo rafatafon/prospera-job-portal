@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { toDateLocale } from '@/lib/locale';
+import { formatDate } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import {
@@ -112,13 +112,6 @@ export default async function DashboardPage({
   const activityItems = [...jobItems, ...appItems]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
-
-  function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString(
-      toDateLocale(locale),
-      { year: 'numeric', month: 'short', day: 'numeric' }
-    );
-  }
 
   const stats = [
     {
@@ -268,7 +261,7 @@ export default async function DashboardPage({
                 </div>
                 <span className="shrink-0 flex items-center gap-1 text-xs text-slate-400">
                   <CalendarDays className="h-3 w-3" />
-                  {formatDate(item.date)}
+                  {formatDate(item.date, locale)}
                 </span>
               </div>
             ))}

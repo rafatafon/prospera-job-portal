@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n/navigation';
-import { toDateLocale } from '@/lib/locale';
+import { formatDate } from '@/lib/utils';
 import { CompanyLogo } from '@/components/ui/company-logo';
 import type { Database } from '@/types/database.types';
 import { Briefcase, MapPin, CalendarDays } from 'lucide-react';
@@ -39,14 +39,6 @@ const TYPE_TEXT: Record<EmploymentType, string> = {
   part_time: '#0f766e',
   contract: '#6d28d9',
 };
-
-function formatDate(dateStr: string, locale: string) {
-  return new Date(dateStr).toLocaleDateString(toDateLocale(locale), {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-}
 
 export default async function AdminJobsPage({
   params,

@@ -6,7 +6,7 @@ import 'server-only';
 // registry API.
 // ---------------------------------------------------------------------------
 
-const BASE_URL = process.env.PROSPERA_API_BASE_URL || 'https://portal.eprospera.com/api/v1';
+const BASE_URL = process.env.PROSPERA_API_BASE_URL ?? 'https://portal.eprospera.com/api/v1';
 const FETCH_TIMEOUT_MS = 10_000;
 
 // ---------------------------------------------------------------------------
