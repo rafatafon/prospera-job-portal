@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
-import { MapPin, Briefcase, User } from 'lucide-react';
+import { MapPin, Briefcase, User, Sparkles } from 'lucide-react';
 import { AuthGateDialog } from './AuthGateDialog';
 
 interface CandidateCardProps {
@@ -22,6 +22,8 @@ interface CandidateCardProps {
   viewProfileLabel: string;
   isAuthenticated: boolean;
   userRole: string | null;
+  isCreator?: boolean;
+  creatorLabel?: string;
 }
 
 const AVAILABILITY_COLORS = {
@@ -37,6 +39,8 @@ export function CandidateCard({
   viewProfileLabel,
   isAuthenticated,
   userRole,
+  isCreator = false,
+  creatorLabel,
 }: CandidateCardProps) {
   const [showAuthGate, setShowAuthGate] = useState(false);
   const maxSkills = 4;
@@ -65,17 +69,21 @@ export function CandidateCard({
         )}
 
         <div className="min-w-0 flex-1">
-          {/* Name + availability */}
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="truncate text-base font-semibold text-slate-900 group-hover:text-slate-700">
-              {candidate.full_name}
-            </h3>
+          {/* Creator badge */}
+          {isCreator && creatorLabel && (
             <span
-              className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium ${AVAILABILITY_COLORS[candidate.availability]}`}
+              className="mb-1 inline-flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
+              style={{ color: '#E8501C', backgroundColor: 'rgba(232, 80, 28, 0.08)' }}
             >
-              {availabilityLabel}
+              <Sparkles className="h-2.5 w-2.5 shrink-0" />
+              {creatorLabel}
             </span>
-          </div>
+          )}
+
+          {/* Name */}
+          <h3 className="text-base font-semibold leading-snug text-slate-900 group-hover:text-slate-700">
+            {candidate.full_name}
+          </h3>
 
           {/* Headline */}
           {candidate.headline && (
@@ -121,8 +129,13 @@ export function CandidateCard({
         </div>
       </div>
 
-      {/* View profile */}
-      <div className="mt-3 text-right">
+      {/* Availability + View profile */}
+      <div className="mt-3 flex items-center justify-between">
+        <span
+          className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${AVAILABILITY_COLORS[candidate.availability]}`}
+        >
+          {availabilityLabel}
+        </span>
         <span
           className="text-xs font-medium transition-colors group-hover:opacity-80"
           style={{ color: '#E8501C' }}

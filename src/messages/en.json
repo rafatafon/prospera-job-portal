@@ -285,6 +285,7 @@
     "downloadCV": "Download CV",
     "noCandidates": "No candidates available",
     "noCandidatesDetail": "Check back soon for new profiles",
+    "creatorBadge": "Creator of this site",
     "candidateCount": "__count__ candidate",
     "candidateCountPlural": "__count__ candidates",
     "details": "Candidate details",

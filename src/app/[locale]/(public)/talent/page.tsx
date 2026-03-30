@@ -6,6 +6,9 @@ import { Users } from 'lucide-react';
 import type { Database } from '@/types/database.types';
 import { sanitizeSearchInput } from '@/lib/security/sanitize';
 
+/** The site creator is always pinned first in the talent list. */
+const CREATOR_ID = process.env.CREATOR_CANDIDATE_ID;
+
 type CandidateAvailability = Database['public']['Enums']['candidate_availability'];
 
 const VALID_AVAILABILITY: CandidateAvailability[] = [
@@ -69,8 +72,20 @@ export default async function TalentPage({
     query = query.eq('availability', filters.availability as CandidateAvailability);
   }
 
-  const { data: candidates } = await query;
-  const count = candidates?.length ?? 0;
+  const { data: rawCandidates } = await query;
+
+  // Pin the site creator to the top of the list
+  const candidates = rawCandidates
+    ? [...rawCandidates].sort((a, b) => {
+        if (CREATOR_ID) {
+          if (a.id === CREATOR_ID) return -1;
+          if (b.id === CREATOR_ID) return 1;
+        }
+        return 0;
+      })
+    : [];
+
+  const count = candidates.length;
 
   // Pre-translate labels
   const availabilityLabels: Record<CandidateAvailability, string> = {
@@ -101,12 +116,14 @@ export default async function TalentPage({
         </p>
 
         {/* Grid */}
-        {candidates && candidates.length > 0 ? (
+        {candidates.length > 0 ? (
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {candidates.map((candidate) => (
               <CandidateCard
                 key={candidate.id}
                 candidate={candidate}
+                isCreator={!!CREATOR_ID && candidate.id === CREATOR_ID}
+                creatorLabel={t('creatorBadge')}
                 availabilityLabel={availabilityLabels[candidate.availability]}
                 experienceLabel={
                   candidate.years_of_experience != null

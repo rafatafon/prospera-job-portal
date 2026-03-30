@@ -11,11 +11,14 @@ import {
   Download,
   User,
   Calendar,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Database } from '@/types/database.types';
 
 type CandidateAvailability = Database['public']['Enums']['candidate_availability'];
+
+const CREATOR_ID = process.env.CREATOR_CANDIDATE_ID;
 
 const AVAILABILITY_COLORS = {
   actively_looking: 'bg-green-50 text-green-700 border-green-200',
@@ -121,6 +124,15 @@ export default async function CandidateDetailPage({
               )}
 
               <div className="text-center sm:text-left">
+                {!!CREATOR_ID && candidate.id === CREATOR_ID && (
+                  <span
+                    className="mb-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
+                    style={{ color: '#E8501C', backgroundColor: 'rgba(232, 80, 28, 0.08)' }}
+                  >
+                    <Sparkles className="h-2.5 w-2.5 shrink-0" />
+                    {t('creatorBadge')}
+                  </span>
+                )}
                 <h1 className="text-2xl font-bold text-slate-900">
                   {candidate.full_name}
                 </h1>
