@@ -120,7 +120,7 @@ export default async function JobDetailPage({
               {/* Brand top bar */}
               <div
                 className="h-1.5 w-full"
-                style={{ backgroundColor: '#E8501C' }}
+                style={{ backgroundColor: '#ff2c02' }}
                 aria-hidden="true"
               />
               <div className="p-6">
@@ -135,7 +135,7 @@ export default async function JobDetailPage({
                     {company && (
                       <Link
                         href={`/companies/${company.slug}`}
-                        className="text-sm font-medium text-slate-600 transition-colors hover:text-[#E8501C]"
+                        className="text-sm font-medium text-slate-600 transition-colors hover:text-[#ff2c02]"
                       >
                         {company.name}
                       </Link>
@@ -269,8 +269,8 @@ export default async function JobDetailPage({
                       <dd className="mt-0.5">
                         <Link
                           href={`/companies/${company.slug}`}
-                          className="text-sm font-medium transition-colors hover:text-[#E8501C]"
-                          style={{ color: '#E8501C' }}
+                          className="text-sm font-medium transition-colors hover:text-[#ff2c02]"
+                          style={{ color: '#ff2c02' }}
                         >
                           {company.name}
                         </Link>

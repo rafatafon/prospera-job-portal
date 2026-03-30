@@ -65,11 +65,11 @@ function FileField({ id, name, label, hint, required, disabled }: FileFieldProps
       >
         <Paperclip
           className="h-4 w-4 shrink-0"
-          style={{ color: filename ? '#E8501C' : '#94a3b8' }}
+          style={{ color: filename ? '#ff2c02' : '#94a3b8' }}
         />
         <span className="min-w-0 flex-1 truncate text-sm">
           {filename ? (
-            <span className="font-medium" style={{ color: '#E8501C' }}>
+            <span className="font-medium" style={{ color: '#ff2c02' }}>
               {filename}
             </span>
           ) : (
@@ -158,7 +158,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div
           className="h-1.5 w-full"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
           aria-hidden="true"
         />
         <div className="flex flex-col items-center px-6 py-10 text-center">
@@ -166,7 +166,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
             className="mb-4 flex h-14 w-14 items-center justify-center rounded-full"
             style={{ backgroundColor: '#FFF5F0' }}
           >
-            <CheckCircle2 className="h-7 w-7" style={{ color: '#E8501C' }} />
+            <CheckCircle2 className="h-7 w-7" style={{ color: '#ff2c02' }} />
           </div>
           <h3 className="text-base font-semibold text-slate-900">
             {t('successTitle')}
@@ -184,7 +184,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
     <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
       <div
         className="h-1.5 w-full"
-        style={{ backgroundColor: '#E8501C' }}
+        style={{ backgroundColor: '#ff2c02' }}
         aria-hidden="true"
       />
 
@@ -210,7 +210,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
               placeholder={t('fullNamePlaceholder')}
               disabled={isPending}
               className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-              style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+              style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             />
           </div>
 
@@ -228,7 +228,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
               placeholder={t('emailPlaceholder')}
               disabled={isPending}
               className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-              style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+              style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             />
           </div>
 
@@ -272,7 +272,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
             </Label>
             <div
               className="flex h-10 w-full overflow-hidden rounded-md border border-slate-200 bg-white focus-within:ring-1"
-              style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+              style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             >
               <span className="flex items-center border-r border-slate-200 bg-slate-50 px-3 text-xs text-slate-500 select-none">
                 https://
@@ -322,7 +322,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
             type="submit"
             disabled={isPending}
             className="h-11 w-full gap-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-            style={{ backgroundColor: '#E8501C' }}
+            style={{ backgroundColor: '#ff2c02' }}
           >
             {isPending ? (
               <>

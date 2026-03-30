@@ -134,7 +134,7 @@ export function CompanySignupForm() {
                     ? 'text-white'
                     : 'border border-slate-300 text-slate-400'
               }`}
-              style={s === step ? { backgroundColor: '#E8501C' } : undefined}
+              style={s === step ? { backgroundColor: '#ff2c02' } : undefined}
             >
               {s < step ? <Check className="h-3.5 w-3.5" /> : s}
             </div>
@@ -165,7 +165,7 @@ export function CompanySignupForm() {
         <Link
           href="/login"
           className="font-medium transition-colors hover:opacity-80"
-          style={{ color: '#E8501C' }}
+          style={{ color: '#ff2c02' }}
         >
           {t('loginLink')}
         </Link>
@@ -185,7 +185,7 @@ export function CompanySignupForm() {
 
   const inputClass =
     'h-11 rounded-lg focus-visible:ring-1 border-slate-200 bg-white text-slate-900 placeholder:text-slate-400';
-  const inputStyle = { '--tw-ring-color': '#E8501C' } as React.CSSProperties;
+  const inputStyle = { '--tw-ring-color': '#ff2c02' } as React.CSSProperties;
   const labelClass = 'text-sm font-medium text-slate-700';
 
   // ─── Render ───────────────────────────────────────────────────────────────
@@ -222,7 +222,7 @@ export function CompanySignupForm() {
             type="submit"
             disabled={isPending}
             className="h-11 w-full rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-            style={{ backgroundColor: '#E8501C' }}
+            style={{ backgroundColor: '#ff2c02' }}
           >
             {isPending ? t('verifying') : t('verifyButton')}
           </Button>
@@ -297,7 +297,7 @@ export function CompanySignupForm() {
               }}
               disabled={!confirmed || isPending}
               className="h-11 flex-1 rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#ff2c02' }}
             >
               {t('continueButton')}
             </Button>
@@ -380,7 +380,7 @@ export function CompanySignupForm() {
             type="submit"
             disabled={isPending}
             className="h-11 w-full rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-            style={{ backgroundColor: '#E8501C' }}
+            style={{ backgroundColor: '#ff2c02' }}
           >
             {isPending ? t('creatingAccount') : t('createAccount')}
           </Button>

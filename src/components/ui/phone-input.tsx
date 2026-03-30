@@ -181,7 +181,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           disabled && "opacity-50 cursor-not-allowed",
           className
         )}
-        style={{ "--tw-ring-color": "#E8501C" } as React.CSSProperties}
+        style={{ "--tw-ring-color": "#ff2c02" } as React.CSSProperties}
       >
         {/* Country code selector */}
         <Popover open={open} onOpenChange={setOpen}>

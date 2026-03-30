@@ -61,7 +61,7 @@ export default async function AdminCompaniesPage({
               className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
               style={{ backgroundColor: '#FFF5F0' }}
             >
-              <Building2 className="h-6 w-6" style={{ color: '#E8501C' }} />
+              <Building2 className="h-6 w-6" style={{ color: '#ff2c02' }} />
             </div>
             <h3 className="mt-4 text-sm font-semibold text-slate-700">
               {t('noCompanies')}

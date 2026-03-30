@@ -126,7 +126,7 @@ export default async function LoginPage({
             <Link
               href="/company/signup"
               className="font-medium transition-colors hover:opacity-80"
-              style={{ color: '#E8501C' }}
+              style={{ color: '#ff2c02' }}
             >
               {tCompanyAuth('registerCompany')}
             </Link>

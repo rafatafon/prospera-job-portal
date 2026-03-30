@@ -64,7 +64,7 @@ export default async function AdminAccessPage({
             className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
             style={{ backgroundColor: '#FFF5F0' }}
           >
-            <Users className="h-6 w-6" style={{ color: '#E8501C' }} />
+            <Users className="h-6 w-6" style={{ color: '#ff2c02' }} />
           </div>
           <h3 className="mt-4 text-sm font-semibold text-slate-700">
             {t('noUsers')}

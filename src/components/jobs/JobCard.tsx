@@ -9,7 +9,7 @@ type WorkMode = Database['public']['Enums']['work_mode'];
 
 /** Color accent per employment type for the card's left border on hover */
 const TYPE_ACCENT: Record<EmploymentType, string> = {
-  full_time: '#E8501C',
+  full_time: '#ff2c02',
   part_time: '#0d9488',
   contract: '#7c3aed',
 };
@@ -133,7 +133,7 @@ export function JobCard({
             </p>
 
             {/* Job title */}
-            <h3 className="mt-0.5 text-sm font-semibold leading-snug text-slate-900 group-hover:text-[#E8501C] transition-colors">
+            <h3 className="mt-0.5 text-sm font-semibold leading-snug text-slate-900 group-hover:text-[#ff2c02] transition-colors">
               {job.title}
             </h3>
 

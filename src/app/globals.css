@@ -50,14 +50,14 @@
 
 :root {
   --radius: 1rem;
-  --brand: #E8501C;
+  --brand: #ff2c02;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.58 0.2 38);
+  --primary: oklch(0.59 0.27 29);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);

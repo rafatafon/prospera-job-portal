@@ -42,7 +42,7 @@ function ToolbarButton({
       className={[
         'flex h-8 w-8 items-center justify-center rounded-md transition-colors',
         isActive
-          ? 'bg-[#FFF5F0] text-[#E8501C]'
+          ? 'bg-[#FFF5F0] text-[#ff2c02]'
           : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700',
         disabled ? 'cursor-not-allowed opacity-50' : '',
       ].join(' ')}
@@ -91,7 +91,7 @@ export function RichTextEditor({
     <div
       className={[
         'overflow-hidden rounded-md border border-slate-200 bg-white',
-        'focus-within:border-[#E8501C] focus-within:ring-1 focus-within:ring-[#E8501C]',
+        'focus-within:border-[#ff2c02] focus-within:ring-1 focus-within:ring-[#ff2c02]',
         disabled ? 'opacity-60' : '',
       ].join(' ')}
     >

@@ -105,7 +105,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
                 <Button
                   asChild
                   size="sm"
-                  style={{ backgroundColor: '#E8501C' }}
+                  style={{ backgroundColor: '#ff2c02' }}
                   className="rounded-full px-6 text-white hover:opacity-90"
                 >
                   <Link href="/dashboard">{t('dashboard')}</Link>
@@ -115,7 +115,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
               <Button
                 asChild
                 size="sm"
-                style={{ backgroundColor: '#E8501C' }}
+                style={{ backgroundColor: '#ff2c02' }}
                 className="rounded-full px-6 text-white hover:opacity-90"
               >
                 <Link href="/candidate/profile">{t('myProfile')}</Link>
@@ -124,7 +124,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
               <Button
                 asChild
                 size="sm"
-                style={{ backgroundColor: '#E8501C' }}
+                style={{ backgroundColor: '#ff2c02' }}
                 className="rounded-full px-6 text-white hover:opacity-90"
               >
                 <Link href={dashboardHref}>{t('dashboard')}</Link>
@@ -141,7 +141,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
               <Button
                 asChild
                 size="sm"
-                style={{ backgroundColor: '#E8501C' }}
+                style={{ backgroundColor: '#ff2c02' }}
                 className="rounded-full px-6 text-white hover:opacity-90"
               >
                 <Link href="/login">{t('companyLogin')}</Link>

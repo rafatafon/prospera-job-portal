@@ -118,7 +118,7 @@ export default async function DashboardPage({
       label: t('totalJobs'),
       value: totalJobs,
       icon: Briefcase,
-      accent: '#E8501C',
+      accent: '#ff2c02',
       bg: '#FFF5F0',
     },
     {
@@ -150,7 +150,7 @@ export default async function DashboardPage({
           asChild
           size="sm"
           className="gap-2 text-white"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
         >
           <Link href="/dashboard/jobs/new">
             <PlusCircle className="h-4 w-4" />
@@ -217,7 +217,7 @@ export default async function DashboardPage({
               asChild
               size="sm"
               className="mt-4 gap-2 text-white"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#ff2c02' }}
             >
               <Link href="/dashboard/jobs/new">
                 <PlusCircle className="h-4 w-4" />
@@ -247,7 +247,7 @@ export default async function DashboardPage({
                   ) : (
                     <Briefcase
                       className="h-4 w-4"
-                      style={{ color: '#E8501C' }}
+                      style={{ color: '#ff2c02' }}
                     />
                   )}
                 </div>

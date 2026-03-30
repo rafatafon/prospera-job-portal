@@ -61,9 +61,9 @@ export default async function AdminPage({
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg"
               style={{ backgroundColor: '#FFF4F0' }}
             >
-              <Building2 className="h-5 w-5" style={{ color: '#E8501C' }} />
+              <Building2 className="h-5 w-5" style={{ color: '#ff2c02' }} />
             </div>
-            <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-[#E8501C]" />
+            <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-[#ff2c02]" />
           </div>
           <h2 className="mt-4 text-base font-semibold text-slate-900">
             {tCompanies('title')}
@@ -86,9 +86,9 @@ export default async function AdminPage({
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg"
               style={{ backgroundColor: '#FFF4F0' }}
             >
-              <Briefcase className="h-5 w-5" style={{ color: '#E8501C' }} />
+              <Briefcase className="h-5 w-5" style={{ color: '#ff2c02' }} />
             </div>
-            <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-[#E8501C]" />
+            <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-[#ff2c02]" />
           </div>
           <h2 className="mt-4 text-base font-semibold text-slate-900">
             {tJobs('title')}
@@ -115,9 +115,9 @@ export default async function AdminPage({
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg"
               style={{ backgroundColor: '#FFF4F0' }}
             >
-              <ShieldCheck className="h-5 w-5" style={{ color: '#E8501C' }} />
+              <ShieldCheck className="h-5 w-5" style={{ color: '#ff2c02' }} />
             </div>
-            <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-[#E8501C]" />
+            <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-[#ff2c02]" />
           </div>
           <h2 className="mt-4 text-base font-semibold text-slate-900">
             {tAccess('title')}

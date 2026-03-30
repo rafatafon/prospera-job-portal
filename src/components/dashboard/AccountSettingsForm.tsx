@@ -83,7 +83,7 @@ export function AccountSettingsForm({ userEmail, emailChanged = false }: Account
   }
 
   const inputClasses = 'h-11 rounded-lg border-slate-200 bg-white focus-visible:ring-1';
-  const ringStyle = { '--tw-ring-color': '#E8501C' } as React.CSSProperties;
+  const ringStyle = { '--tw-ring-color': '#ff2c02' } as React.CSSProperties;
 
   return (
     <div className="space-y-6">
@@ -146,7 +146,7 @@ export function AccountSettingsForm({ userEmail, emailChanged = false }: Account
               type="submit"
               disabled={isPendingPassword}
               className="h-10 rounded-lg px-5 font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#ff2c02' }}
             >
               {isPendingPassword ? t('updating') : t('updatePassword')}
             </Button>
@@ -212,7 +212,7 @@ export function AccountSettingsForm({ userEmail, emailChanged = false }: Account
               type="submit"
               disabled={isPendingEmail}
               className="h-10 rounded-lg px-5 font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#ff2c02' }}
             >
               {isPendingEmail ? t('updating') : t('updateEmail')}
             </Button>

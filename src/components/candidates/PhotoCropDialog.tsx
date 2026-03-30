@@ -73,7 +73,7 @@ export function PhotoCropDialog({
             step={0.05}
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
-            className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#E8501C]"
+            className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#ff2c02]"
           />
         </div>
 
@@ -84,7 +84,7 @@ export function PhotoCropDialog({
           <Button
             onClick={handleConfirm}
             className="text-white hover:opacity-90"
-            style={{ backgroundColor: '#E8501C' }}
+            style={{ backgroundColor: '#ff2c02' }}
           >
             {t('cropConfirm')}
           </Button>

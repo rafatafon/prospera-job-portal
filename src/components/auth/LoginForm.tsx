@@ -70,7 +70,7 @@ export function LoginForm({ variant = 'company', dark = false }: LoginFormProps)
             autoComplete="email"
             placeholder="you@company.com"
             className={inputClasses}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -87,14 +87,14 @@ export function LoginForm({ variant = 'company', dark = false }: LoginFormProps)
             placeholder="••••••••"
             dark={dark}
             className={inputClasses}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
           <div className="flex justify-end">
             <Link
               href="/forgot-password"
               className="text-xs font-medium hover:opacity-80"
-              style={{ color: '#E8501C' }}
+              style={{ color: '#ff2c02' }}
             >
               {t('forgotPassword')}
             </Link>
@@ -113,7 +113,7 @@ export function LoginForm({ variant = 'company', dark = false }: LoginFormProps)
           type="submit"
           disabled={isPending}
           className="h-11 w-full rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
         >
           {isPending ? tCommon('loading') : t('loginButton')}
         </Button>

@@ -73,7 +73,7 @@ export function JobFilters({
           defaultValue={initialQuery}
           onChange={handleQueryChange}
           className="h-10 rounded-lg border-slate-200 bg-white pl-9 focus-visible:ring-1"
-          style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+          style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
         />
       </div>
 
@@ -82,7 +82,7 @@ export function JobFilters({
         value={initialType}
         onChange={handleTypeChange}
         className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 focus-visible:outline-none focus-visible:ring-1 sm:w-44"
-        style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+        style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
       >
         <option value="">{t('allTypes')}</option>
         <option value="full_time">{t('fullTime')}</option>
@@ -95,7 +95,7 @@ export function JobFilters({
         value={initialWorkMode}
         onChange={handleWorkModeChange}
         className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 focus-visible:outline-none focus-visible:ring-1 sm:w-52"
-        style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+        style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
       >
         <option value="">{t('allWorkModes')}</option>
         <option value="on_site">{t('onSite')}</option>

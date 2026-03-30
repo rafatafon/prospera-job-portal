@@ -110,7 +110,7 @@ export default async function CompanyEmailConfirmedPage({
             <Link
               href="/login"
               className="flex w-full items-center justify-center rounded-md px-6 py-2.5 text-sm font-medium text-white transition-colors"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#ff2c02' }}
             >
               {t('goToLogin')}
             </Link>

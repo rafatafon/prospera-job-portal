@@ -85,7 +85,7 @@ export function ForgotPasswordForm({ from, dark = false }: ForgotPasswordFormPro
             autoComplete="email"
             placeholder={t('emailPlaceholder')}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -101,7 +101,7 @@ export function ForgotPasswordForm({ from, dark = false }: ForgotPasswordFormPro
           type="submit"
           disabled={isPending}
           className="h-11 w-full rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
         >
           {isPending ? t('sending') : t('sendButton')}
         </Button>

@@ -73,7 +73,7 @@ export function CandidateCard({
           {isCreator && creatorLabel && (
             <span
               className="mb-1 inline-flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
-              style={{ color: '#E8501C', backgroundColor: 'rgba(232, 80, 28, 0.08)' }}
+              style={{ color: '#ff2c02', backgroundColor: 'rgba(255, 44, 2, 0.08)' }}
             >
               <Sparkles className="h-2.5 w-2.5 shrink-0" />
               {creatorLabel}
@@ -138,7 +138,7 @@ export function CandidateCard({
         </span>
         <span
           className="text-xs font-medium transition-colors group-hover:opacity-80"
-          style={{ color: '#E8501C' }}
+          style={{ color: '#ff2c02' }}
         >
           {viewProfileLabel} &rarr;
         </span>
@@ -167,7 +167,7 @@ export function CandidateCard({
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') setShowAuthGate(true);
         }}
-        className="group block cursor-pointer rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md focus:ring-2 focus:ring-[#E8501C]/50 focus:ring-offset-2 focus:outline-none"
+        className="group block cursor-pointer rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md focus:ring-2 focus:ring-[#ff2c02]/50 focus:ring-offset-2 focus:outline-none"
       >
         {cardContent}
       </div>

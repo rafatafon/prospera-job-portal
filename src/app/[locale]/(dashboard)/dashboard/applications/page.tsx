@@ -23,7 +23,7 @@ type ApplicationStatus = Database['public']['Enums']['application_status'];
 const STATUSES: ApplicationStatus[] = ['pending', 'reviewed', 'interested', 'denied'];
 
 const ACCENT_COLORS: Record<ApplicationStatus, string> = {
-  pending: '#E8501C',
+  pending: '#ff2c02',
   reviewed: '#3b82f6',
   interested: '#16a34a',
   denied: '#94a3b8',
@@ -165,7 +165,7 @@ export default async function DashboardApplicationsPage({
               className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
               style={{ backgroundColor: '#FFF5F0' }}
             >
-              <FileText className="h-6 w-6" style={{ color: '#E8501C' }} />
+              <FileText className="h-6 w-6" style={{ color: '#ff2c02' }} />
             </div>
             <h3 className="mt-4 text-sm font-semibold text-slate-700">
               {t('noApplications')}
@@ -175,7 +175,7 @@ export default async function DashboardApplicationsPage({
           <div className="space-y-2.5">
             {appsWithUrls.map((app) => {
               const job = app.jobs as { title: string; id: string } | null;
-              const accentColor = ACCENT_COLORS[app.status] ?? '#E8501C';
+              const accentColor = ACCENT_COLORS[app.status] ?? '#ff2c02';
               return (
                 <div
                   key={app.id}

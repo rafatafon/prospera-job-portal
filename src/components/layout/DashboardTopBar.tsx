@@ -55,7 +55,7 @@ export async function DashboardTopBar({
             <Avatar className="h-7 w-7">
               <AvatarFallback
                 className="text-xs font-semibold text-white"
-                style={{ backgroundColor: '#E8501C' }}
+                style={{ backgroundColor: '#ff2c02' }}
               >
                 {initials}
               </AvatarFallback>

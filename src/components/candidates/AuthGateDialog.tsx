@@ -37,7 +37,7 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
             {/* Brand orange top rule */}
             <div
               className="h-[3px] w-full"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#ff2c02' }}
               aria-hidden="true"
             />
 
@@ -67,9 +67,9 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
                 >
                   <path
                     d="M10 2L3 5v5c0 4.418 3.032 8.55 7 9.5C13.968 18.55 17 14.418 17 10V5l-7-3z"
-                    fill="#E8501C"
+                    fill="#ff2c02"
                     fillOpacity="0.15"
-                    stroke="#E8501C"
+                    stroke="#ff2c02"
                     strokeWidth="1.5"
                     strokeLinejoin="round"
                   />
@@ -79,11 +79,11 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
                     width="5"
                     height="4.5"
                     rx="0.75"
-                    fill="#E8501C"
+                    fill="#ff2c02"
                   />
                   <path
                     d="M8.25 9V7.5a1.75 1.75 0 1 1 3.5 0V9"
-                    stroke="#E8501C"
+                    stroke="#ff2c02"
                     strokeWidth="1.25"
                     strokeLinecap="round"
                   />
@@ -106,7 +106,7 @@ export function AuthGateDialog({ open, onOpenChange }: AuthGateDialogProps) {
                   asChild
                   size="lg"
                   className="w-full font-medium text-white shadow-sm hover:opacity-90 transition-opacity"
-                  style={{ backgroundColor: '#E8501C', borderColor: '#E8501C' }}
+                  style={{ backgroundColor: '#ff2c02', borderColor: '#ff2c02' }}
                 >
                   <Link href="/company/signup">
                     {t('signUpCompany')}

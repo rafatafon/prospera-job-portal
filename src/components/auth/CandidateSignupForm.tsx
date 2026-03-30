@@ -62,7 +62,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
             autoComplete="name"
             placeholder="Juan Perez"
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -79,7 +79,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
             autoComplete="email"
             placeholder="you@email.com"
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -96,7 +96,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
             placeholder="••••••••"
             dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -113,7 +113,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
             placeholder="••••••••"
             dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -129,7 +129,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
           type="submit"
           disabled={isPending}
           className="h-11 w-full rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
         >
           {isPending ? t('signingUp') : t('signup')}
         </Button>
@@ -140,7 +140,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
         <Link
           href="/candidate/login"
           className="font-medium transition-colors hover:opacity-80"
-          style={{ color: '#E8501C' }}
+          style={{ color: '#ff2c02' }}
         >
           {t('loginLink')}
         </Link>

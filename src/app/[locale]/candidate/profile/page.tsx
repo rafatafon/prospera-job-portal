@@ -52,7 +52,7 @@ export default async function CandidateProfilePage({
         <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
           <div
             className="h-1.5 w-full rounded-t-xl"
-            style={{ backgroundColor: '#E8501C' }}
+            style={{ backgroundColor: '#ff2c02' }}
             aria-hidden="true"
           />
           <div className="border-b border-slate-100 px-6 py-5">

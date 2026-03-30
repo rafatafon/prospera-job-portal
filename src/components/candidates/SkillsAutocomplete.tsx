@@ -154,7 +154,7 @@ export function SkillsAutocomplete({
             disabled={disabled}
             autoComplete="off"
             className="h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50"
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
           />
         </PopoverAnchor>
 

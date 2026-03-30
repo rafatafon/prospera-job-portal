@@ -94,7 +94,7 @@ export function ResetPasswordForm({ from, dark = false }: ResetPasswordFormProps
     return (
       <div className="w-full">
         <div className="flex items-center justify-center py-8">
-          <div className={`h-6 w-6 animate-spin rounded-full border-2 ${dark ? 'border-white/20' : 'border-slate-200'}`} style={{ borderTopColor: '#E8501C' }} />
+          <div className={`h-6 w-6 animate-spin rounded-full border-2 ${dark ? 'border-white/20' : 'border-slate-200'}`} style={{ borderTopColor: '#ff2c02' }} />
         </div>
       </div>
     );
@@ -115,7 +115,7 @@ export function ResetPasswordForm({ from, dark = false }: ResetPasswordFormProps
             placeholder="••••••••"
             dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -132,7 +132,7 @@ export function ResetPasswordForm({ from, dark = false }: ResetPasswordFormProps
             placeholder="••••••••"
             dark={dark}
             className={`h-11 rounded-lg focus-visible:ring-1 ${dark ? 'border-white/20 bg-white/10 text-white placeholder:text-white/40' : 'border-slate-200 bg-white'}`}
-            style={{ '--tw-ring-color': '#E8501C' } as React.CSSProperties}
+            style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
             disabled={isPending}
           />
         </div>
@@ -148,7 +148,7 @@ export function ResetPasswordForm({ from, dark = false }: ResetPasswordFormProps
           type="submit"
           disabled={isPending}
           className="h-11 w-full rounded-lg font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
         >
           {isPending ? t('updating') : t('resetButton')}
         </Button>

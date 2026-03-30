@@ -116,7 +116,7 @@ export default async function DashboardJobsPage({
           asChild
           size="sm"
           className="gap-2 text-white"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
         >
           <Link href="/dashboard/jobs/new">
             <PlusCircle className="h-4 w-4" />
@@ -141,7 +141,7 @@ export default async function DashboardJobsPage({
                 'shrink-0 px-4 py-2.5 text-sm font-medium transition-colors',
                 'border-b-2 -mb-px',
                 isActive
-                  ? 'border-[#E8501C] text-[#E8501C]'
+                  ? 'border-[#ff2c02] text-[#ff2c02]'
                   : 'border-transparent text-slate-500 hover:text-slate-800',
               ].join(' ')}
             >
@@ -160,7 +160,7 @@ export default async function DashboardJobsPage({
               className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
               style={{ backgroundColor: '#FFF5F0' }}
             >
-              <Briefcase className="h-6 w-6" style={{ color: '#E8501C' }} />
+              <Briefcase className="h-6 w-6" style={{ color: '#ff2c02' }} />
             </div>
             <h3 className="mt-4 text-sm font-semibold text-slate-700">
               {t('noJobs')}
@@ -172,7 +172,7 @@ export default async function DashboardJobsPage({
               asChild
               size="sm"
               className="mt-6 gap-2 text-white"
-              style={{ backgroundColor: '#E8501C' }}
+              style={{ backgroundColor: '#ff2c02' }}
             >
               <Link href="/dashboard/jobs/new">
                 <PlusCircle className="h-4 w-4" />

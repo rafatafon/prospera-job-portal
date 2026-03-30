@@ -94,7 +94,7 @@ export default async function CompanyProfilePage({
           {/* Top accent bar */}
           <div
             className="h-2 w-full"
-            style={{ backgroundColor: '#E8501C' }}
+            style={{ backgroundColor: '#ff2c02' }}
             aria-hidden="true"
           />
 
@@ -129,7 +129,7 @@ export default async function CompanyProfilePage({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-1.5 text-sm font-medium transition-colors hover:opacity-80"
-                      style={{ color: '#E8501C' }}
+                      style={{ color: '#ff2c02' }}
                     >
                       <Globe className="h-4 w-4" />
                       {t('website')}
@@ -166,7 +166,7 @@ export default async function CompanyProfilePage({
                 className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
                 style={{ backgroundColor: '#FFF5F0' }}
               >
-                <Briefcase className="h-6 w-6" style={{ color: '#E8501C' }} />
+                <Briefcase className="h-6 w-6" style={{ color: '#ff2c02' }} />
               </div>
               <p className="mt-3 text-sm text-slate-500">
                 {t('noActiveJobsDetail')}

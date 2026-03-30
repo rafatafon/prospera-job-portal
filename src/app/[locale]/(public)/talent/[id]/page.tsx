@@ -102,7 +102,7 @@ export default async function CandidateDetailPage({
         <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
           <div
             className="h-1.5 w-full rounded-t-xl"
-            style={{ backgroundColor: '#E8501C' }}
+            style={{ backgroundColor: '#ff2c02' }}
             aria-hidden="true"
           />
 
@@ -127,7 +127,7 @@ export default async function CandidateDetailPage({
                 {!!CREATOR_ID && candidate.id === CREATOR_ID && (
                   <span
                     className="mb-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
-                    style={{ color: '#E8501C', backgroundColor: 'rgba(232, 80, 28, 0.08)' }}
+                    style={{ color: '#ff2c02', backgroundColor: 'rgba(255, 44, 2, 0.08)' }}
                   >
                     <Sparkles className="h-2.5 w-2.5 shrink-0" />
                     {t('creatorBadge')}
@@ -208,7 +208,7 @@ export default async function CandidateDetailPage({
             {/* Actions */}
             <div className="mt-8 flex flex-wrap gap-3">
               {cvUrl && (
-                <Button asChild className="gap-2 text-white hover:opacity-90" style={{ backgroundColor: '#E8501C' }}>
+                <Button asChild className="gap-2 text-white hover:opacity-90" style={{ backgroundColor: '#ff2c02' }}>
                   <a href={cvUrl} target="_blank" rel="noopener noreferrer">
                     <Download className="h-4 w-4" />
                     {t('downloadCV')}

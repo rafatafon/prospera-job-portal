@@ -110,7 +110,7 @@ export default async function JobsPage({
               <Link
                 href="/candidate/signup"
                 className="rounded-lg px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: '#E8501C' }}
+                style={{ backgroundColor: '#ff2c02' }}
               >
                 {t('openAppSignUp')}
               </Link>
@@ -130,7 +130,7 @@ export default async function JobsPage({
               className="mx-auto flex h-14 w-14 items-center justify-center rounded-full"
               style={{ backgroundColor: '#FFF5F0' }}
             >
-              <Briefcase className="h-7 w-7" style={{ color: '#E8501C' }} />
+              <Briefcase className="h-7 w-7" style={{ color: '#ff2c02' }} />
             </div>
             <h2 className="mt-4 text-sm font-semibold text-slate-700">
               {tCommon('noResults')}

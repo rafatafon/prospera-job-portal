@@ -30,7 +30,7 @@ export default function AdminError({
         <Button
           onClick={reset}
           className="text-white"
-          style={{ backgroundColor: '#E8501C' }}
+          style={{ backgroundColor: '#ff2c02' }}
         >
           {t('tryAgain')}
         </Button>

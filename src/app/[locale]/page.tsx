@@ -120,7 +120,7 @@ export default async function LandingPage({
                   asChild
                   size="lg"
                   className="h-12 gap-2 rounded-lg px-8 text-base font-semibold text-white transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: '#E8501C' }}
+                  style={{ backgroundColor: '#ff2c02' }}
                 >
                   <Link href="/jobs">
                     {t('ctaButton')}
@@ -142,7 +142,7 @@ export default async function LandingPage({
             <Link
               href="/jobs"
               className="flex items-center gap-1 text-sm font-medium transition-colors hover:opacity-80"
-              style={{ color: '#E8501C' }}
+              style={{ color: '#ff2c02' }}
             >
               {tCommon('viewAll')}
               <ArrowRight className="h-3.5 w-3.5" />
@@ -186,7 +186,7 @@ export default async function LandingPage({
                 asChild
                 size="sm"
                 className="mt-6 text-white"
-                style={{ backgroundColor: '#E8501C' }}
+                style={{ backgroundColor: '#ff2c02' }}
               >
                 <Link href="/jobs">{t('ctaButton')}</Link>
               </Button>

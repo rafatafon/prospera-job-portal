@@ -160,7 +160,7 @@ export default async function TalentPage({
               className="mb-4 flex h-14 w-14 items-center justify-center rounded-full"
               style={{ backgroundColor: '#FFF5F0' }}
             >
-              <Users className="h-6 w-6" style={{ color: '#E8501C' }} />
+              <Users className="h-6 w-6" style={{ color: '#ff2c02' }} />
             </div>
             <p className="text-sm font-medium text-slate-900">{t('noCandidates')}</p>
             <p className="mt-1 text-sm text-slate-500">{t('noCandidatesDetail')}</p>
