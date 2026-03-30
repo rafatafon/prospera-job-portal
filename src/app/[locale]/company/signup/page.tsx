@@ -35,7 +35,7 @@ export default async function CompanySignupPage({
           }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 flex flex-col justify-between p-6 lg:p-10">
+        <div className="absolute inset-0 flex flex-col items-center lg:items-start justify-between p-6 lg:p-10">
           <Link href="/" className="flex items-center gap-2.5">
             <div
               className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30"
@@ -66,7 +66,7 @@ export default async function CompanySignupPage({
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 sm:px-10 lg:px-16">
         <div className="w-full max-w-sm">
           {/* Mobile logo */}
-          <div className="mb-8 flex items-center gap-2.5 sm:hidden">
+          <div className="mb-8 flex items-center justify-center gap-2.5 sm:hidden">
             <Link href="/" className="flex items-center gap-2.5">
               <Image
                 src="/prospera-logo/prospera-icon.svg"
