@@ -42,7 +42,7 @@ export async function generateMetadata({
 
   return {
     title,
-    description: `${description} — Prospera Job Portal`,
+    description: `${description} — Próspera Job Portal`,
   };
 }
 

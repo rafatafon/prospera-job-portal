@@ -68,7 +68,7 @@ export function AdminSidebar() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/prospera-logo/prospera-icon.svg"
-            alt="Prospera"
+            alt="Próspera"
             width={20}
             height={20}
             className="h-5 w-5 brightness-0 invert"
@@ -113,7 +113,7 @@ export function AdminSidebar() {
 
       {/* Bottom divider */}
       <div className="border-t border-white/10 p-4">
-        <p className="text-center text-xs text-white/30">Prospera Admin</p>
+        <p className="text-center text-xs text-white/30">Próspera Admin</p>
       </div>
     </aside>
   );

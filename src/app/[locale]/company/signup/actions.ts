@@ -99,7 +99,7 @@ export async function verifyRpn(
 
     case 'inactive':
       return {
-        error: 'This entity is inactive in the Prospera registry.',
+        error: 'This entity is inactive in the Próspera registry.',
         code: 'inactive',
       };
 

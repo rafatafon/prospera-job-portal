@@ -42,7 +42,7 @@
   },
   "landing": {
     "heroTitle": "Encuentra tu proximo empleo",
-    "heroSubtitle": "Conectamos talento humano con las mejores oportunidades laborales de las empresas en Prospera",
+    "heroSubtitle": "Conectamos talento humano con las mejores oportunidades laborales de las empresas en Próspera",
     "ctaButton": "Explorar empleos",
     "featuredJobs": "Empleos destacados"
   },
@@ -160,7 +160,7 @@
     "accessDenied": "Acceso denegado. Se requieren credenciales de administrador."
   },
   "adminOverview": {
-    "subtitle": "Herramientas de moderacion y gestion para el portal de Prospera.",
+    "subtitle": "Herramientas de moderacion y gestion para el portal de Próspera.",
     "companiesCount": "{count} empresas",
     "activeCompanies": "{active} activas",
     "jobsByStatus": "{published} publicados, {draft} borradores, {archived} archivados",
@@ -296,7 +296,7 @@
     "accessRestricted": "Solo empresas registradas pueden acceder a esta seccion",
     "loginToAccess": "Inicia sesion como empresa para ver candidatos",
     "authGateTitle": "Acceso de Empresa Requerido",
-    "authGateDescription": "Para ver este perfil debes ser una Entidad en Prospera",
+    "authGateDescription": "Para ver este perfil debes ser una Entidad en Próspera",
     "signUpCompany": "Registrate en el Portal de Empresas",
     "authGateLogin": "Iniciar Sesion"
   },
@@ -363,7 +363,7 @@
   },
   "candidateUpgrade": {
     "pageTitle": "Registra tu empresa",
-    "pageSubtitle": "Actualiza tu cuenta para gestionar una empresa en Prospera",
+    "pageSubtitle": "Actualiza tu cuenta para gestionar una empresa en Próspera",
     "rpnLabel": "Numero de Permiso de Residente (RPN)",
     "rpnPlaceholder": "Ingresa tu RPN",
     "verifyButton": "Verificar",
@@ -473,7 +473,7 @@
     "errorRpnEmpty": "Por favor ingresa un numero de RPN",
     "errorInvalidFormat": "Formato de RPN invalido",
     "errorNotFound": "No se encontro ninguna entidad con este RPN. Verifica tu numero e intenta de nuevo.",
-    "errorInactive": "El permiso de esta entidad no esta activo actualmente. Contacta a Prospera para asistencia.",
+    "errorInactive": "El permiso de esta entidad no esta activo actualmente. Contacta a Próspera para asistencia.",
     "errorNaturalPerson": "Este RPN pertenece a una persona natural, no a una entidad legal. El registro de empresa requiere un RPN de entidad legal.",
     "errorDuplicateRpn": "Una empresa con este RPN ya esta registrada en el portal.",
     "errorRateLimited": "Demasiadas solicitudes. Intenta de nuevo en un momento.",

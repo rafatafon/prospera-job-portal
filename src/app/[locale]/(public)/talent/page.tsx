@@ -16,7 +16,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'talent' });
 
   return {
-    title: `${t('title')} — Prospera Job Portal`,
+    title: `${t('title')} — Próspera Job Portal`,
     description: t('subtitle'),
   };
 }

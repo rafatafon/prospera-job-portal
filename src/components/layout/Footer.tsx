@@ -18,7 +18,7 @@ export async function Footer() {
         {/* Center: copyright + admin link */}
         <div className="flex items-center gap-3">
           <p className="text-xs text-slate-400">
-            &copy; {currentYear} Prospera. Honduras.
+            &copy; {currentYear} Próspera. Honduras.
           </p>
           <Link
             href="/admin/login"

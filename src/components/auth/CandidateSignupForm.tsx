@@ -151,7 +151,7 @@ export function CandidateSignupForm({ dark = false }: { dark?: boolean }) {
           href="/"
           className={`font-medium transition-colors ${dark ? 'text-white/50 hover:text-white/80' : 'text-slate-500 hover:text-slate-900'}`}
         >
-          &larr; Prospera
+          &larr; Próspera
         </Link>
       </p>
     </div>

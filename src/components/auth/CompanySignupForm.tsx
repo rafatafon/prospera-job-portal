@@ -175,7 +175,7 @@ export function CompanySignupForm() {
           href="/"
           className="font-medium text-slate-400 transition-colors hover:text-slate-600"
         >
-          &larr; Prospera
+          &larr; Próspera
         </Link>
       </p>
     </>

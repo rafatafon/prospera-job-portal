@@ -42,7 +42,7 @@
   },
   "landing": {
     "heroTitle": "Find your next job",
-    "heroSubtitle": "We connect human talent with the best job opportunities from the companies in Prospera",
+    "heroSubtitle": "We connect human talent with the best job opportunities from the companies in Próspera",
     "ctaButton": "Explore jobs",
     "featuredJobs": "Featured jobs"
   },
@@ -160,7 +160,7 @@
     "accessDenied": "Access denied. Admin credentials required."
   },
   "adminOverview": {
-    "subtitle": "Moderation and management tools for the Prospera portal.",
+    "subtitle": "Moderation and management tools for the Próspera portal.",
     "companiesCount": "{count} companies",
     "activeCompanies": "{active} active",
     "jobsByStatus": "{published} published, {draft} drafts, {archived} archived",
@@ -296,7 +296,7 @@
     "accessRestricted": "Only registered companies can access this section",
     "loginToAccess": "Log in as a company to view candidates",
     "authGateTitle": "Company Access Required",
-    "authGateDescription": "To view this profile you have to be an Entity in Prospera",
+    "authGateDescription": "To view this profile you have to be an Entity in Próspera",
     "signUpCompany": "Sign Up for Company Portal",
     "authGateLogin": "Login"
   },
@@ -363,7 +363,7 @@
   },
   "candidateUpgrade": {
     "pageTitle": "Register your company",
-    "pageSubtitle": "Upgrade your account to manage a company on Prospera",
+    "pageSubtitle": "Upgrade your account to manage a company on Próspera",
     "rpnLabel": "Resident Permit Number (RPN)",
     "rpnPlaceholder": "Enter your RPN",
     "verifyButton": "Verify",
@@ -473,7 +473,7 @@
     "errorRpnEmpty": "Please enter an RPN number",
     "errorInvalidFormat": "Invalid RPN format",
     "errorNotFound": "No entity found with this RPN. Please verify your number and try again.",
-    "errorInactive": "This entity's permit is not currently active. Please contact Prospera for assistance.",
+    "errorInactive": "This entity's permit is not currently active. Please contact Próspera for assistance.",
     "errorNaturalPerson": "This RPN belongs to a natural person, not a legal entity. Company registration requires a legal entity RPN.",
     "errorDuplicateRpn": "A company with this RPN is already registered on the portal.",
     "errorRateLimited": "Too many requests. Please try again in a moment.",

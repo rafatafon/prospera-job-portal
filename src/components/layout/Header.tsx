@@ -29,7 +29,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
           >
             <Image
               src="/prospera-logo/prospera-icon.svg"
-              alt="Prospera"
+              alt="Próspera"
               width={22}
               height={22}
               className="h-[22px] w-[22px]"

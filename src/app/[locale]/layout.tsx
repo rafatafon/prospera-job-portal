@@ -12,7 +12,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const tCommon = await getTranslations({ locale, namespace: 'common' });
   return {
-    title: 'Prospera Job Portal',
+    title: 'Próspera Job Portal',
     description: tCommon('siteDescription'),
   };
 }

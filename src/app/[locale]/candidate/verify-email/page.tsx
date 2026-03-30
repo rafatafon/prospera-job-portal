@@ -39,13 +39,13 @@ export default async function VerifyEmailPage({
             >
               <Image
                 src="/prospera-logo/prospera-icon.svg"
-                alt="Prospera"
+                alt="Próspera"
                 width={20}
                 height={20}
                 className="h-5 w-5 brightness-0 invert"
               />
             </div>
-            <span className="text-sm font-semibold text-white">Prospera</span>
+            <span className="text-sm font-semibold text-white">Próspera</span>
           </Link>
           <div className="hidden lg:block">
             <h2 className="max-w-md text-3xl font-bold leading-tight text-white">
@@ -72,13 +72,13 @@ export default async function VerifyEmailPage({
             <Link href="/" className="flex items-center gap-2.5">
               <Image
                 src="/prospera-logo/prospera-icon.svg"
-                alt="Prospera"
+                alt="Próspera"
                 width={28}
                 height={28}
                 className="h-7 w-7 brightness-0 invert"
               />
               <span className="text-sm font-semibold text-white">
-                Prospera
+                Próspera
               </span>
             </Link>
           </div>

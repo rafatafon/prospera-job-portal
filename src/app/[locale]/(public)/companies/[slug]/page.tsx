@@ -27,8 +27,8 @@ export async function generateMetadata({
   if (!company) return {};
 
   return {
-    title: `${company.name} — Prospera Job Portal`,
-    description: company.description || `${company.name} on Prospera Job Portal`,
+    title: `${company.name} — Próspera Job Portal`,
+    description: company.description || `${company.name} on Próspera Job Portal`,
   };
 }
 
