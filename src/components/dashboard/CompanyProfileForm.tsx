@@ -112,6 +112,7 @@ export function CompanyProfileForm({
           <h2 className="text-lg font-semibold text-slate-900">
             {t('title')}
           </h2>
+          <p className="mt-1 text-sm text-slate-500">{t('subtitle')}</p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -135,7 +136,7 @@ export function CompanyProfileForm({
                 placeholder={t('namePlaceholder')}
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
+                style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
               />
             </div>
 
@@ -158,7 +159,7 @@ export function CompanyProfileForm({
                 placeholder={t('slugPlaceholder')}
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white font-mono text-sm focus-visible:ring-1"
-                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
+                style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
               />
               <p className="text-xs text-slate-400">{t('slugHint')}</p>
             </div>
@@ -179,7 +180,7 @@ export function CompanyProfileForm({
                 placeholder={t('websitePlaceholder')}
                 disabled={isPending}
                 className="h-10 border-slate-200 bg-white focus-visible:ring-1"
-                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
+                style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
               />
             </div>
 
@@ -199,7 +200,7 @@ export function CompanyProfileForm({
                 disabled={isPending}
                 rows={3}
                 className="[field-sizing:fixed] border-slate-200 bg-white focus-visible:ring-1"
-                style={{ '--tw-ring-color': '#0057FF' } as React.CSSProperties}
+                style={{ '--tw-ring-color': '#ff2c02' } as React.CSSProperties}
               />
             </div>
 
@@ -282,7 +283,7 @@ export function CompanyProfileForm({
               type="submit"
               disabled={isPending}
               className="gap-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: '#0057FF' }}
+              style={{ backgroundColor: '#ff2c02' }}
             >
               {isPending ? (
                 <>

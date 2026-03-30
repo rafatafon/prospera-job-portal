@@ -98,7 +98,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
               <>
                 <Link
                   href="/candidate/profile"
-                  className="rounded-full border border-white/60 bg-white/75 px-4 py-2 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
+                  className="inline-flex h-8 items-center rounded-full border border-white/60 bg-white/75 px-6 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
                 >
                   {t('myProfile')}
                 </Link>
@@ -134,7 +134,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
             <>
               <Link
                 href="/candidate/login"
-                className="rounded-full border border-white/60 bg-white/75 px-4 py-2 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
+                className="inline-flex h-8 items-center rounded-full border border-white/60 bg-white/75 px-6 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
               >
                 {t('candidateLogin')}
               </Link>
