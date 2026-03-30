@@ -80,7 +80,7 @@ export async function Footer() {
           </a>
           {/* Discord */}
           <a
-            href="https://discord.gg/FKSGnQWxXps"
+            href="https://discord.com/invite/FKSGnQWxXp"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 transition-colors hover:text-slate-600"
