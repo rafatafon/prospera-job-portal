@@ -5,8 +5,32 @@ import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { JobCard } from '@/components/jobs/JobCard';
 import { CompanyLogo } from '@/components/ui/company-logo';
+import type { Metadata } from 'next';
 import type { Database } from '@/types/database.types';
 import { Globe, Briefcase, ArrowLeft } from 'lucide-react';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: company } = await supabase
+    .from('companies')
+    .select('name, description')
+    .eq('slug', slug)
+    .eq('is_active', true)
+    .single();
+
+  if (!company) return {};
+
+  return {
+    title: `${company.name} — Prospera Job Portal`,
+    description: company.description || `${company.name} on Prospera Job Portal`,
+  };
+}
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
 

@@ -20,7 +20,6 @@ type WorkMode = Database['public']['Enums']['work_mode'];
  * Header and Footer are imported directly here so the (public)/layout.tsx is
  * only needed for nested public routes like /jobs and /companies.
  *
- * TODO: Once the old placeholder can be removed, move this into (public)/page.tsx.
  */
 export default async function LandingPage({
   params,

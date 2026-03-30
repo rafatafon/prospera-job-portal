@@ -3,8 +3,23 @@ import { createClient, getUser } from '@/lib/supabase/server';
 import { CandidateCard } from '@/components/candidates/CandidateCard';
 import { CandidateFilters } from '@/components/candidates/CandidateFilters';
 import { Users } from 'lucide-react';
+import type { Metadata } from 'next';
 import type { Database } from '@/types/database.types';
 import { sanitizeSearchInput } from '@/lib/security/sanitize';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'talent' });
+
+  return {
+    title: `${t('title')} — Prospera Job Portal`,
+    description: t('subtitle'),
+  };
+}
 
 /** The site creator is always pinned first in the talent list. */
 const CREATOR_ID = process.env.CREATOR_CANDIDATE_ID;

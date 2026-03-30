@@ -4,6 +4,7 @@ import { formatDateLong } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
 import { notFound } from 'next/navigation';
 import { CompanyLogo } from '@/components/ui/company-logo';
+import type { Metadata } from 'next';
 import type { Database } from '@/types/database.types';
 import { ApplicationForm } from '@/components/jobs/ApplicationForm';
 import { sanitizeHtml } from '@/lib/security/sanitize';
@@ -17,6 +18,33 @@ import {
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
 type WorkMode = Database['public']['Enums']['work_mode'];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+
+  const { data: job } = await supabase
+    .from('jobs')
+    .select('title, location, companies(name)')
+    .eq('id', id)
+    .eq('status', 'published')
+    .single();
+
+  if (!job) return {};
+
+  const companyName = (job.companies as { name: string } | null)?.name;
+  const title = companyName ? `${job.title} — ${companyName}` : job.title;
+  const description = [job.title, companyName, job.location].filter(Boolean).join(' · ');
+
+  return {
+    title,
+    description: `${description} — Prospera Job Portal`,
+  };
+}
 
 const TYPE_BG: Record<EmploymentType, string> = {
   full_time: '#FFF5F0',
