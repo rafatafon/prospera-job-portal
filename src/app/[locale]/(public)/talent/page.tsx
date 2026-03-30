@@ -111,28 +111,31 @@ export default async function TalentPage({
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
+      {/* Page header */}
+      <div className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+            {t('title')}
+          </h1>
+          <p className="mt-2 text-slate-500">
+            {count > 0
+              ? count === 1
+                ? t('candidateCount').replace('__count__', '1')
+                : t('candidateCountPlural').replace('__count__', String(count))
+              : t('subtitle')}
+          </p>
+
+          {/* Filters */}
+          <div className="mt-6">
+            <CandidateFilters />
+          </div>
+        </div>
+      </div>
+
+      {/* Candidate list */}
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-slate-900">{t('title')}</h1>
-          <p className="mt-1 text-sm text-slate-500">{t('subtitle')}</p>
-        </div>
-
-        {/* Filters */}
-        <div className="mb-6">
-          <CandidateFilters />
-        </div>
-
-        {/* Count */}
-        <p className="mb-4 text-sm font-medium text-slate-500">
-          {count === 1
-            ? t('candidateCount').replace('__count__', '1')
-            : t('candidateCountPlural').replace('__count__', String(count))}
-        </p>
-
-        {/* Grid */}
         {candidates.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             {candidates.map((candidate) => (
               <CandidateCard
                 key={candidate.id}
@@ -155,15 +158,15 @@ export default async function TalentPage({
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-white py-16 shadow-sm">
+          <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-white py-20 text-center">
             <div
-              className="mb-4 flex h-14 w-14 items-center justify-center rounded-full"
+              className="mx-auto flex h-14 w-14 items-center justify-center rounded-full"
               style={{ backgroundColor: '#FFF5F0' }}
             >
-              <Users className="h-6 w-6" style={{ color: '#ff2c02' }} />
+              <Users className="h-7 w-7" style={{ color: '#ff2c02' }} />
             </div>
-            <p className="text-sm font-medium text-slate-900">{t('noCandidates')}</p>
-            <p className="mt-1 text-sm text-slate-500">{t('noCandidatesDetail')}</p>
+            <h2 className="mt-4 text-sm font-semibold text-slate-700">{t('noCandidates')}</h2>
+            <p className="mt-1 text-sm text-slate-400">{t('noCandidatesDetail')}</p>
           </div>
         )}
       </div>
