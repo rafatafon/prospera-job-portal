@@ -3,7 +3,8 @@
 import { createClient, getUser } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { nameSchema, availabilitySchema } from '@/lib/security/validation';
-import { validateFileMagicBytes } from '@/lib/security/file-validation';
+import { validateFileMagicBytes, scanPdfContent, scanImageContent } from '@/lib/security/file-validation';
+import { rateLimit } from '@/lib/security/rate-limit';
 
 const candidateProfileSchema = z.object({
   full_name: nameSchema,
@@ -20,6 +21,9 @@ const candidateProfileSchema = z.object({
 export async function upsertCandidateProfile(
   formData: FormData,
 ): Promise<{ error?: string; success?: boolean }> {
+  const rateLimited = await rateLimit('profileUpdate');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   const supabase = await createClient();
   const user = await getUser(supabase);
 
@@ -95,6 +99,10 @@ export async function upsertCandidateProfile(
     if (!validBytes) {
       return { error: 'Photo does not appear to be a valid image file' };
     }
+    const imageScan = await scanImageContent(photoFile);
+    if (!imageScan.safe) {
+      return { error: 'Photo contains content that is not allowed' };
+    }
     const ext = photoFile.type === 'image/png' ? 'png' : 'jpg';
     const path = `${user.id}/photo.${ext}`;
     const { error: uploadErr } = await supabase.storage
@@ -119,6 +127,10 @@ export async function upsertCandidateProfile(
     const validBytes = await validateFileMagicBytes(cvFile, 'pdf');
     if (!validBytes) {
       return { error: 'CV does not appear to be a valid PDF file' };
+    }
+    const cvScan = await scanPdfContent(cvFile);
+    if (!cvScan.safe) {
+      return { error: 'CV contains content that is not allowed' };
     }
     const path = `${user.id}/cv.pdf`;
     const { error: uploadErr } = await supabase.storage

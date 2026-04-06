@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { safeErrorMessage } from '@/lib/security/validation';
+import { rateLimit } from '@/lib/security/rate-limit';
 
 const jobIdSchema = z.string().uuid('Invalid job ID');
 
@@ -46,6 +47,9 @@ export async function createJob(
   locale: string,
   formData: FormData,
 ): Promise<{ error: string } | void> {
+  const rateLimited = await rateLimit('jobMutation');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   const supabase = await createClient();
   const auth = await getAuthenticatedCompanyId(supabase);
   if ('error' in auth) return { error: auth.error };
@@ -79,6 +83,9 @@ export async function publishJob(
   locale: string,
   jobId: string,
 ): Promise<{ error: string } | { success: true }> {
+  const rateLimited = await rateLimit('jobMutation');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   if (!jobIdSchema.safeParse(jobId).success) return { error: 'Invalid job ID' };
 
   const supabase = await createClient();
@@ -105,6 +112,9 @@ export async function archiveJob(
   locale: string,
   jobId: string,
 ): Promise<{ error: string } | { success: true }> {
+  const rateLimited = await rateLimit('jobMutation');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   if (!jobIdSchema.safeParse(jobId).success) return { error: 'Invalid job ID' };
 
   const supabase = await createClient();
@@ -131,6 +141,9 @@ export async function deleteJob(
   locale: string,
   jobId: string,
 ): Promise<{ error: string } | { success: true }> {
+  const rateLimited = await rateLimit('jobMutation');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   if (!jobIdSchema.safeParse(jobId).success) return { error: 'Invalid job ID' };
 
   const supabase = await createClient();

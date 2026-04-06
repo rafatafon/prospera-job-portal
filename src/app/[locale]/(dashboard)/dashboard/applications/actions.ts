@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import type { Database } from '@/types/database.types';
 import { safeErrorMessage } from '@/lib/security/validation';
+import { rateLimit } from '@/lib/security/rate-limit';
 
 type ApplicationStatus = Database['public']['Enums']['application_status'];
 
@@ -16,6 +17,9 @@ export async function updateApplicationStatus(
   applicationId: string,
   status: ApplicationStatus,
 ): Promise<{ error: string } | { success: true }> {
+  const rateLimited = await rateLimit('statusUpdate');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   // Validate inputs
   if (!applicationIdSchema.safeParse(applicationId).success) {
     return { error: 'Invalid application ID' };

@@ -10,7 +10,9 @@ export async function GET(
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get('token_hash');
   const type = searchParams.get('type') as EmailOtpType | null;
-  const next = searchParams.get('next') ?? `/${locale}/dashboard`;
+  // Validate redirect target to prevent open redirect attacks
+  const rawNext = searchParams.get('next') ?? `/${locale}/dashboard`;
+  const next = rawNext.startsWith(`/${locale}/`) ? rawNext : `/${locale}/dashboard`;
 
   if (token_hash && type) {
     const supabase = await createClient();

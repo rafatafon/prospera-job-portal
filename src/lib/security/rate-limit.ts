@@ -105,6 +105,9 @@ const LIMITS = {
   signup: { limit: 10, windowSeconds: 1800 }, // 10 attempts per 30 min
   passwordReset: { limit: 5, windowSeconds: 900 }, // 5 attempts per 15 min
   application: { limit: 10, windowSeconds: 600 }, // 10 submissions per 10 min
+  jobMutation: { limit: 30, windowSeconds: 3600 }, // 30 job ops per hour
+  profileUpdate: { limit: 20, windowSeconds: 3600 }, // 20 profile updates per hour
+  statusUpdate: { limit: 60, windowSeconds: 3600 }, // 60 status changes per hour
 } as const;
 
 type ActionType = keyof typeof LIMITS;

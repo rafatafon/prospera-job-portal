@@ -1,16 +1,21 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { safeErrorMessage } from '@/lib/security/validation';
+import { safeErrorMessage, passwordSchema, emailSchema } from '@/lib/security/validation';
+import { rateLimit } from '@/lib/security/rate-limit';
 
 export async function changePassword(
   formData: FormData,
 ): Promise<{ error?: string; success?: boolean }> {
+  const rateLimited = await rateLimit('passwordReset');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   const supabase = await createClient();
   const newPassword = formData.get('newPassword') as string;
   const confirmPassword = formData.get('confirmPassword') as string;
 
-  if (!newPassword || newPassword.length < 8) {
+  const parsed = passwordSchema.safeParse(newPassword);
+  if (!parsed.success) {
     return { error: 'min_length' };
   }
 
@@ -38,10 +43,14 @@ export async function changePassword(
 export async function changeEmail(
   formData: FormData,
 ): Promise<{ error?: string; success?: boolean }> {
+  const rateLimited = await rateLimit('passwordReset');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   const supabase = await createClient();
   const newEmail = (formData.get('newEmail') as string)?.trim();
 
-  if (!newEmail) {
+  const parsedEmail = emailSchema.safeParse(newEmail);
+  if (!parsedEmail.success) {
     return { error: 'email_required' };
   }
 

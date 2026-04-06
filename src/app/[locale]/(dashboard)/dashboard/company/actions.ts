@@ -4,7 +4,8 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { safeErrorMessage } from '@/lib/security/validation';
-import { validateFileMagicBytes } from '@/lib/security/file-validation';
+import { rateLimit } from '@/lib/security/rate-limit';
+import { validateFileMagicBytes, scanImageContent } from '@/lib/security/file-validation';
 
 const MAX_LOGO_SIZE = 2 * 1024 * 1024; // 2 MB
 const ACCEPTED_IMAGE_TYPES = [
@@ -62,6 +63,9 @@ export async function updateCompanyProfile(
   companyId: string,
   formData: FormData,
 ): Promise<{ error: string } | { success: true }> {
+  const rateLimited = await rateLimit('profileUpdate');
+  if (rateLimited) return { error: 'too_many_requests' };
+
   const parsed = companyProfileSchema.safeParse({
     name: formData.get('name'),
     slug: formData.get('slug'),
@@ -131,6 +135,11 @@ export async function updateCompanyProfile(
       if (!validBytes) {
         return { error: 'Logo does not appear to be a valid image file' };
       }
+    }
+    // Scan for polyglot attacks (embedded scripts in image data)
+    const logoScan = await scanImageContent(logoFile);
+    if (!logoScan.safe) {
+      return { error: 'Logo contains content that is not allowed' };
     }
     if (currentCompany?.logo_url) {
       await deleteLogo(supabase, currentCompany.logo_url);

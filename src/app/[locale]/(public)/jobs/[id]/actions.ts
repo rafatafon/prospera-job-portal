@@ -3,7 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { rateLimit } from '@/lib/security/rate-limit';
-import { validateFileMagicBytes } from '@/lib/security/file-validation';
+import { validateFileMagicBytes, scanPdfContent } from '@/lib/security/file-validation';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
@@ -44,6 +44,12 @@ async function validatePdfFile(
   const validBytes = await validateFileMagicBytes(file, 'pdf');
   if (!validBytes) {
     return { error: `${fieldName} does not appear to be a valid PDF file` };
+  }
+
+  // Scan for dangerous embedded content (JavaScript, auto-actions, etc.)
+  const scanResult = await scanPdfContent(file);
+  if (!scanResult.safe) {
+    return { error: `${fieldName} contains content that is not allowed` };
   }
 
   return { file };

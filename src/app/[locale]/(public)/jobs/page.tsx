@@ -5,6 +5,7 @@ import { JobCard } from '@/components/jobs/JobCard';
 import { JobFilters } from '@/components/jobs/JobFilters';
 import type { Database } from '@/types/database.types';
 import { Briefcase } from 'lucide-react';
+import { sanitizeSearchInput } from '@/lib/security/sanitize';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
 type WorkMode = Database['public']['Enums']['work_mode'];
@@ -40,10 +41,16 @@ export default async function JobsPage({
     .order('published_at', { ascending: false });
 
   if (query) {
-    jobsQuery = jobsQuery.ilike('title', `%${query}%`);
+    const safeQuery = sanitizeSearchInput(query);
+    if (safeQuery) {
+      jobsQuery = jobsQuery.ilike('title', `%${safeQuery}%`);
+    }
   }
   if (location) {
-    jobsQuery = jobsQuery.ilike('location', `%${location}%`);
+    const safeLocation = sanitizeSearchInput(location);
+    if (safeLocation) {
+      jobsQuery = jobsQuery.ilike('location', `%${safeLocation}%`);
+    }
   }
   if (type && ['full_time', 'part_time', 'contract'].includes(type)) {
     jobsQuery = jobsQuery.eq('employment_type', type as EmploymentType);
