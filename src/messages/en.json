@@ -44,7 +44,8 @@
     "heroTitle": "Find your next job",
     "heroSubtitle": "We connect human talent with the best job opportunities from the companies in Próspera",
     "ctaButton": "Explore jobs",
-    "featuredJobs": "Featured jobs"
+    "featuredJobs": "Featured jobs",
+    "featuredCandidates": "Featured candidates"
   },
   "jobs": {
     "title": "Available jobs",

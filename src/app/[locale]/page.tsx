@@ -5,12 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { JobCard } from '@/components/jobs/JobCard';
-import { ArrowRight, Briefcase } from 'lucide-react';
+import { CandidateCard } from '@/components/candidates/CandidateCard';
+import { ArrowRight, Briefcase, Users } from 'lucide-react';
 import Image from 'next/image';
 import type { Database } from '@/types/database.types';
 
 type EmploymentType = Database['public']['Enums']['employment_type'];
 type WorkMode = Database['public']['Enums']['work_mode'];
+type CandidateAvailability = Database['public']['Enums']['candidate_availability'];
 
 /**
  * Landing page — /[locale]/
@@ -46,6 +48,7 @@ export default async function LandingPage({
   const tCommon = await getTranslations('common');
   const tJobs = await getTranslations('jobs');
   const tJobCard = await getTranslations('jobCard');
+  const tTalent = await getTranslations('talent');
 
   // Fetch latest published jobs for the featured section
   const { data: featuredJobs } = await supabase
@@ -56,6 +59,36 @@ export default async function LandingPage({
     .limit(6);
 
   const jobList = featuredJobs ?? [];
+
+  // Fetch latest visible candidates for the featured section
+  const CREATOR_ID = process.env.CREATOR_CANDIDATE_ID;
+  const { data: rawCandidates } = await supabase
+    .from('candidates')
+    .select('*')
+    .eq('is_visible', true)
+    .order('created_at', { ascending: false })
+    .limit(7);
+
+  // Pin creator first, then cap at 6
+  const candidateList = rawCandidates
+    ? [...rawCandidates]
+        .sort((a, b) => {
+          if (CREATOR_ID) {
+            if (a.id === CREATOR_ID) return -1;
+            if (b.id === CREATOR_ID) return 1;
+          }
+          return 0;
+        })
+        .slice(0, 6)
+    : [];
+
+  const isAuthenticated = !!user;
+
+  const availabilityLabels: Record<CandidateAvailability, string> = {
+    actively_looking: tTalent('activelyLooking'),
+    open_to_offers: tTalent('openToOffers'),
+    not_available: tTalent('notAvailable'),
+  };
 
   const typeLabels: Record<EmploymentType, string> = {
     full_time: tJobs('fullTime'),
@@ -189,6 +222,63 @@ export default async function LandingPage({
                 style={{ backgroundColor: '#ff2c02' }}
               >
                 <Link href="/jobs">{t('ctaButton')}</Link>
+              </Button>
+            </div>
+          )}
+        </section>
+
+        {/* Featured candidates section */}
+        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+              {t('featuredCandidates')}
+            </h2>
+            <Link
+              href="/talent"
+              className="flex items-center gap-1 text-sm font-medium transition-colors hover:opacity-80"
+              style={{ color: '#ff2c02' }}
+            >
+              {tCommon('viewAll')}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+
+          {candidateList.length > 0 ? (
+            <div className="mt-8 grid grid-cols-1 gap-3 lg:grid-cols-2">
+              {candidateList.map((candidate) => (
+                <CandidateCard
+                  key={candidate.id}
+                  candidate={candidate}
+                  isCreator={!!CREATOR_ID && candidate.id === CREATOR_ID}
+                  creatorLabel={tTalent('creatorBadge')}
+                  availabilityLabel={availabilityLabels[candidate.availability]}
+                  experienceLabel={
+                    candidate.years_of_experience != null
+                      ? tTalent('yearsExperience').replace(
+                          '__count__',
+                          String(candidate.years_of_experience),
+                        )
+                      : ''
+                  }
+                  viewProfileLabel={tTalent('viewProfile')}
+                  isAuthenticated={isAuthenticated}
+                  userRole={userRole}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 flex min-h-[200px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 py-16 text-center">
+              <Users className="mx-auto h-10 w-10 text-slate-300" />
+              <p className="mt-4 text-sm font-medium text-slate-500">
+                {tCommon('noResults')}
+              </p>
+              <Button
+                asChild
+                size="sm"
+                className="mt-6 text-white"
+                style={{ backgroundColor: '#ff2c02' }}
+              >
+                <Link href="/talent">{tCommon('viewAll')}</Link>
               </Button>
             </div>
           )}

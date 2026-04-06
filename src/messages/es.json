@@ -44,7 +44,8 @@
     "heroTitle": "Encuentra tu proximo empleo",
     "heroSubtitle": "Conectamos talento humano con las mejores oportunidades laborales de las empresas en Próspera",
     "ctaButton": "Explorar empleos",
-    "featuredJobs": "Empleos destacados"
+    "featuredJobs": "Empleos destacados",
+    "featuredCandidates": "Candidatos destacados"
   },
   "jobs": {
     "title": "Empleos disponibles",
