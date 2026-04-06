@@ -133,7 +133,7 @@ export function JobCard({
             </p>
 
             {/* Job title */}
-            <h3 className="mt-0.5 text-sm font-semibold leading-snug text-slate-900 group-hover:text-[#ff2c02] transition-colors">
+            <h3 className="mt-0.5 text-base font-semibold leading-snug text-slate-900 group-hover:text-[#ff2c02] transition-colors">
               {job.title}
             </h3>
 
