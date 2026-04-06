@@ -9,6 +9,7 @@
  * @module security/file-validation
  */
 
+
 // Magic byte signatures for supported file types
 const MAGIC_BYTES: Record<string, { bytes: number[]; offset: number }> = {
   pdf: { bytes: [0x25, 0x50, 0x44, 0x46], offset: 0 }, // %PDF
