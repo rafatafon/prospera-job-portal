@@ -9,6 +9,8 @@
  * @module security/file-validation
  */
 
+import { logSecurityEvent } from '@/lib/security/audit-log';
+
 
 // Magic byte signatures for supported file types
 const MAGIC_BYTES: Record<string, { bytes: number[]; offset: number }> = {
@@ -92,6 +94,12 @@ export async function scanPdfContent(
 
   for (const pattern of DANGEROUS_PDF_PATTERNS) {
     if (pattern.test(content)) {
+      logSecurityEvent('security.file_blocked', {
+        action: 'pdf_upload',
+        reason: `Blocked pattern: ${pattern.source}`,
+        fileName: file.name,
+        fileSize: file.size,
+      }).catch(() => {});
       return {
         safe: false,
         reason: `PDF contains blocked content: ${pattern.source}`,
@@ -138,6 +146,12 @@ export async function scanImageContent(
 
   for (const pattern of DANGEROUS_IMAGE_PATTERNS) {
     if (pattern.test(content)) {
+      logSecurityEvent('security.file_blocked', {
+        action: 'image_upload',
+        reason: `Blocked pattern: ${pattern.source}`,
+        fileName: file.name,
+        fileSize: file.size,
+      }).catch(() => {});
       return {
         safe: false,
         reason: `Image contains suspicious embedded content: ${pattern.source}`,

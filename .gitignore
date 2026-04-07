@@ -52,3 +52,5 @@ next-env.d.ts
 
 # email templates
 docs/email-templates/*.html
+# Sentry Config File
+.env.sentry-build-plugin

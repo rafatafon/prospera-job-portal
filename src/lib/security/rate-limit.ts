@@ -10,6 +10,7 @@
  */
 
 import { headers } from 'next/headers';
+import { logSecurityEvent } from '@/lib/security/audit-log';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -136,6 +137,10 @@ export async function rateLimit(
   const result = checkRateLimit(key, config);
 
   if (!result.success) {
+    logSecurityEvent('security.rate_limited', {
+      action: actionType,
+      discriminator: discriminator ?? null,
+    }).catch(() => {});
     return { error: 'too_many_requests', code: 'rate_limited' };
   }
 
