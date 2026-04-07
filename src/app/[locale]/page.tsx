@@ -84,6 +84,35 @@ export default async function LandingPage({
 
   const isAuthenticated = !!user;
 
+  // Fetch experiences for featured candidates to calculate total years
+  const featCandidateIds = candidateList.map((c) => c.id);
+  const { data: featExperiences } = featCandidateIds.length > 0
+    ? await supabase
+        .from('candidate_experiences')
+        .select('candidate_id, start_date, end_date, is_current')
+        .in('candidate_id', featCandidateIds)
+    : { data: [] };
+
+  const featExpYearsMap = new Map<string, number>();
+  if (featExperiences) {
+    const grouped = new Map<string, typeof featExperiences>();
+    for (const exp of featExperiences) {
+      const list = grouped.get(exp.candidate_id) ?? [];
+      list.push(exp);
+      grouped.set(exp.candidate_id, list);
+    }
+    const now = new Date();
+    for (const [cid, exps] of grouped) {
+      let totalMonths = 0;
+      for (const exp of exps) {
+        const start = new Date(exp.start_date + 'T00:00:00');
+        const end = exp.is_current || !exp.end_date ? now : new Date(exp.end_date + 'T00:00:00');
+        totalMonths += (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+      }
+      featExpYearsMap.set(cid, Math.max(0, Math.round(totalMonths / 12)));
+    }
+  }
+
   const availabilityLabels: Record<CandidateAvailability, string> = {
     actively_looking: tTalent('activelyLooking'),
     open_to_offers: tTalent('openToOffers'),
@@ -253,10 +282,10 @@ export default async function LandingPage({
                   creatorLabel={tTalent('creatorBadge')}
                   availabilityLabel={availabilityLabels[candidate.availability]}
                   experienceLabel={
-                    candidate.years_of_experience != null
+                    (featExpYearsMap.get(candidate.id) ?? 0) > 0
                       ? tTalent('yearsExperience').replace(
                           '__count__',
-                          String(candidate.years_of_experience),
+                          String(featExpYearsMap.get(candidate.id)),
                         )
                       : ''
                   }

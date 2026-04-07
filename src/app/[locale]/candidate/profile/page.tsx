@@ -44,6 +44,17 @@ export default async function CandidateProfilePage({
     .eq('user_id', user.id)
     .single();
 
+  // Fetch experiences for the candidate
+  let experiences: Database['public']['Tables']['candidate_experiences']['Row'][] = [];
+  if (candidate) {
+    const { data } = await supabase
+      .from('candidate_experiences')
+      .select('*')
+      .eq('candidate_id', candidate.id)
+      .order('start_date', { ascending: false });
+    experiences = data ?? [];
+  }
+
   const t = await getTranslations('candidateProfile');
 
   return (
@@ -59,7 +70,7 @@ export default async function CandidateProfilePage({
             <h1 className="text-lg font-bold text-slate-900">{t('title')}</h1>
             <p className="mt-1 text-sm text-slate-500">{t('subtitle')}</p>
           </div>
-          <CandidateProfileForm candidate={candidate as CandidateRow | null} />
+          <CandidateProfileForm candidate={candidate as CandidateRow | null} experiences={experiences} />
         </div>
       </div>
     </div>

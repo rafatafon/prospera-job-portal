@@ -12,7 +12,6 @@ const candidateProfileSchema = z.object({
   bio: z.string().max(5000).optional().default(''),
   location: z.string().max(200).optional().default(''),
   skills: z.string().max(2000).optional().default(''),
-  years_of_experience: z.string().optional().default(''),
   availability: availabilitySchema.default('actively_looking'),
   linkedin_url: z.string().url().max(500).optional().or(z.literal('')).default(''),
   contact_email: z.string().email().max(254).optional().or(z.literal('')).default(''),
@@ -52,7 +51,6 @@ export async function upsertCandidateProfile(
     bio: formData.get('bio') || '',
     location: formData.get('location') || '',
     skills: formData.get('skills') || '',
-    years_of_experience: formData.get('years_of_experience') || '',
     availability: formData.get('availability') || 'actively_looking',
     linkedin_url: (() => {
       const raw = (formData.get('linkedin_url') as string) || '';
@@ -77,7 +75,6 @@ export async function upsertCandidateProfile(
     bio,
     location,
     skills: skillsRaw,
-    years_of_experience: yearsStr,
     availability,
     linkedin_url: linkedinUrl,
     contact_email: contactEmail,
@@ -87,7 +84,6 @@ export async function upsertCandidateProfile(
   } = parsed.data;
 
   const skills = skillsRaw ? skillsRaw.split(',').map((s) => s.trim()).filter(Boolean) : [];
-  const yearsOfExperience = yearsStr ? parseInt(yearsStr, 10) : null;
   const isVisible = isVisibleStr === 'true';
 
   let photoUrl: string | null = null;
@@ -165,7 +161,6 @@ export async function upsertCandidateProfile(
     bio: bio || null,
     location: location || null,
     skills,
-    years_of_experience: yearsOfExperience,
     availability: availability as 'actively_looking' | 'open_to_offers' | 'not_available',
     linkedin_url: linkedinUrl || null,
     contact_email: contactEmail || null,
@@ -201,5 +196,150 @@ export async function upsertCandidateProfile(
     }
   }
 
+  return { success: true };
+}
+
+// ---------------------------------------------------------------------------
+// Experience CRUD
+// ---------------------------------------------------------------------------
+
+const experienceSchema = z.object({
+  job_title: z.string().min(1).max(200),
+  company_name: z.string().min(1).max(200),
+  location: z.string().max(200).optional().or(z.literal('')),
+  start_date: z.string().min(1),
+  end_date: z.string().optional().or(z.literal('')),
+  is_current: z.enum(['true', 'false']).default('false'),
+  description: z.string().max(5000).optional().or(z.literal('')),
+  employment_type: z.enum(['full_time', 'part_time', 'contract', '']).optional().default(''),
+});
+
+const uuidSchema = z.string().uuid();
+
+async function resolveCandidate(supabase: Awaited<ReturnType<typeof createClient>>, userId: string) {
+  const { data } = await supabase
+    .from('candidates')
+    .select('id')
+    .eq('user_id', userId)
+    .single();
+  return data;
+}
+
+export async function addExperience(
+  formData: FormData,
+): Promise<{ error?: string; success?: boolean }> {
+  const rateLimited = await rateLimit('profileUpdate');
+  if (rateLimited) return { error: 'too_many_requests' };
+
+  const supabase = await createClient();
+  const user = await getUser(supabase);
+  if (!user) return { error: 'Not authenticated' };
+
+  const candidate = await resolveCandidate(supabase, user.id);
+  if (!candidate) return { error: 'No candidate profile found' };
+
+  const parsed = experienceSchema.safeParse({
+    job_title: formData.get('job_title'),
+    company_name: formData.get('company_name'),
+    location: formData.get('location') || '',
+    start_date: formData.get('start_date'),
+    end_date: formData.get('end_date') || '',
+    is_current: formData.get('is_current') === 'true' ? 'true' : 'false',
+    description: formData.get('description') || '',
+    employment_type: formData.get('employment_type') || '',
+  });
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? 'Validation error' };
+  }
+
+  const { error } = await supabase.from('candidate_experiences').insert({
+    candidate_id: candidate.id,
+    job_title: parsed.data.job_title,
+    company_name: parsed.data.company_name,
+    location: parsed.data.location || null,
+    start_date: parsed.data.start_date,
+    end_date: parsed.data.is_current === 'true' ? null : (parsed.data.end_date || null),
+    is_current: parsed.data.is_current === 'true',
+    description: parsed.data.description || null,
+    employment_type: parsed.data.employment_type || null,
+  });
+
+  if (error) return { error: 'Failed to add experience. Please try again.' };
+  return { success: true };
+}
+
+export async function updateExperience(
+  experienceId: string,
+  formData: FormData,
+): Promise<{ error?: string; success?: boolean }> {
+  if (!uuidSchema.safeParse(experienceId).success) return { error: 'Invalid ID' };
+
+  const rateLimited = await rateLimit('profileUpdate');
+  if (rateLimited) return { error: 'too_many_requests' };
+
+  const supabase = await createClient();
+  const user = await getUser(supabase);
+  if (!user) return { error: 'Not authenticated' };
+
+  const candidate = await resolveCandidate(supabase, user.id);
+  if (!candidate) return { error: 'No candidate profile found' };
+
+  const parsed = experienceSchema.safeParse({
+    job_title: formData.get('job_title'),
+    company_name: formData.get('company_name'),
+    location: formData.get('location') || '',
+    start_date: formData.get('start_date'),
+    end_date: formData.get('end_date') || '',
+    is_current: formData.get('is_current') === 'true' ? 'true' : 'false',
+    description: formData.get('description') || '',
+    employment_type: formData.get('employment_type') || '',
+  });
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? 'Validation error' };
+  }
+
+  const { error } = await supabase
+    .from('candidate_experiences')
+    .update({
+      job_title: parsed.data.job_title,
+      company_name: parsed.data.company_name,
+      location: parsed.data.location || null,
+      start_date: parsed.data.start_date,
+      end_date: parsed.data.is_current === 'true' ? null : (parsed.data.end_date || null),
+      is_current: parsed.data.is_current === 'true',
+      description: parsed.data.description || null,
+      employment_type: parsed.data.employment_type || null,
+    })
+    .eq('id', experienceId)
+    .eq('candidate_id', candidate.id);
+
+  if (error) return { error: 'Failed to update experience. Please try again.' };
+  return { success: true };
+}
+
+export async function deleteExperience(
+  experienceId: string,
+): Promise<{ error?: string; success?: boolean }> {
+  if (!uuidSchema.safeParse(experienceId).success) return { error: 'Invalid ID' };
+
+  const rateLimited = await rateLimit('profileUpdate');
+  if (rateLimited) return { error: 'too_many_requests' };
+
+  const supabase = await createClient();
+  const user = await getUser(supabase);
+  if (!user) return { error: 'Not authenticated' };
+
+  const candidate = await resolveCandidate(supabase, user.id);
+  if (!candidate) return { error: 'No candidate profile found' };
+
+  const { error } = await supabase
+    .from('candidate_experiences')
+    .delete()
+    .eq('id', experienceId)
+    .eq('candidate_id', candidate.id);
+
+  if (error) return { error: 'Failed to delete experience. Please try again.' };
   return { success: true };
 }

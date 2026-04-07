@@ -301,7 +301,8 @@
     "signUpCompany": "Registrate en el Portal de Empresas",
     "authGateLogin": "Iniciar Sesion",
     "sendEmail": "Enviar correo",
-    "callPhone": "Llamar"
+    "callPhone": "Llamar",
+    "experienceSection": "Experiencia"
   },
   "candidateProfile": {
     "title": "Mi perfil de candidato",
@@ -365,7 +366,26 @@
     "sidebarRegisterCompany": "Registrar Empresa",
     "contactEmail": "Correo de contacto",
     "contactEmailPlaceholder": "Correo para que las empresas te contacten",
-    "phoneNumber": "Numero de telefono"
+    "phoneNumber": "Numero de telefono",
+    "experience": "Experiencia",
+    "addExperience": "Agregar experiencia",
+    "editExperience": "Editar experiencia",
+    "deleteExperience": "Eliminar",
+    "deleteExperienceConfirm": "Estas seguro de eliminar esta experiencia?",
+    "jobTitle": "Titulo del puesto",
+    "companyName": "Nombre de la empresa",
+    "expLocation": "Ubicacion",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "currentJob": "Actualmente trabajo aqui",
+    "duties": "Descripcion / Responsabilidades",
+    "employmentType": "Tipo de empleo",
+    "noExperience": "Sin experiencia agregada",
+    "present": "Actualidad",
+    "expFullTime": "Tiempo completo",
+    "expPartTime": "Medio tiempo",
+    "expContract": "Contrato",
+    "saveExperience": "Guardar"
   },
   "candidateUpgrade": {
     "pageTitle": "Registra tu empresa",

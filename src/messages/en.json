@@ -301,7 +301,8 @@
     "signUpCompany": "Sign Up for Company Portal",
     "authGateLogin": "Login",
     "sendEmail": "Send email",
-    "callPhone": "Call"
+    "callPhone": "Call",
+    "experienceSection": "Experience"
   },
   "candidateProfile": {
     "title": "My candidate profile",
@@ -365,7 +366,26 @@
     "sidebarRegisterCompany": "Register Company",
     "contactEmail": "Contact email",
     "contactEmailPlaceholder": "Email for companies to reach you",
-    "phoneNumber": "Phone number"
+    "phoneNumber": "Phone number",
+    "experience": "Experience",
+    "addExperience": "Add experience",
+    "editExperience": "Edit experience",
+    "deleteExperience": "Delete",
+    "deleteExperienceConfirm": "Are you sure you want to delete this experience?",
+    "jobTitle": "Job title",
+    "companyName": "Company name",
+    "expLocation": "Location",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "currentJob": "I currently work here",
+    "duties": "Description / Duties",
+    "employmentType": "Employment type",
+    "noExperience": "No experience added yet",
+    "present": "Present",
+    "expFullTime": "Full time",
+    "expPartTime": "Part time",
+    "expContract": "Contract",
+    "saveExperience": "Save"
   },
   "candidateUpgrade": {
     "pageTitle": "Register your company",

@@ -100,7 +100,7 @@ export function CandidateCard({
                 {candidate.location}
               </span>
             )}
-            {candidate.years_of_experience != null && (
+            {experienceLabel && (
               <span className="flex items-center gap-1">
                 <Briefcase className="h-3 w-3" />
                 {experienceLabel}

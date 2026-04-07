@@ -70,6 +70,59 @@ export type Database = {
           },
         ]
       }
+      candidate_experiences: {
+        Row: {
+          candidate_id: string
+          company_name: string
+          created_at: string | null
+          description: string | null
+          employment_type: string | null
+          end_date: string | null
+          id: string
+          is_current: boolean | null
+          job_title: string
+          location: string | null
+          start_date: string
+          updated_at: string | null
+        }
+        Insert: {
+          candidate_id: string
+          company_name: string
+          created_at?: string | null
+          description?: string | null
+          employment_type?: string | null
+          end_date?: string | null
+          id?: string
+          is_current?: boolean | null
+          job_title: string
+          location?: string | null
+          start_date: string
+          updated_at?: string | null
+        }
+        Update: {
+          candidate_id?: string
+          company_name?: string
+          created_at?: string | null
+          description?: string | null
+          employment_type?: string | null
+          end_date?: string | null
+          id?: string
+          is_current?: boolean | null
+          job_title?: string
+          location?: string | null
+          start_date?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_experiences_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "candidates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       candidates: {
         Row: {
           availability: Database["public"]["Enums"]["candidate_availability"]

@@ -7,20 +7,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PhoneInput } from '@/components/ui/phone-input';
-import { upsertCandidateProfile } from '@/app/[locale]/candidate/profile/actions';
-import { AlertCircle, AlertTriangle, CheckCircle, Loader2, Upload } from 'lucide-react';
+import { upsertCandidateProfile, deleteExperience } from '@/app/[locale]/candidate/profile/actions';
+import { AlertCircle, AlertTriangle, CheckCircle, Loader2, Upload, Plus, Briefcase } from 'lucide-react';
 
 import type { Database } from '@/types/database.types';
 import { PhotoCropDialog } from '@/components/candidates/PhotoCropDialog';
 import { SkillsAutocomplete } from '@/components/candidates/SkillsAutocomplete';
+import { ExperienceForm } from '@/components/candidates/ExperienceForm';
+import { ExperienceCard } from '@/components/candidates/ExperienceCard';
+import { createBrowserClient } from '@supabase/ssr';
 
 type CandidateRow = Database['public']['Tables']['candidates']['Row'];
+type ExperienceRow = Database['public']['Tables']['candidate_experiences']['Row'];
 
 interface CandidateProfileFormProps {
   candidate: CandidateRow | null;
+  experiences?: ExperienceRow[];
 }
 
-export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
+export function CandidateProfileForm({ candidate, experiences: initialExperiences = [] }: CandidateProfileFormProps) {
   const t = useTranslations('candidateProfile');
   const locale = useLocale();
   const [isPending, startTransition] = useTransition();
@@ -38,7 +43,32 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
     }
     return '';
   });
+  const [experiences, setExperiences] = useState<ExperienceRow[]>(initialExperiences);
+  const [expFormOpen, setExpFormOpen] = useState(false);
+  const [editingExp, setEditingExp] = useState<ExperienceRow | undefined>();
   const [isDirty, setIsDirty] = useState(false);
+
+  async function refreshExperiences() {
+    if (!candidate) return;
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    );
+    const { data } = await supabase
+      .from('candidate_experiences')
+      .select('*')
+      .eq('candidate_id', candidate.id)
+      .order('start_date', { ascending: false });
+    if (data) setExperiences(data);
+  }
+
+  async function handleDeleteExperience(experienceId: string) {
+    if (!confirm(t('deleteExperienceConfirm'))) return;
+    const result = await deleteExperience(experienceId);
+    if (!result.error) {
+      await refreshExperiences();
+    }
+  }
 
   // Warn before leaving with unsaved changes
   useEffect(() => {
@@ -254,21 +284,60 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
         />
       </div>
 
-      {/* Years of experience */}
-      <div className="space-y-1.5">
-        <Label htmlFor="years_of_experience" className="text-sm font-medium text-slate-700">
-          {t('yearsOfExperience')}
-        </Label>
-        <Input
-          id="years_of_experience"
-          name="years_of_experience"
-          type="number"
-          min={0}
-          max={50}
-          defaultValue={candidate?.years_of_experience ?? ''}
-          className={inputClasses}
-          style={ringStyle}
-          disabled={isPending}
+      {/* Experience */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <Label className="text-sm font-medium text-slate-700">{t('experience')}</Label>
+          {experiences.length > 0 && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="gap-1.5 text-xs"
+              onClick={() => { setEditingExp(undefined); setExpFormOpen(true); }}
+              disabled={isPending}
+            >
+              <Plus className="h-3.5 w-3.5" />
+              {t('addExperience')}
+            </Button>
+          )}
+        </div>
+
+        {experiences.length === 0 ? (
+          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-slate-200 py-8 text-center">
+            <Briefcase className="h-8 w-8 text-slate-300" />
+            <p className="mt-2 text-sm text-slate-400">{t('noExperience')}</p>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="mt-3 gap-1.5 text-xs"
+              onClick={() => { setEditingExp(undefined); setExpFormOpen(true); }}
+            >
+              <Plus className="h-3.5 w-3.5" />
+              {t('addExperience')}
+            </Button>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {experiences.map((exp) => (
+              <ExperienceCard
+                key={exp.id}
+                experience={exp}
+                locale={locale}
+                showActions
+                onEdit={() => { setEditingExp(exp); setExpFormOpen(true); }}
+                onDelete={() => handleDeleteExperience(exp.id)}
+              />
+            ))}
+          </div>
+        )}
+
+        <ExperienceForm
+          open={expFormOpen}
+          onOpenChange={setExpFormOpen}
+          experience={editingExp}
+          onSaved={refreshExperiences}
         />
       </div>
 

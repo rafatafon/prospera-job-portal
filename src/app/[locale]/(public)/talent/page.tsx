@@ -100,6 +100,36 @@ export default async function TalentPage({
       })
     : [];
 
+  // Fetch experiences for all visible candidates to calculate total years
+  const candidateIds = candidates.map((c) => c.id);
+  const { data: allExperiences } = candidateIds.length > 0
+    ? await supabase
+        .from('candidate_experiences')
+        .select('candidate_id, start_date, end_date, is_current')
+        .in('candidate_id', candidateIds)
+    : { data: [] };
+
+  // Build a map of candidate_id → total years
+  const experienceYearsMap = new Map<string, number>();
+  if (allExperiences) {
+    const grouped = new Map<string, typeof allExperiences>();
+    for (const exp of allExperiences) {
+      const list = grouped.get(exp.candidate_id) ?? [];
+      list.push(exp);
+      grouped.set(exp.candidate_id, list);
+    }
+    const now = new Date();
+    for (const [candidateId, exps] of grouped) {
+      let totalMonths = 0;
+      for (const exp of exps) {
+        const start = new Date(exp.start_date + 'T00:00:00');
+        const end = exp.is_current || !exp.end_date ? now : new Date(exp.end_date + 'T00:00:00');
+        totalMonths += (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+      }
+      experienceYearsMap.set(candidateId, Math.max(0, Math.round(totalMonths / 12)));
+    }
+  }
+
   const count = candidates.length;
 
   // Pre-translate labels
@@ -144,10 +174,10 @@ export default async function TalentPage({
                 creatorLabel={t('creatorBadge')}
                 availabilityLabel={availabilityLabels[candidate.availability]}
                 experienceLabel={
-                  candidate.years_of_experience != null
+                  (experienceYearsMap.get(candidate.id) ?? 0) > 0
                     ? t('yearsExperience').replace(
                         '__count__',
-                        String(candidate.years_of_experience),
+                        String(experienceYearsMap.get(candidate.id)),
                       )
                     : ''
                 }

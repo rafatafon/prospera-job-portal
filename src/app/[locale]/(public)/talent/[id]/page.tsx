@@ -68,6 +68,28 @@ export default async function CandidateDetailPage({
     notFound();
   }
 
+  // Fetch experiences
+  const { data: experiences } = await supabase
+    .from('candidate_experiences')
+    .select('*')
+    .eq('candidate_id', candidate.id)
+    .order('start_date', { ascending: false });
+
+  const experienceList = experiences ?? [];
+
+  // Calculate total years from experiences
+  let totalExperienceYears = 0;
+  if (experienceList.length > 0) {
+    let totalMonths = 0;
+    const now = new Date();
+    for (const exp of experienceList) {
+      const start = new Date(exp.start_date + 'T00:00:00');
+      const end = exp.is_current || !exp.end_date ? now : new Date(exp.end_date + 'T00:00:00');
+      totalMonths += (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+    }
+    totalExperienceYears = Math.max(0, Math.round(totalMonths / 12));
+  }
+
   // Generate signed URL for CV download
   let cvUrl: string | null = null;
   if (candidate.cv_path) {
@@ -161,12 +183,12 @@ export default async function CandidateDetailPage({
                       {candidate.location}
                     </span>
                   )}
-                  {candidate.years_of_experience != null && (
+                  {totalExperienceYears > 0 && (
                     <span className="flex items-center gap-1.5">
                       <Briefcase className="h-4 w-4" />
                       {t('yearsExperience').replace(
                         '__count__',
-                        String(candidate.years_of_experience),
+                        String(totalExperienceYears),
                       )}
                     </span>
                   )}
@@ -203,6 +225,56 @@ export default async function CandidateDetailPage({
                       {skill}
                     </span>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Experience timeline */}
+            {experienceList.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-sm font-semibold text-slate-700">
+                  {t('experienceSection')}
+                </h2>
+                <div className="mt-3 space-y-3">
+                  {experienceList.map((exp) => {
+                    const startFormatted = new Date(exp.start_date + 'T00:00:00').toLocaleDateString(
+                      locale === 'es' ? 'es-HN' : 'en-US',
+                      { year: 'numeric', month: 'short' },
+                    );
+                    const endFormatted = exp.is_current
+                      ? (locale === 'es' ? 'Actualidad' : 'Present')
+                      : exp.end_date
+                        ? new Date(exp.end_date + 'T00:00:00').toLocaleDateString(
+                            locale === 'es' ? 'es-HN' : 'en-US',
+                            { year: 'numeric', month: 'short' },
+                          )
+                        : '';
+
+                    return (
+                      <div key={exp.id} className="rounded-lg border border-slate-100 bg-slate-50 p-4">
+                        <h3 className="text-sm font-semibold text-slate-900">{exp.job_title}</h3>
+                        <p className="mt-0.5 text-sm text-slate-600">{exp.company_name}</p>
+                        {exp.location && (
+                          <p className="mt-0.5 text-xs text-slate-400">{exp.location}</p>
+                        )}
+                        <p className="mt-1 text-xs text-slate-400">
+                          {startFormatted}{endFormatted ? ` — ${endFormatted}` : ''}
+                        </p>
+                        {exp.employment_type && (
+                          <span className="mt-1.5 inline-block rounded-full border border-slate-200 px-2 py-0.5 text-[10px] font-medium text-slate-500">
+                            {exp.employment_type === 'full_time' ? (locale === 'es' ? 'Tiempo completo' : 'Full time')
+                              : exp.employment_type === 'part_time' ? (locale === 'es' ? 'Medio tiempo' : 'Part time')
+                              : (locale === 'es' ? 'Contrato' : 'Contract')}
+                          </span>
+                        )}
+                        {exp.description && (
+                          <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-500">
+                            {exp.description}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
