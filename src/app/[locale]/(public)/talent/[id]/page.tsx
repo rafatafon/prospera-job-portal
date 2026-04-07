@@ -43,26 +43,41 @@ export default async function CandidateDetailPage({
     redirect(`/${locale}/login`);
   }
 
-  // Only company and admin users
   const { data: profile } = await supabase
     .from('profiles')
     .select('role')
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'company' && profile?.role !== 'admin') {
+  const isCompanyOrAdmin = profile?.role === 'company' || profile?.role === 'admin';
+
+  // Check if the viewer is the candidate themselves
+  const { data: ownCandidate } = await supabase
+    .from('candidates')
+    .select('id')
+    .eq('user_id', user.id)
+    .single();
+
+  const isOwnProfile = ownCandidate?.id === id;
+
+  // Only company, admin, or the candidate themselves can view
+  if (!isCompanyOrAdmin && !isOwnProfile) {
     redirect(`/${locale}/jobs`);
   }
 
   const t = await getTranslations('talent');
 
-  // Fetch candidate
-  const { data: candidate } = await supabase
+  // Fetch candidate — skip is_visible check if viewing own profile
+  let candidateQuery = supabase
     .from('candidates')
     .select('*')
-    .eq('id', id)
-    .eq('is_visible', true)
-    .single();
+    .eq('id', id);
+
+  if (!isOwnProfile) {
+    candidateQuery = candidateQuery.eq('is_visible', true);
+  }
+
+  const { data: candidate } = await candidateQuery.single();
 
   if (!candidate) {
     notFound();
