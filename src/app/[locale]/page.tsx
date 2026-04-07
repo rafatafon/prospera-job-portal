@@ -84,6 +84,17 @@ export default async function LandingPage({
 
   const isAuthenticated = !!user;
 
+  // Check if current user has a candidate profile (for own-profile card access)
+  let ownCandidateId: string | null = null;
+  if (user) {
+    const { data: ownCandidate } = await supabase
+      .from('candidates')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
+    ownCandidateId = ownCandidate?.id ?? null;
+  }
+
   // Fetch experiences for featured candidates to calculate total years
   const featCandidateIds = candidateList.map((c) => c.id);
   const { data: featExperiences } = featCandidateIds.length > 0
@@ -292,6 +303,7 @@ export default async function LandingPage({
                   viewProfileLabel={tTalent('viewProfile')}
                   isAuthenticated={isAuthenticated}
                   userRole={userRole}
+                  isOwnProfile={!!ownCandidateId && candidate.id === ownCandidateId}
                 />
               ))}
             </div>

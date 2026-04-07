@@ -48,6 +48,7 @@ export default async function TalentPage({
   // Derive auth state for candidate card gating (no redirects — page is public)
   let isAuthenticated = false;
   let userRole: string | null = null;
+  let ownCandidateId: string | null = null;
 
   if (user) {
     isAuthenticated = true;
@@ -57,6 +58,14 @@ export default async function TalentPage({
       .eq('id', user.id)
       .single();
     userRole = profile?.role ?? null;
+
+    // Check if this user has a candidate profile (for own-profile access)
+    const { data: ownCandidate } = await supabase
+      .from('candidates')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
+    ownCandidateId = ownCandidate?.id ?? null;
   }
 
   const t = await getTranslations('talent');
@@ -184,6 +193,7 @@ export default async function TalentPage({
                 viewProfileLabel={t('viewProfile')}
                 isAuthenticated={isAuthenticated}
                 userRole={userRole}
+                isOwnProfile={!!ownCandidateId && candidate.id === ownCandidateId}
               />
             ))}
           </div>

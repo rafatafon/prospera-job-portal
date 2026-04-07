@@ -24,6 +24,7 @@ interface CandidateCardProps {
   userRole: string | null;
   isCreator?: boolean;
   creatorLabel?: string;
+  isOwnProfile?: boolean;
 }
 
 const AVAILABILITY_COLORS = {
@@ -41,6 +42,7 @@ export function CandidateCard({
   userRole,
   isCreator = false,
   creatorLabel,
+  isOwnProfile = false,
 }: CandidateCardProps) {
   const [showAuthGate, setShowAuthGate] = useState(false);
   const maxSkills = 4;
@@ -48,7 +50,7 @@ export function CandidateCard({
   const remainingCount = candidate.skills.length - maxSkills;
 
   const canAccessProfile =
-    isAuthenticated && (userRole === 'company' || userRole === 'admin');
+    isAuthenticated && (userRole === 'company' || userRole === 'admin' || isOwnProfile);
 
   const cardContent = (
     <>
