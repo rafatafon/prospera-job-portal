@@ -144,7 +144,7 @@ export default async function LandingPage({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header user={user} userRole={userRole} showLogin={false} />
+      <Header user={user} userRole={userRole} showLogin={false} hasCandidateProfile={!!ownCandidateId} />
       <main className="flex-1">
         {/* Hero */}
         <section className="relative -mt-20 flex min-h-[80vh] flex-col overflow-hidden pt-20 sm:min-h-[85vh] lg:min-h-screen">

@@ -10,9 +10,10 @@ interface HeaderProps {
   user: User | null;
   userRole?: 'user' | 'company' | 'admin' | null;
   showLogin?: boolean;
+  hasCandidateProfile?: boolean;
 }
 
-export async function Header({ user, userRole, showLogin = true }: HeaderProps) {
+export async function Header({ user, userRole, showLogin = true, hasCandidateProfile = false }: HeaderProps) {
   const dashboardHref = userRole === 'admin' ? '/admin' : '/dashboard';
   const t = await getTranslations('common');
 
@@ -96,12 +97,14 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
           {user ? (
             userRole === 'company' ? (
               <>
-                <Link
-                  href="/candidate/profile"
-                  className="inline-flex h-8 items-center rounded-full border border-white/60 bg-white/75 px-6 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
-                >
-                  {t('myProfile')}
-                </Link>
+                {hasCandidateProfile && (
+                  <Link
+                    href="/candidate/profile"
+                    className="inline-flex h-8 items-center rounded-full border border-white/60 bg-white/75 px-6 text-sm font-medium text-black shadow-sm backdrop-blur-md transition-colors hover:bg-white/60 hover:text-slate-700"
+                  >
+                    {t('myProfile')}
+                  </Link>
+                )}
                 <Button
                   asChild
                   size="sm"
@@ -111,6 +114,15 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
                   <Link href="/dashboard">{t('dashboard')}</Link>
                 </Button>
               </>
+            ) : userRole === 'admin' ? (
+              <Button
+                asChild
+                size="sm"
+                style={{ backgroundColor: '#ff2c02' }}
+                className="rounded-full px-6 text-white hover:opacity-90"
+              >
+                <Link href="/admin">{t('dashboard')}</Link>
+              </Button>
             ) : userRole === 'user' ? (
               <Button
                 asChild
@@ -152,7 +164,7 @@ export async function Header({ user, userRole, showLogin = true }: HeaderProps) 
 
         {/* Mobile right section — burger menu only (Company Login lives inside the menu) */}
         <div className="flex items-center md:hidden">
-          <MobileMenu user={user} userRole={userRole} />
+          <MobileMenu user={user} userRole={userRole} hasCandidateProfile={hasCandidateProfile} />
         </div>
       </div>
     </header>

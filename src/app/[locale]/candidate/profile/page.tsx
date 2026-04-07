@@ -33,16 +33,20 @@ export default async function CandidateProfilePage({
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'user' && profile?.role !== 'company') {
-    redirect(`/${locale}/dashboard`);
-  }
-
   // Fetch existing candidate record
   const { data: candidate } = await supabase
     .from('candidates')
     .select('*')
     .eq('user_id', user.id)
     .single();
+
+  // Only allow: candidates (role 'user'), or company users who already have a candidate profile
+  if (profile?.role === 'company' && !candidate) {
+    redirect(`/${locale}/dashboard`);
+  }
+  if (profile?.role !== 'user' && profile?.role !== 'company') {
+    redirect(`/${locale}/dashboard`);
+  }
 
   // Fetch experiences for the candidate
   let experiences: Database['public']['Tables']['candidate_experiences']['Row'][] = [];

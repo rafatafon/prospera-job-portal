@@ -15,9 +15,10 @@ import type { User } from '@supabase/supabase-js';
 interface MobileMenuProps {
   user: User | null;
   userRole?: 'user' | 'company' | 'admin' | null;
+  hasCandidateProfile?: boolean;
 }
 
-export function MobileMenu({ user, userRole }: MobileMenuProps) {
+export function MobileMenu({ user, userRole, hasCandidateProfile = false }: MobileMenuProps) {
   const dashboardHref = userRole === 'admin' ? '/admin' : '/dashboard';
   const [open, setOpen] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -110,13 +111,15 @@ export function MobileMenu({ user, userRole }: MobileMenuProps) {
             {user ? (
               userRole === 'company' ? (
                 <>
-                  <Link
-                    href="/candidate/profile"
-                    onClick={() => setOpen(false)}
-                    className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
-                  >
-                    {t('myProfile')}
-                  </Link>
+                  {hasCandidateProfile && (
+                    <Link
+                      href="/candidate/profile"
+                      onClick={() => setOpen(false)}
+                      className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+                    >
+                      {t('myProfile')}
+                    </Link>
+                  )}
                   <Link
                     href="/dashboard"
                     onClick={() => setOpen(false)}
@@ -125,6 +128,14 @@ export function MobileMenu({ user, userRole }: MobileMenuProps) {
                     {t('dashboard')}
                   </Link>
                 </>
+              ) : userRole === 'admin' ? (
+                <Link
+                  href="/admin"
+                  onClick={() => setOpen(false)}
+                  className="text-2xl font-semibold text-slate-900 transition-colors hover:text-slate-600"
+                >
+                  {t('dashboard')}
+                </Link>
               ) : userRole === 'user' ? (
                 <Link
                   href="/candidate/profile"

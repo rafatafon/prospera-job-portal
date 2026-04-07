@@ -44,6 +44,18 @@ export async function upsertCandidateProfile(
     return { error: 'Only candidates can create profiles' };
   }
 
+  // Company users can only update existing candidate profiles, not create new ones
+  if (profile?.role === 'company') {
+    const { data: existingCandidate } = await supabase
+      .from('candidates')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
+    if (!existingCandidate) {
+      return { error: 'Only candidates can create profiles' };
+    }
+  }
+
   // Parse and validate text fields via Zod schema
   const parsed = candidateProfileSchema.safeParse({
     full_name: formData.get('full_name'),
