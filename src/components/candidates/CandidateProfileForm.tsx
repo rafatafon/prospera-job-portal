@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import parsePhoneNumber from 'libphonenumber-js';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { upsertCandidateProfile } from '@/app/[locale]/candidate/profile/actions';
 import { AlertCircle, AlertTriangle, CheckCircle, Loader2, Upload } from 'lucide-react';
 
@@ -20,6 +22,7 @@ interface CandidateProfileFormProps {
 
 export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
   const t = useTranslations('candidateProfile');
+  const locale = useLocale();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -29,6 +32,12 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [rawImageSrc, setRawImageSrc] = useState<string | null>(null);
   const [croppedFile, setCroppedFile] = useState<File | null>(null);
+  const [phone, setPhone] = useState(() => {
+    if (candidate?.phone_country_code && candidate?.phone_number) {
+      return `${candidate.phone_country_code}${candidate.phone_number}`;
+    }
+    return '';
+  });
   const [isDirty, setIsDirty] = useState(false);
 
   // Warn before leaving with unsaved changes
@@ -70,6 +79,18 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
     formData.set('is_visible', isVisible ? 'true' : 'false');
     if (croppedFile) {
       formData.set('photo', croppedFile);
+    }
+
+    // Parse phone into country code + national number
+    if (phone) {
+      const parsed = parsePhoneNumber(phone);
+      if (parsed) {
+        formData.set('phone_country_code', `+${parsed.countryCallingCode}`);
+        formData.set('phone_number', parsed.nationalNumber);
+      } else {
+        formData.set('phone_country_code', '+');
+        formData.set('phone_number', phone.replace(/^\+/, ''));
+      }
     }
 
     startTransition(async () => {
@@ -290,6 +311,37 @@ export function CandidateProfileForm({ candidate }: CandidateProfileFormProps) {
             disabled={isPending}
           />
         </div>
+      </div>
+
+      {/* Contact Email */}
+      <div className="space-y-1.5">
+        <Label htmlFor="contact_email" className="text-sm font-medium text-slate-700">
+          {t('contactEmail')}
+        </Label>
+        <Input
+          id="contact_email"
+          name="contact_email"
+          type="email"
+          defaultValue={candidate?.contact_email ?? ''}
+          placeholder={t('contactEmailPlaceholder')}
+          className={inputClasses}
+          style={ringStyle}
+          disabled={isPending}
+        />
+      </div>
+
+      {/* Phone */}
+      <div className="space-y-1.5">
+        <Label className="text-sm font-medium text-slate-700">
+          {t('phoneNumber')}
+        </Label>
+        <PhoneInput
+          defaultCountry="HN"
+          locale={locale}
+          value={phone}
+          onChange={(e) => { setPhone(e.target.value); setIsDirty(true); }}
+          disabled={isPending}
+        />
       </div>
 
       {/* CV */}

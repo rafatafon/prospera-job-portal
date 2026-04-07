@@ -74,6 +74,7 @@ export type Database = {
         Row: {
           availability: Database["public"]["Enums"]["candidate_availability"]
           bio: string | null
+          contact_email: string | null
           created_at: string
           cv_path: string | null
           full_name: string
@@ -82,6 +83,8 @@ export type Database = {
           is_visible: boolean
           linkedin_url: string | null
           location: string | null
+          phone_country_code: string | null
+          phone_number: string | null
           photo_url: string | null
           skills: string[]
           updated_at: string
@@ -91,6 +94,7 @@ export type Database = {
         Insert: {
           availability?: Database["public"]["Enums"]["candidate_availability"]
           bio?: string | null
+          contact_email?: string | null
           created_at?: string
           cv_path?: string | null
           full_name: string
@@ -99,6 +103,8 @@ export type Database = {
           is_visible?: boolean
           linkedin_url?: string | null
           location?: string | null
+          phone_country_code?: string | null
+          phone_number?: string | null
           photo_url?: string | null
           skills?: string[]
           updated_at?: string
@@ -108,6 +114,7 @@ export type Database = {
         Update: {
           availability?: Database["public"]["Enums"]["candidate_availability"]
           bio?: string | null
+          contact_email?: string | null
           created_at?: string
           cv_path?: string | null
           full_name?: string
@@ -116,6 +123,8 @@ export type Database = {
           is_visible?: boolean
           linkedin_url?: string | null
           location?: string | null
+          phone_country_code?: string | null
+          phone_number?: string | null
           photo_url?: string | null
           skills?: string[]
           updated_at?: string
@@ -269,6 +278,15 @@ export type Database = {
     }
     Functions: {
       get_my_company_id: { Args: never; Returns: string }
+      get_my_company_sensitive: {
+        Args: never
+        Returns: {
+          is_active: boolean
+          prospera_entity_id: string
+          registered_by: string
+          rpn: string
+        }[]
+      }
       get_my_role: {
         Args: never
         Returns: Database["public"]["Enums"]["user_role"]

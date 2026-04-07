@@ -12,6 +12,8 @@ import {
   User,
   Calendar,
   Sparkles,
+  Mail,
+  Phone,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Database } from '@/types/database.types';
@@ -229,6 +231,24 @@ export default async function CandidateDetailPage({
                   >
                     <Linkedin className="h-4 w-4" />
                     {t('linkedin')}
+                  </a>
+                </Button>
+              )}
+
+              {candidate.contact_email && (
+                <Button asChild variant="outline" className="gap-2">
+                  <a href={`mailto:${candidate.contact_email}`}>
+                    <Mail className="h-4 w-4" />
+                    {t('sendEmail')}
+                  </a>
+                </Button>
+              )}
+
+              {candidate.phone_number && (
+                <Button asChild variant="outline" className="gap-2">
+                  <a href={`tel:${candidate.phone_country_code || ''}${candidate.phone_number}`}>
+                    <Phone className="h-4 w-4" />
+                    {t('callPhone')}
                   </a>
                 </Button>
               )}

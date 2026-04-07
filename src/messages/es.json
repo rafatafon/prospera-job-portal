@@ -299,7 +299,9 @@
     "authGateTitle": "Acceso de Empresa Requerido",
     "authGateDescription": "Para ver este perfil debes ser una Entidad en Próspera",
     "signUpCompany": "Registrate en el Portal de Empresas",
-    "authGateLogin": "Iniciar Sesion"
+    "authGateLogin": "Iniciar Sesion",
+    "sendEmail": "Enviar correo",
+    "callPhone": "Llamar"
   },
   "candidateProfile": {
     "title": "Mi perfil de candidato",
@@ -360,7 +362,10 @@
     "notAvailable": "No disponible",
     "sidebarTitle": "Candidato",
     "sidebarProfile": "Mi Perfil",
-    "sidebarRegisterCompany": "Registrar Empresa"
+    "sidebarRegisterCompany": "Registrar Empresa",
+    "contactEmail": "Correo de contacto",
+    "contactEmailPlaceholder": "Correo para que las empresas te contacten",
+    "phoneNumber": "Numero de telefono"
   },
   "candidateUpgrade": {
     "pageTitle": "Registra tu empresa",

@@ -15,6 +15,9 @@ const candidateProfileSchema = z.object({
   years_of_experience: z.string().optional().default(''),
   availability: availabilitySchema.default('actively_looking'),
   linkedin_url: z.string().url().max(500).optional().or(z.literal('')).default(''),
+  contact_email: z.string().email().max(254).optional().or(z.literal('')).default(''),
+  phone_country_code: z.string().max(5).optional().or(z.literal('')).default(''),
+  phone_number: z.string().max(20).optional().or(z.literal('')).default(''),
   is_visible: z.enum(['true', 'false']).default('false'),
 });
 
@@ -58,6 +61,9 @@ export async function upsertCandidateProfile(
       const stripped = raw.replace(/^https?:\/\//, '');
       return `https://${stripped}`;
     })(),
+    contact_email: formData.get('contact_email') || '',
+    phone_country_code: formData.get('phone_country_code') || '',
+    phone_number: formData.get('phone_number') || '',
     is_visible: formData.get('is_visible') === 'true' ? 'true' : 'false',
   });
 
@@ -74,6 +80,9 @@ export async function upsertCandidateProfile(
     years_of_experience: yearsStr,
     availability,
     linkedin_url: linkedinUrl,
+    contact_email: contactEmail,
+    phone_country_code: phoneCountryCode,
+    phone_number: phoneNumber,
     is_visible: isVisibleStr,
   } = parsed.data;
 
@@ -159,6 +168,9 @@ export async function upsertCandidateProfile(
     years_of_experience: yearsOfExperience,
     availability: availability as 'actively_looking' | 'open_to_offers' | 'not_available',
     linkedin_url: linkedinUrl || null,
+    contact_email: contactEmail || null,
+    phone_country_code: phoneCountryCode || null,
+    phone_number: phoneNumber || null,
     is_visible: isVisible,
     ...(photoUrl ? { photo_url: photoUrl } : {}),
     ...(cvPath ? { cv_path: cvPath } : {}),

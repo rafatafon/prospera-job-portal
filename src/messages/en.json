@@ -299,7 +299,9 @@
     "authGateTitle": "Company Access Required",
     "authGateDescription": "To view this profile you have to be an Entity in Próspera",
     "signUpCompany": "Sign Up for Company Portal",
-    "authGateLogin": "Login"
+    "authGateLogin": "Login",
+    "sendEmail": "Send email",
+    "callPhone": "Call"
   },
   "candidateProfile": {
     "title": "My candidate profile",
@@ -360,7 +362,10 @@
     "notAvailable": "Not available",
     "sidebarTitle": "Candidate",
     "sidebarProfile": "My Profile",
-    "sidebarRegisterCompany": "Register Company"
+    "sidebarRegisterCompany": "Register Company",
+    "contactEmail": "Contact email",
+    "contactEmailPlaceholder": "Email for companies to reach you",
+    "phoneNumber": "Phone number"
   },
   "candidateUpgrade": {
     "pageTitle": "Register your company",
