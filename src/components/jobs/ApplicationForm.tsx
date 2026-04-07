@@ -131,6 +131,7 @@ export function ApplicationForm({ jobId }: ApplicationFormProps) {
 
     formData.set('country', country);
     formData.set('job_id', jobId);
+    formData.set('locale', locale);
 
     // Prepend https:// to LinkedIn URL if user omitted it
     const linkedinRaw = formData.get('linkedin_url') as string;

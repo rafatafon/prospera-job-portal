@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { rateLimit } from '@/lib/security/rate-limit';
 import { validateFileMagicBytes, scanPdfContent } from '@/lib/security/file-validation';
+import { sendCompanyNotification, sendCandidateConfirmation } from '@/lib/email/resend';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
@@ -163,6 +164,56 @@ export async function submitApplication(
     return { error: 'Failed to submit application. Please try again.' };
   }
 
-  // 11. Return success
+  // 11. Send notification emails (fire-and-forget — don't block response)
+  const locale = (formData.get('locale') as string) || 'es';
+
+  // Fetch job + company info for emails
+  const { data: jobWithCompany } = await supabase
+    .from('jobs')
+    .select('title, company_id, companies(name)')
+    .eq('id', jobId)
+    .single();
+
+  if (jobWithCompany) {
+    const company = jobWithCompany.companies as { name: string } | null;
+    const companyName = company?.name ?? '';
+
+    // Get company user emails
+    const { data: companyProfiles } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('company_id', jobWithCompany.company_id)
+      .eq('role', 'company');
+
+    const companyEmails = (companyProfiles ?? [])
+      .map((p) => p.email)
+      .filter((e): e is string => !!e);
+
+    const applicantPhone = `${parsed.data.phone_country_code} ${parsed.data.phone_number}`;
+    const dashboardUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000').origin : 'http://localhost:3000'}/${locale}/dashboard/applications`;
+
+    // Fire-and-forget: company notification
+    void sendCompanyNotification({
+      companyEmails,
+      jobTitle: jobWithCompany.title,
+      applicantName: parsed.data.full_name,
+      applicantEmail: parsed.data.email,
+      applicantPhone,
+      applicantLinkedin: parsed.data.linkedin_url || null,
+      dashboardUrl,
+      locale,
+    });
+
+    // Fire-and-forget: candidate confirmation
+    void sendCandidateConfirmation({
+      candidateEmail: parsed.data.email,
+      applicantName: parsed.data.full_name,
+      jobTitle: jobWithCompany.title,
+      companyName,
+      locale,
+    });
+  }
+
+  // 12. Return success
   return { success: true };
 }
