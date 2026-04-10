@@ -49,6 +49,11 @@ function isAdminRoute(pathname: string): boolean {
 }
 
 export async function proxy(request: NextRequest) {
+  // Let Sentry tunnel requests pass through without middleware processing
+  if (request.nextUrl.pathname === '/monitoring') {
+    return NextResponse.next();
+  }
+
   // 1. Refresh Supabase auth tokens (must run on every request).
   const { supabaseResponse, user, sessionExpired } =
     await updateSession(request);
@@ -110,6 +115,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - common static file extensions
      */
-    '/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
+    '/((?!_next/static|_next/image|favicon\\.ico|monitoring|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 };
